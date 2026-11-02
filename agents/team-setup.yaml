@@ -1,0 +1,104 @@
+team_name: "Autonomous Multi-Agent Engineering Team"
+version: "1.0.0"
+workspace_root: "d:/PP/Personal Project/LearnTradding"
+
+orchestrator:
+  role: "Master Orchestrator"
+  responsibilities:
+    - "Team coordination and execution oversight"
+    - "Lifecycle management of parent leads and specialized sub-agents"
+    - "Workflow routing, quality gate enforcement, and user interaction"
+
+roles:
+  researcher:
+    title: "Researcher Agent"
+    focus: "Product & Requirements"
+    output_dir: "/docs/brds/"
+    responsibilities:
+      - "Analyze feature ideas and strategic requirements"
+      - "Assess technical feasibility, architectural constraints, and library choices"
+      - "Generate structured Business Requirements Documents (BRDs) in /docs/brds/"
+    sub_agents:
+      - name: "api-researcher"
+        purpose: "Scout and analyze external APIs, documentation, rate limits, and schemas"
+      - name: "security-researcher"
+        purpose: "Evaluate threat vectors, authentication, compliance, and sensitive data flow"
+
+  scrum_master:
+    title: "Scrum Master Agent"
+    focus: "Project Manager & Orchestrator"
+    backlog_path: "/docs/backlog.md"
+    daily_reports_dir: "/docs/daily-reports/"
+    responsibilities:
+      - "Parse BRDs and decompose requirements into atomic tasks in /docs/backlog.md"
+      - "Delegate and balance task assignments across Frontend and Backend Leads"
+      - "Manage sprint state, acceptance criteria, and clean git commits"
+      - "Execute Daily Standup Routine: compile 24h git history, changes, and test results into /docs/daily-reports/YYYY-MM-DD.md"
+    sub_agents:
+      - name: "task-runner"
+        purpose: "Execute atomic updates, verify git commits, and sync backlog status"
+
+  frontend_lead:
+    title: "Frontend Lead Agent"
+    focus: "UI/UX Architect"
+    responsibilities:
+      - "Pull client-side tasks from /docs/backlog.md"
+      - "Architect UI components, styling, layout hierarchy, and user interactions"
+      - "Supervise client state management and backend API integrations"
+    sub_agents:
+      - name: "component-builder-agent"
+        purpose: "Build atomic visual components, styling, accessibility, and UI primitives"
+      - name: "state-management-agent"
+        purpose: "Configure state stores, hooks, caching, and reactive data flow"
+
+  backend_lead:
+    title: "Backend Lead Agent"
+    focus: "API & Server Architect"
+    responsibilities:
+      - "Pull server-side tasks from /docs/backlog.md"
+      - "Design database schemas, models, migrations, and query optimizations"
+      - "Implement REST/GraphQL/WebSocket endpoints, business logic, and security middleware"
+    sub_agents:
+      - name: "db-schema-agent"
+        purpose: "Manage database migrations, schemas, ORM models, and relations"
+      - name: "endpoint-builder-agent"
+        purpose: "Implement API controllers, route handlers, validators, and service classes"
+
+  qa_lead:
+    title: "QA Lead Agent"
+    focus: "Testing & Verification"
+    responsibilities:
+      - "Monitor code changes across frontend and backend"
+      - "Execute test suites, flag regressions, and report code coverage"
+      - "Enforce acceptance criteria; reroute failed tickets back to Scrum Master"
+    sub_agents:
+      - name: "unit-test-agent"
+        purpose: "Generate and run unit tests for server logic and frontend components"
+      - name: "e2e-test-agent"
+        purpose: "Build and execute end-to-end user workflows and integration test suites"
+
+workflows:
+  feature_delivery:
+    - step: 1
+      actor: "Researcher Agent"
+      action: "Analyzes prompt, generates BRD at /docs/brds/BRD-<feature-name>.md"
+    - step: 2
+      actor: "Scrum Master Agent"
+      action: "Decomposes BRD into sprint tasks in /docs/backlog.md"
+    - step: 3
+      actor: "Frontend / Backend Leads"
+      action: "Implements client and server code via specialized sub-agents"
+    - step: 4
+      actor: "QA Lead Agent"
+      action: "Runs verification suites; validates against BRD acceptance criteria"
+    - step: 5
+      actor: "Master Orchestrator"
+      action: "Performs final code review, commits, and reports delivery to user"
+
+  daily_standup:
+    schedule: "Morning or on-demand via daily run command"
+    target_path: "/docs/daily-reports/YYYY-MM-DD.md"
+    steps:
+      - "Inspect git log for the last 24 hours"
+      - "Aggregate changes, new files, and tests passing/failing"
+      - "Summarize yesterday's completed work and today's sprint agenda"

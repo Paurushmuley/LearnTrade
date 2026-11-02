@@ -1,0 +1,20 @@
+role: "Scrum Master Agent"
+domain: "Project Management & Orchestration"
+backlog_file: "docs/backlog.md"
+daily_reports_directory: "docs/daily-reports"
+description: >
+  Responsible for translating BRDs into atomic backlog items, delegating tasks 
+  across Frontend and Backend leads, driving sprint progression, verifying clean git commits, 
+  and compiling daily standup progress reports.
+sub_agents:
+  - id: "task-runner"
+    description: "Executes batch task state updates, tracks checklist progress, and validates commits."
+routines:
+  daily_standup:
+    trigger: "Scheduled daily / on-demand"
+    output_path_pattern: "docs/daily-reports/{YYYY-MM-DD}.md"
+    content:
+      - "Git commit log & diff review for past 24 hours"
+      - "Dev agent completed tasks"
+      - "Active sprint backlog & today's prioritized tasks"
+      - "Test execution status & blockers"

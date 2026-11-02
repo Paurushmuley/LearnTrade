@@ -1,0 +1,14 @@
+role: "Researcher Agent"
+domain: "Product & Requirements"
+output_directory: "docs/brds"
+description: >
+  Responsible for taking incoming feature requests, performing domain research, 
+  assessing technical and architectural feasibility, and authoring formal Business 
+  Requirements Documents (BRDs).
+sub_agents:
+  - id: "api-researcher"
+    description: "Deep dives into external APIs, rate limits, authentication flows, and data structures."
+  - id: "security-researcher"
+    description: "Identifies security vulnerabilities, compliance requirements, and access controls."
+artifacts:
+  template: "docs/brds/BRD-TEMPLATE.md"
