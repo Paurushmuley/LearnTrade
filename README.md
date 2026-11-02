@@ -77,11 +77,11 @@ cd LearnTrade
 # Install dependencies
 npm install
 
-# Start local development server
+# Start local development server (configured to port 3100)
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3100](http://localhost:3100) in your browser.
 
 ---
 
