@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, Brain, Key, RefreshCw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { Activity, Brain, Key, Layers, RefreshCw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
   aiConfig: AIConfig;
+  onOpenOptions: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -16,6 +17,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   portfolio,
   aiConfig,
+  onOpenOptions,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -107,6 +109,16 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Action Controls */}
       <div className="flex items-center gap-2">
+        {/* Options Chain (F&O) */}
+        <button
+          onClick={onOpenOptions}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/40 text-xs font-semibold text-emerald-300 border border-emerald-800/60 transition shadow-sm"
+          title="Live Option Chain, Greeks & Multi-Leg Strategy Payoff Visualizer"
+        >
+          <Layers className="h-3.5 w-3.5 text-emerald-400" />
+          <span className="hidden sm:inline">Option Chain (F&O)</span>
+        </button>
+
         {/* Strategy Backtester */}
         <button
           onClick={onOpenStrategy}

@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AIConfig, Candle, OrderSide, OrderType, ProductType, TickerInfo } from '../types/trading';
+import { AIConfig, Candle, Order, OrderSide, OrderType, Position, ProductType, TickerInfo } from '../types/trading';
 import { POPULAR_TICKERS, generateHistoricalCandles, CrisisScenario } from '../lib/marketData';
 import { checkPendingOrders, getPortfolioSummary, INITIAL_TRADING_STATE, placeOrder, TradingState } from '../lib/tradingEngine';
+import { OptionLeg, StrategyPayoffResult } from '../lib/optionsEngine';
 import { Header } from '../components/Header';
 import { ChartTerminal } from '../components/ChartTerminal';
 import { OrderTicket } from '../components/OrderTicket';
@@ -11,6 +12,7 @@ import { PortfolioDrawer } from '../components/PortfolioDrawer';
 import { BYOKModal } from '../components/BYOKModal';
 import { StrategyBuilderModal } from '../components/StrategyBuilderModal';
 import { CrisisSimulatorModal } from '../components/CrisisSimulatorModal';
+import { OptionChainModal } from '../components/OptionChainModal';
 
 export default function TradingTerminalPage() {
   const [tradingState, setTradingState] = useState<TradingState>(INITIAL_TRADING_STATE);
@@ -22,6 +24,7 @@ export default function TradingTerminalPage() {
   const [isBYOKOpen, setIsBYOKOpen] = useState(false);
   const [isStrategyOpen, setIsStrategyOpen] = useState(false);
   const [isCrisisOpen, setIsCrisisOpen] = useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   // BYOK Configuration from localStorage
   const [aiConfig, setAIConfig] = useState<AIConfig>({
@@ -161,6 +164,77 @@ export default function TradingTerminalPage() {
     setCandles(scenario.candles);
   };
 
+  // Execute Multi-Leg Options Strategy
+  const handleExecuteOptionsStrategy = (legs: OptionLeg[], payoff: StrategyPayoffResult) => {
+    if (legs.length === 0) return;
+
+    let updatedCash = tradingState.availableCash - payoff.totalStatutoryTaxes;
+    let updatedPositions = [...tradingState.positions];
+    let newOrders: Order[] = [];
+
+    const lotSize = selectedTicker.symbol === 'BANKNIFTY' ? 15 : 25;
+
+    legs.forEach((leg) => {
+      const optionSymbol = `${selectedTicker.symbol} ${leg.strike} ${leg.optionType}`;
+      const signedQty = leg.side === 'BUY' ? leg.quantity * lotSize : -leg.quantity * lotSize;
+      const legInvested = leg.premium * Math.abs(signedQty);
+
+      if (leg.side === 'BUY') {
+        updatedCash -= legInvested;
+      } else {
+        updatedCash += legInvested;
+      }
+
+      const newOrder: Order = {
+        id: 'OPT-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+        symbol: optionSymbol,
+        side: leg.side,
+        type: 'MARKET',
+        product: 'MIS',
+        quantity: Math.abs(signedQty),
+        executedPrice: leg.premium,
+        status: 'FILLED',
+        placedAt: new Date().toISOString(),
+        executedAt: new Date().toISOString(),
+        charges: {
+          brokerage: 20,
+          stt: leg.side === 'SELL' ? legInvested * 0.001 : 0,
+          exchangeCharges: legInvested * 0.0005,
+          sebiCharges: legInvested * 0.000001,
+          stampDuty: leg.side === 'BUY' ? legInvested * 0.00003 : 0,
+          gst: 3.6,
+          totalCharges: Number((20 + (leg.side === 'SELL' ? legInvested * 0.001 : 0) + 3.6).toFixed(2)),
+          breakevenPerShare: 0,
+        },
+      };
+
+      newOrders.push(newOrder);
+
+      updatedPositions.push({
+        symbol: optionSymbol,
+        product: 'MIS',
+        quantity: signedQty,
+        averagePrice: leg.premium,
+        currentPrice: leg.premium,
+        investedAmount: legInvested,
+        unrealizedPnL: 0,
+        unrealizedPnLPercent: 0,
+        realizedPnL: 0,
+        totalChargesPaid: newOrder.charges.totalCharges,
+        netPnL: -newOrder.charges.totalCharges,
+      });
+    });
+
+    setTradingState((prev) => ({
+      ...prev,
+      availableCash: Number(updatedCash.toFixed(2)),
+      positions: updatedPositions,
+      orders: [...newOrders, ...prev.orders],
+    }));
+
+    setIsOptionsOpen(false);
+  };
+
   const marketPrices = { [selectedTicker.symbol]: selectedTicker.currentPrice };
   const portfolioSummary = getPortfolioSummary(tradingState, marketPrices);
 
@@ -170,6 +244,7 @@ export default function TradingTerminalPage() {
       <Header
         portfolio={portfolioSummary}
         aiConfig={aiConfig}
+        onOpenOptions={() => setIsOptionsOpen(true)}
         onOpenBYOK={() => setIsBYOKOpen(true)}
         onOpenStrategy={() => setIsStrategyOpen(true)}
         onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -233,6 +308,15 @@ export default function TradingTerminalPage() {
         isOpen={isCrisisOpen}
         onClose={() => setIsCrisisOpen(false)}
         onLoadScenario={handleLoadScenario}
+      />
+
+      <OptionChainModal
+        isOpen={isOptionsOpen}
+        onClose={() => setIsOptionsOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
+        symbol={selectedTicker.symbol}
+        aiConfig={aiConfig}
+        onExecuteStrategy={handleExecuteOptionsStrategy}
       />
     </div>
   );

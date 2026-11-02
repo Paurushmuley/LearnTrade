@@ -1,12 +1,11 @@
 # Project Sprint Backlog
 
 > Managed by **Scrum Master Agent**  
-> Source of truth for active sprint tasks, feature decomposition, and delivery status.  
-> Based on [`docs/brds/BRD-001-tradecraft-ai-platform.md`](file:///d:/PP/Personal%20Project/LearnTradding/docs/brds/BRD-001-tradecraft-ai-platform.md)
+> Source of truth for active sprint tasks, feature decomposition, and delivery status.
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 1 & 2 (Foundation, Trading Engine, Indian Statutory Fee Engine, Charting & BYOK Architecture)
+- **Active Sprint:** Sprint 2 (Options & Derivatives Sandbox: Black-Scholes, Greeks & Payoff Visualizer)
 - **Status:** COMPLETED & VERIFIED
 - **Updated:** 2026-11-02
 
@@ -16,22 +15,26 @@
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-INIT` | Fullstack | Initialize Next.js TypeScript app with Tailwind CSS, Lucide icons, Lightweight Charts | Fullstack / Master Orchestrator | `DONE` | None |
-| `TC-FEE-01` | Backend / Quant | Implement Indian Statutory Fee Engine (STT, GST, Exchange, SEBI, Stamp Duty, Brokerage) | Backend Lead | `DONE` | `TC-INIT` |
-| `TC-ENG-02` | Backend / Core | Implement Order Execution Engine (Market, Limit, SL, SL-M, MIS, CNC, Margin Calc) | Backend Lead | `DONE` | `TC-FEE-01` |
-| `TC-MKT-03` | Backend / Feed | Market Data Generator & Multi-ticker NSE data stream (Nifty 50, Bluechips) | Backend Lead | `DONE` | `TC-INIT` |
-| `TC-CHT-04` | Frontend / UI | Interactive TradingView Lightweight Charts with timeframe selector & position lines | Frontend Lead | `DONE` | `TC-MKT-03` |
-| `TC-ORD-05` | Frontend / UI | Order Placement Ticket with live pre-trade statutory tax preview & Risk/Reward | Frontend Lead | `DONE` | `TC-FEE-01`, `TC-CHT-04` |
-| `TC-PTF-06` | Frontend / UI | Portfolio, Position Book, Order Ledger, and Margin Utilization Dashboard | Frontend Lead | `DONE` | `TC-ENG-02` |
-| `TC-BYOK-07`| AI / Security | BYOK Key Vault with local encryption & validation for Gemini, OpenAI, Ollama | Backend Lead / Security | `DONE` | `TC-INIT` |
-| `TC-COACH-08`| AI / Coach | AI Trading Coach & Behavioral Auditor (Revenge trading, FOMO, Discipline Score) | Backend Lead / AI | `DONE` | `TC-BYOK-07`, `TC-ENG-02` |
-| `TC-STRAT-09`| AI / Quant | Natural Language Strategy Builder & Historical Backtesting Engine with Python Export | Backend Lead / Quant | `DONE` | `TC-MKT-03`, `TC-BYOK-07` |
-| `TC-CRISIS-10`| Frontend / Sim | Historical Crisis Replay Simulator (COVID 2020 Crash, Budget Day Volatility) | Frontend Lead | `DONE` | `TC-CHT-04`, `TC-ENG-02` |
-| `TC-QA-11` | QA / Test | Comprehensive Unit & Verification Test Suite for Financial Math and Order Engine | QA Lead | `DONE` | `TC-FEE-01`, `TC-ENG-02` |
+| `TC-OPT-01` | Backend / Quant | Black-Scholes Pricing & Greeks Engine ($\Delta$, $\Gamma$, $\Theta$, $\text{Vega}$) | Backend Lead | `DONE` | None |
+| `TC-OPT-02` | Backend / Feed | Live Option Chain Model & Strike Grid Generator (NIFTY & BANKNIFTY) | Backend Lead | `DONE` | `TC-OPT-01` |
+| `TC-OPT-03` | Backend / Quant | Multi-Leg Strategy Payoff Calculator (Max Profit, Max Loss, Breakeven) | Backend Lead | `DONE` | `TC-OPT-01` |
+| `TC-OPT-04` | Frontend / UI | Interactive Option Chain Component with CE/PE matrix and ATM markers | Frontend Lead | `DONE` | `TC-OPT-02` |
+| `TC-OPT-05` | Frontend / UI | Strategy Payoff Visualizer & AI Options Risk Architect Drawer | Frontend Lead | `DONE` | `TC-OPT-03`, `TC-OPT-04` |
+| `TC-OPT-06` | QA / Test | Comprehensive Unit Test Suite for Options Greeks & Strategy Payoffs | QA Lead | `DONE` | `TC-OPT-01`, `TC-OPT-03` |
 
 ---
 
-## Completed Tasks Archive
+## Completed Sprints Archive
+
+### Sprint 2: Options & Derivatives Sandbox (F&O Engine)
+- [x] **TC-OPT-01**: Analytical Black-Scholes formula, standard normal CDF, and option Greeks ($\Delta$, $\Gamma$, $\Theta$, $\text{Vega}$).
+- [x] **TC-OPT-02**: Dynamic Option Chain generator with strike grids, IV smile, and Open Interest (OI) metrics.
+- [x] **TC-OPT-03**: Multi-Leg Strategy Payoff Calculator with Max Profit, Max Loss, Breakevens, and Options STT taxes.
+- [x] **TC-OPT-04**: Interactive Option Chain modal with Call/Put matrices, ATM badges, and quick leg add.
+- [x] **TC-OPT-05**: Strategy Payoff Visualizer with institutional templates (Bull Call, Iron Condor, Straddle) & AI Options Architect.
+- [x] **TC-OPT-06**: Automated unit tests for Black-Scholes pricing, put-call parity delta, and multi-leg spreads.
+
+### Sprint 1: Foundation, Trading Engine, Indian Statutory Fees & BYOK
 - [x] **TC-INIT**: Scaffold Next.js application workspace with required UI, icons, and charting dependencies.
 - [x] **TC-FEE-01**: Build Indian Statutory Tax & Fee calculation module with exact SEBI/NSE formulas.
 - [x] **TC-ENG-02**: Build Paper Trading Order Matching Engine, margin manager, and portfolio state store.
