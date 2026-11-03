@@ -5,9 +5,9 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 2 (Options & Derivatives Sandbox: Black-Scholes, Greeks & Payoff Visualizer)
+- **Active Sprint:** Sprint 3 (TradingView Webhook Gateway & Automated Algorithmic Paper Trading Engine)
 - **Status:** COMPLETED & VERIFIED
-- **Updated:** 2026-11-02
+- **Updated:** 2026-11-03
 
 ---
 
@@ -15,16 +15,22 @@
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-OPT-01` | Backend / Quant | Black-Scholes Pricing & Greeks Engine ($\Delta$, $\Gamma$, $\Theta$, $\text{Vega}$) | Backend Lead | `DONE` | None |
-| `TC-OPT-02` | Backend / Feed | Live Option Chain Model & Strike Grid Generator (NIFTY & BANKNIFTY) | Backend Lead | `DONE` | `TC-OPT-01` |
-| `TC-OPT-03` | Backend / Quant | Multi-Leg Strategy Payoff Calculator (Max Profit, Max Loss, Breakeven) | Backend Lead | `DONE` | `TC-OPT-01` |
-| `TC-OPT-04` | Frontend / UI | Interactive Option Chain Component with CE/PE matrix and ATM markers | Frontend Lead | `DONE` | `TC-OPT-02` |
-| `TC-OPT-05` | Frontend / UI | Strategy Payoff Visualizer & AI Options Risk Architect Drawer | Frontend Lead | `DONE` | `TC-OPT-03`, `TC-OPT-04` |
-| `TC-OPT-06` | QA / Test | Comprehensive Unit Test Suite for Options Greeks & Strategy Payoffs | QA Lead | `DONE` | `TC-OPT-01`, `TC-OPT-03` |
+| `TC-WH-01` | Backend / Quant | Webhook Bot Engine & PineScript Alert Generator (`src/lib/webhookEngine.ts`) | Backend Lead | `DONE` | None |
+| `TC-WH-02` | Backend / API | Next.js API Route Handler (`src/app/api/webhook/route.ts`) with token auth | Backend Lead | `DONE` | `TC-WH-01` |
+| `TC-WH-03` | Frontend / UI | Webhook Bot Manager Modal & In-Browser Test Playground | Frontend Lead | `DONE` | `TC-WH-01`, `TC-WH-02` |
+| `TC-WH-04` | Fullstack / Core | Terminal integration with bot order stream and auto-refresh | Fullstack Lead | `DONE` | `TC-WH-03` |
+| `TC-WH-05` | QA / Test | Comprehensive Unit & Integration Tests for Webhook Gateway | QA Lead | `DONE` | `TC-WH-01`, `TC-WH-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 3: TradingView Webhook Gateway & Automated Algorithmic Trading
+- [x] **TC-WH-01**: Webhook Bot Engine, token validation, Circuit Breaker drawdown protection, and PineScript v5 template generator.
+- [x] **TC-WH-02**: Next.js 15 App Router dynamic Route Handler (`POST /api/webhook`, `GET /api/webhook`) with Indian statutory tax integration.
+- [x] **TC-WH-03**: Interactive Webhook Bot Manager modal with real-time in-browser simulation playground and live audit log stream.
+- [x] **TC-WH-04**: Direct navigation button in Header and real-time execution linking into portfolio positions.
+- [x] **TC-WH-05**: Automated unit tests for valid/invalid payloads, token rejection, and circuit breaker tripping.
 
 ### Sprint 2: Options & Derivatives Sandbox (F&O Engine)
 - [x] **TC-OPT-01**: Analytical Black-Scholes formula, standard normal CDF, and option Greeks ($\Delta$, $\Gamma$, $\Theta$, $\text{Vega}$).

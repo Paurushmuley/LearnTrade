@@ -13,6 +13,7 @@ import { BYOKModal } from '../components/BYOKModal';
 import { StrategyBuilderModal } from '../components/StrategyBuilderModal';
 import { CrisisSimulatorModal } from '../components/CrisisSimulatorModal';
 import { OptionChainModal } from '../components/OptionChainModal';
+import { WebhookBotModal } from '../components/WebhookBotModal';
 
 export default function TradingTerminalPage() {
   const [tradingState, setTradingState] = useState<TradingState>(INITIAL_TRADING_STATE);
@@ -25,6 +26,7 @@ export default function TradingTerminalPage() {
   const [isStrategyOpen, setIsStrategyOpen] = useState(false);
   const [isCrisisOpen, setIsCrisisOpen] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isWebhookBotOpen, setIsWebhookBotOpen] = useState(false);
 
   // BYOK Configuration from localStorage
   const [aiConfig, setAIConfig] = useState<AIConfig>({
@@ -245,6 +247,7 @@ export default function TradingTerminalPage() {
         portfolio={portfolioSummary}
         aiConfig={aiConfig}
         onOpenOptions={() => setIsOptionsOpen(true)}
+        onOpenWebhookBot={() => setIsWebhookBotOpen(true)}
         onOpenBYOK={() => setIsBYOKOpen(true)}
         onOpenStrategy={() => setIsStrategyOpen(true)}
         onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -317,6 +320,18 @@ export default function TradingTerminalPage() {
         symbol={selectedTicker.symbol}
         aiConfig={aiConfig}
         onExecuteStrategy={handleExecuteOptionsStrategy}
+      />
+
+      <WebhookBotModal
+        isOpen={isWebhookBotOpen}
+        onClose={() => setIsWebhookBotOpen(false)}
+        onOrderExecutedFromWebhook={() => {
+          // Trigger local state recheck
+          const savedState = localStorage.getItem('tradecraft_trading_state');
+          if (savedState) {
+            setTradingState(JSON.parse(savedState));
+          }
+        }}
       />
     </div>
   );

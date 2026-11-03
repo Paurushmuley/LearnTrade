@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, Brain, Key, Layers, RefreshCw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { Activity, Brain, Cpu, Key, Layers, RefreshCw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
   aiConfig: AIConfig;
   onOpenOptions: () => void;
+  onOpenWebhookBot: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -18,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   portfolio,
   aiConfig,
   onOpenOptions,
+  onOpenWebhookBot,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -117,6 +119,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Layers className="h-3.5 w-3.5 text-emerald-400" />
           <span className="hidden sm:inline">Option Chain (F&O)</span>
+        </button>
+
+        {/* Algo Webhooks */}
+        <button
+          onClick={onOpenWebhookBot}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/40 hover:bg-indigo-900/40 text-xs font-semibold text-indigo-300 border border-indigo-800/60 transition shadow-sm"
+          title="TradingView Webhook Gateway & Automated Bot Manager"
+        >
+          <Cpu className="h-3.5 w-3.5 text-indigo-400" />
+          <span className="hidden md:inline">Algo Webhooks</span>
         </button>
 
         {/* Strategy Backtester */}
