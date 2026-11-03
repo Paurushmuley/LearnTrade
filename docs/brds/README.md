@@ -33,4 +33,5 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-010`](./BRD-010-social-paper-trading-leagues-leaderboards-proof-of-alpha.md) | Social Paper Trading Leagues, Public Leaderboards & Cryptographically Verifiable Trade Proofs (Proof-of-Alpha) | Sprint 10 | `COMPLETED` |
 | [`BRD-011`](./BRD-011-autonomous-ai-quant-desk-multi-agent-virtual-hedge-fund.md) | Autonomous AI Quant Desk & Multi-Agent Virtual Hedge Fund War Room | Sprint 11 | `COMPLETED` |
 | [`BRD-012`](./BRD-012-institutional-trade-copier-cross-account-multi-broker-bridge.md) | Institutional Trade Copier & Cross-Account Multi-Broker Execution Bridge | Sprint 12 | `COMPLETED` |
-| [`BRD-013`](./BRD-013-real-time-options-greeks-hedger-delta-gamma-autobalancer.md) | Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Autobalancer | Sprint 13 | `READY FOR IMPLEMENTATION` |
+| [`BRD-013`](./BRD-013-real-time-options-greeks-hedger-delta-gamma-autobalancer.md) | Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Autobalancer | Sprint 13 | `COMPLETED` |
+| [`BRD-014`](./BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md) | Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator (SABR / SVI Models) | Sprint 14 | `COMPLETED` |

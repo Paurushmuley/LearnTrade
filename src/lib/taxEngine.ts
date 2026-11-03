@@ -106,3 +106,23 @@ export function calculateRoundTripEstimate(
     breakevenPrice,
   };
 }
+
+/**
+ * Calculates statutory taxes with object parameter interface
+ */
+export function calculateStatutoryTaxes(params: {
+  symbol?: string;
+  side: OrderSide;
+  product?: ProductType;
+  assetType?: string;
+  quantity: number;
+  price: number;
+  lotSize?: number;
+}): StatutoryCharges & { totalStatutoryCharges: number } {
+  const charges = calculateStatutoryCharges(params.side, params.product || 'MIS', params.price, params.quantity);
+  return {
+    ...charges,
+    totalStatutoryCharges: charges.totalCharges,
+  };
+}
+

@@ -6,8 +6,8 @@
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
 - **Active Sprint:** Sprint 14 (Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator: SABR & SVI Parametric Models)
-- **Status:** PLANNING & ARCHITECTURE
-- **Target BRD:** `docs/brds/BRD-014-options-payoff-optimizer-iv-surface-calibrator.md`
+- **Status:** COMPLETED (ALL QUALITY GATES PASSED)
+- **Target BRD:** `docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`
 - **Updated:** 2026-11-03
 
 ---
@@ -16,11 +16,11 @@
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-SBR-01` | Research & Architecture | Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-...`). | Researcher Lead | `IN_PROGRESS` | None |
-| `TC-SBR-02` | Backend & Options | IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Dupire local volatility extraction, and multi-leg combinatorial payoff optimizer (`src/lib/ivSurfaceEngine.ts`, `src/types/ivSurface.ts`). | Backend Lead | `READY` | `TC-SBR-01` |
-| `TC-SBR-03` | Frontend / UI | Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/IVSurfaceOptimizerModal.tsx`). | Frontend Lead | `READY` | `TC-SBR-02` |
-| `TC-SBR-04` | Fullstack & State | Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-SBR-03` |
-| `TC-SBR-05` | QA & Testing | Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/ivSurfaceEngine.test.mjs`). | QA Lead | `READY` | `TC-SBR-02` |
+| `TC-SBR-01` | Research & Architecture | Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-...`). | Researcher Lead | `COMPLETED` | None |
+| `TC-SBR-02` | Backend & Options | IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Dupire local volatility extraction, and multi-leg combinatorial payoff optimizer (`src/lib/volatilitySurfaceEngine.ts`, `src/types/optionsOptimizer.ts`). | Backend Lead | `COMPLETED` | `TC-SBR-01` |
+| `TC-SBR-03` | Frontend / UI | Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`). | Frontend Lead | `COMPLETED` | `TC-SBR-02` |
+| `TC-SBR-04` | Fullstack & State | Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `COMPLETED` | `TC-SBR-03` |
+| `TC-SBR-05` | QA & Testing | Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/volatilityOptimizerEngine.test.mjs`). | QA Lead | `COMPLETED` | `TC-SBR-02` |
 
 ### Sprint 14 User Stories & Acceptance Criteria
 
@@ -56,6 +56,13 @@
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 14: Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator (SABR / SVI Models)
+- [x] **TC-SBR-01**: Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`).
+- [x] **TC-SBR-02**: IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Gatheral arbitrage verification, and multi-leg combinatorial payoff optimizer (`src/lib/volatilitySurfaceEngine.ts`, `src/lib/optionsOptimizerEngine.ts`, `src/types/optionsOptimizer.ts`).
+- [x] **TC-SBR-03**: Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`).
+- [x] **TC-SBR-04**: Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-SBR-05**: Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/volatilityOptimizerEngine.test.mjs`). 61/61 tests passing.
 
 ### Sprint 13: Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Autobalancer
 - [x] **TC-HDG-01**: Author comprehensive BRD-013 specifying analytical Greek hedging math, Delta neutral bounds ($\Delta_{\text{net}} \approx 0$), Gamma curvature protection, and auto-rebalancing thresholds (`docs/brds/BRD-013-options-greeks-hedger-delta-gamma-neutral-autobalancer.md`).

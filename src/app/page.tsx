@@ -24,6 +24,7 @@ import { ProofOfAlphaModal } from '../components/ProofOfAlphaModal';
 import { QuantWarRoomModal } from '../components/QuantWarRoomModal';
 import { TradeCopierModal } from '../components/TradeCopierModal';
 import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
+import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -66,6 +67,7 @@ export default function TradingTerminalPage() {
   const [isQuantDeskOpen, setIsQuantDeskOpen] = useState(false);
   const [isCopierOpen, setIsCopierOpen] = useState(false);
   const [isGreeksHedgerOpen, setIsGreeksHedgerOpen] = useState(false);
+  const [isVolOptimizerOpen, setIsVolOptimizerOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -461,6 +463,7 @@ export default function TradingTerminalPage() {
             onOpenQuantDesk={() => setIsQuantDeskOpen(true)}
             onOpenCopier={() => setIsCopierOpen(true)}
             onOpenGreeksHedger={() => setIsGreeksHedgerOpen(true)}
+            onOpenVolOptimizer={() => setIsVolOptimizerOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -688,6 +691,13 @@ export default function TradingTerminalPage() {
       <GreeksHedgerModal
         isOpen={isGreeksHedgerOpen}
         onClose={() => setIsGreeksHedgerOpen(false)}
+        currentSpotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Options Strategy Payoff Optimizer & Volatility Surface Calibrator Modal */}
+      <VolatilityOptimizerModal
+        isOpen={isVolOptimizerOpen}
+        onClose={() => setIsVolOptimizerOpen(false)}
         currentSpotPrice={selectedTicker.currentPrice}
       />
 

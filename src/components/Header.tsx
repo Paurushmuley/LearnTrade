@@ -21,6 +21,7 @@ interface HeaderProps {
   onOpenQuantDesk: () => void;
   onOpenCopier: () => void;
   onOpenGreeksHedger: () => void;
+  onOpenVolOptimizer?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -45,6 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenQuantDesk,
   onOpenCopier,
   onOpenGreeksHedger,
+  onOpenVolOptimizer,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -268,6 +270,18 @@ export const Header: React.FC<HeaderProps> = ({
           <Scale className="h-3.5 w-3.5 text-cyan-400" />
           <span className="hidden md:inline">Delta Hedger</span>
         </button>
+
+        {/* Options Strategy Payoff Optimizer & Volatility Surface Calibrator */}
+        {onOpenVolOptimizer && (
+          <button
+            onClick={onOpenVolOptimizer}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-950/40 hover:bg-amber-900/50 text-xs font-semibold text-amber-300 border border-amber-800/60 transition shadow-sm"
+            title="Options Strategy Payoff Optimizer & Volatility Surface Calibrator (SABR / SVI Models)"
+          >
+            <TrendingUp className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden md:inline">⚡ IV Surface</span>
+          </button>
+        )}
 
         {/* Strategy Backtester */}
         <button

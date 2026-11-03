@@ -426,6 +426,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Aggregate portfolio Delta, Gamma, Theta, and Vega across all open options and futures. Features an automated Delta-Neutral counter-order solver, non-linear 2D Taylor curvature visualizer, and customizable rebalance daemon thresholds.
             </p>
           </div>
+
+          {/* Card 12: IV Surface Calibrator & Multi-Leg Strategy Optimizer */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-amber-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
+              <TrendingUp className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">IV Surface & Strategy Optimizer</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Parametric volatility smile calibration via Hagan SABR (α, β, ρ, ν) and Gatheral SVI models. Detects mispriced options contracts with real-time relative value radar and optimizes multi-leg spreads for maximum PoP and Sharpe expectancy.
+            </p>
+          </div>
         </div>
       </section>
 
