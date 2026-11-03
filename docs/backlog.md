@@ -5,54 +5,51 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 13 (Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Portfolio Autobalancer)
-- **Status:** COMPLETED (ALL QUALITY GATES PASSED)
-- **Target BRD:** `docs/brds/BRD-013-options-greeks-hedger-delta-gamma-neutral-autobalancer.md`
+- **Active Sprint:** Sprint 14 (Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator: SABR & SVI Parametric Models)
+- **Status:** PLANNING & ARCHITECTURE
+- **Target BRD:** `docs/brds/BRD-014-options-payoff-optimizer-iv-surface-calibrator.md`
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 13 Task Board (Dynamic Options Greeks Hedger & Delta-Gamma Autobalancer)
+## Active Sprint 14 Task Board (IV Surface Calibrator & Strategy Payoff Optimizer)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-HDG-01` | Research & Architecture | Author comprehensive BRD-013 specifying analytical Greek hedging math, Delta neutral bounds ($\Delta_{\text{net}} \approx 0$), Gamma curvature protection, and auto-rebalancing thresholds (`docs/brds/BRD-013-...`). | Researcher Lead | `COMPLETED` | None |
-| `TC-HDG-02` | Backend & Options | Greeks Hedging Engine: Aggregate portfolio Delta ($\Delta$), Gamma ($\Gamma$), Vega ($\nu$), Theta ($\Theta$), auto-hedge order solver for ATM/OTM options or futures (`src/lib/greeksHedgerEngine.ts`). | Backend Lead | `COMPLETED` | `TC-HDG-01` |
-| `TC-HDG-03` | Frontend / UI | Interactive Greeks Hedging Studio Modal: Real-time Greeks risk radar, 2D curvature payoff visualizer, 1-click "Neutralize Delta" solver, and autobalancer daemon controls (`src/components/GreeksHedgerModal.tsx`). | Frontend Lead | `COMPLETED` | `TC-HDG-02` |
-| `TC-HDG-04` | Fullstack & State | Header navigation ("🛡️ Delta Hedger"), auto-hedging daemon interval, and terminal options chain synchronization (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `COMPLETED` | `TC-HDG-03` |
-| `TC-HDG-05` | QA & Testing | Automated unit tests for portfolio Greek aggregation, zero-delta solver accuracy, and hedge rebalancing trigger points (`test/greeksHedgerEngine.test.mjs`). | QA Lead | `COMPLETED` | `TC-HDG-02` |
+| `TC-SBR-01` | Research & Architecture | Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-SBR-02` | Backend & Options | IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Dupire local volatility extraction, and multi-leg combinatorial payoff optimizer (`src/lib/ivSurfaceEngine.ts`, `src/types/ivSurface.ts`). | Backend Lead | `READY` | `TC-SBR-01` |
+| `TC-SBR-03` | Frontend / UI | Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/IVSurfaceOptimizerModal.tsx`). | Frontend Lead | `READY` | `TC-SBR-02` |
+| `TC-SBR-04` | Fullstack & State | Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-SBR-03` |
+| `TC-SBR-05` | QA & Testing | Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/ivSurfaceEngine.test.mjs`). | QA Lead | `READY` | `TC-SBR-02` |
 
-### Sprint 13 User Stories & Acceptance Criteria
+### Sprint 14 User Stories & Acceptance Criteria
 
-#### User Story 1: Analytical Greeks Aggregation & Hedging Solver (`TC-HDG-01`, `TC-HDG-02`)
-- **Story:** *As an institutional derivatives trader*, I want the system to continuously calculate aggregate portfolio Greeks ($\Delta_{\text{port}}$, $\Gamma_{\text{port}}$, $\mathcal{V}_{\text{port}}$, $\Theta_{\text{port}}$) across all open stock and option positions, and automatically compute exact hedging quantities in underlying assets or companion options, so that I can eliminate directional risk and stabilize my portfolio.
+#### User Story 1: Parametric IV Surface Calibration (`TC-SBR-01`, `TC-SBR-02`)
+- **Story:** *As an options quantitative analyst*, I want the platform to calibrate Hagan's SABR and Gatheral's SVI parametric volatility models across NSE option strikes and expiries, so that I have smooth, arbitrage-free implied volatilities for fair options pricing and Greek calculations.
 - **Acceptance Criteria:**
-  - Aggregate net portfolio Delta: $\Delta_{\text{net}} = \sum_i Q_i \cdot \Delta_i$.
-  - Provide a 1-instrument Delta Neutral Solver calculating exact underlying shares or ATM option contracts to drive $\Delta_{\text{net}} \to 0$.
-  - Provide a 2-instrument Delta-Gamma Neutral Solver using a $2 \times 2$ matrix system to simultaneously neutralize directional drift ($\Delta$) and curvature acceleration ($\Gamma$):
-    $$\begin{pmatrix} \Delta_1 & \Delta_2 \\ \Gamma_1 & \Gamma_2 \end{pmatrix} \begin{pmatrix} n_1 \\ n_2 \end{pmatrix} = -\begin{pmatrix} \Delta_{\text{port}} \\ \Gamma_{\text{port}} \end{pmatrix}$$
-  - Integrate Indian statutory tax estimation (STT, GST, Exchange charges) via `taxEngine.ts` to ensure rebalancing costs do not exceed the variance benefit.
-  - Implement a configurable deadband tolerance (e.g. $|\Delta_{\text{net}}| \le \delta_{\text{tol}}$) to prevent frivolous micro-rebalancing.
+  - Calibrate SABR parameters ($\alpha, \beta, \rho, \nu$) with fixed $\beta = 0.5$ for equity index skew.
+  - Implement Raw SVI parameterization $w(k) = a + b(\rho(k-m) + \sqrt{(k-m)^2 + \sigma^2})$ with $b \ge 0, |\rho| < 1, \sigma > 0$.
+  - Detect and flag butterfly arbitrage violations ($g(k) < 0$) and calendar spread arbitrage across consecutive expiries.
+  - Compute theoretical mispricing spreads between market quotes and calibrated SABR/SVI fair values.
 
-#### User Story 2: Interactive Greeks Hedging Studio & Curvature Visualizer (`TC-HDG-03`)
-- **Story:** *As a trader*, I want an intuitive visual studio with real-time Greek risk gauges, a 2D curvature payoff visualizer, and a 1-click execution interface, so that I can monitor portfolio sensitivity to market moves and deploy rebalancing orders with one click.
+#### User Story 2: Combinatorial Multi-Leg Strategy Payoff Optimizer (`TC-SBR-02`, `TC-SBR-03`)
+- **Story:** *As a derivative trader*, I want a strategy optimizer that scans multi-leg combinations (e.g. Iron Condors, Ratio Spreads, Jade Lizards, Calendars) to maximize risk-reward or probability of profit (POP) given an expected market view, so that I can discover optimal high-edge setups.
 - **Acceptance Criteria:**
-  - 4 real-time risk gauges with color-coded safety/danger zones for Delta, Gamma, Vega, and Theta.
-  - Dynamic 2D P&L Curvature chart displaying current portfolio payoff envelope vs hedged payoff curve across a $\pm 5\%$ underlying price swing.
-  - "Autobalancer Daemon" toggle with adjustable rebalancing frequency and threshold slider.
-  - Proposed hedge recommendation card with contract details, estimated statutory tax friction, and a 1-click "Execute Neutralizing Hedge" button.
+  - Evaluates multi-leg structures against trader market view (Bullish, Bearish, Range-bound, Volatility Expansion).
+  - Maximizes objective function: $\text{Obj} = w_1 \cdot \text{POP} + w_2 \cdot \frac{\text{MaxProfit}}{\text{MaxLoss}} - w_3 \cdot \text{StatutoryTaxes}$.
+  - Filters out candidates with unacceptable tail risk or negative edge after Indian statutory taxes.
 
-#### User Story 3: Terminal Integration & Seamless Order Execution (`TC-HDG-04`)
-- **Story:** *As a platform user*, I want the Greeks Hedger accessible from the primary terminal header with real-time status badges, so that hedging orders route through the existing paper trading engine and update my positions instantly.
+#### User Story 3: Interactive IV Surface Studio UI (`TC-SBR-03`, `TC-SBR-04`)
+- **Story:** *As a trader*, I want an intuitive visual studio showing the 2D/3D volatility surface, moneyness skews, and optimized strategy blueprints with 1-click execution into paper trading.
 - **Acceptance Criteria:**
-  - Dedicated "🛡️ Delta Hedger" button in `Header.tsx` displaying current net Delta status pill.
-  - One-click hedge executions seamlessly update `TradingContext.tsx` holdings, margin reserves, and order history.
-  - Landing page feature showcase updated with Greeks Autobalancer capabilities.
+  - Interactive multi-strike volatility smile chart showing Market IV vs Calibrated SVI/SABR curves.
+  - Term structure curve comparing near, next, and far-month implied vols.
+  - Top 3 recommended strategy setups with entry strikes, net credit/debit, max profit/loss, and 1-click execution.
 
-#### User Story 4: Automated Verification & Quality Gates (`TC-HDG-05`)
-- **Story:** *As a QA engineer*, I want automated unit tests validating Greek superposition math, matrix solver accuracy, tolerance boundaries, and fee friction checks, so that the hedging engine operates with zero calculation errors.
+#### User Story 4: Automated Verification & Quality Gates (`TC-SBR-05`)
+- **Story:** *As a QA engineer*, I want automated tests validating formula fidelity, parameter constraints, and optimizer convergence.
 - **Acceptance Criteria:**
-  - 100% test pass rate in `test/greeksHedgerEngine.test.mjs`.
+  - 100% test pass rate in `test/ivSurfaceEngine.test.mjs`.
   - Zero TypeScript compiler errors (`npx tsc --noEmit`).
   - Production build succeeds without warnings (`npm run build`).
 
