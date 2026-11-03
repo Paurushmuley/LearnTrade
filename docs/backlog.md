@@ -22,6 +22,37 @@
 | `TC-ARB-04` | Fullstack & State | Header navigation ("⚖️ Pairs Arb"), 2-leg synthetic market execution into portfolio positions, and auto-hedge execution into `tradingEngine.ts` (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-ARB-03` |
 | `TC-ARB-05` | QA & Testing | Automated test suite verifying ADF stationarity critical values, Kalman filter tracking convergence, residual mean-reversion, and zero-dollar market-neutral cash balance (`test/statArbEngine.test.mjs`). | QA Lead | `READY` | `TC-ARB-02` |
 
+### Sprint 16 User Stories & Acceptance Criteria
+
+#### User Story 1: Cointegration Regression & Hedge Ratio Modeling (`TC-ARB-01`, `TC-ARB-02`)
+- **Story:** *As a Quantitative Statistical Arbitrageur*, I want the platform to evaluate pair cointegration via Engle-Granger two-step tests, Augmented Dickey-Fuller (ADF) unit root tests on spread residuals, and dynamic Kalman filter tracking of the time-varying hedge ratio ($\beta_t$), so that I can trade stationary mean-reverting spreads with high statistical confidence.
+- **Acceptance Criteria:**
+  - Calculate OLS and Kalman filter dynamic hedge ratios: $y_t = \alpha + \beta_t x_t + \epsilon_t$.
+  - Perform ADF stationarity test: $t_{\text{stat}} < t_{\text{crit}}(95\%) \approx -2.86 \implies \text{Stationary}$.
+  - Compute Ornstein-Uhlenbeck mean-reversion speed ($\theta$) and half-life: $t_{1/2} = \frac{\ln(2)}{\theta}$.
+  - Standardize rolling spread into a dynamic z-score: $z_t = \frac{\epsilon_t - \mu_{\epsilon}}{\sigma_{\epsilon}}$.
+
+#### User Story 2: Pairs Trading Baskets & Arbitrage Signals (`TC-ARB-02`, `TC-ARB-03`)
+- **Story:** *As a Market Neutral Trader*, I want automated signal generation on high-correlation Indian pairs (NIFTY/BANKNIFTY, HDFCBANK/ICICIBANK, TCS/INFY, RELIANCE/ONGC) with Bollinger z-score entry ($\pm 2.0\sigma$) and exit ($\pm 0.5\sigma$ or $0.0\sigma$) bounds, strictly factoring in Indian statutory tax friction.
+- **Acceptance Criteria:**
+  - Ingest historical tick pairs and compute real-time spread z-scores.
+  - Generate Long Pair (Long A, Short B) and Short Pair (Short A, Long B) recommendations.
+  - Calculate round-trip Indian statutory taxes on both legs via `taxEngine.ts` to ensure edge exceeds friction.
+
+#### User Story 3: Interactive Pairs Studio & Residual Diagnostics Modal (`TC-ARB-03`, `TC-ARB-04`)
+- **Story:** *As a Trader*, I want an interactive Pairs Trading Studio displaying continuous 2D z-score spread charts, correlation heatmaps, residual distribution Q-Q plots, and 1-click execution into the paper trading portfolio.
+- **Acceptance Criteria:**
+  - 2D time-series chart of spread z-score with trigger bands ($\pm 2.0\sigma$, stop-loss $\pm 3.5\sigma$).
+  - Pair Correlation & Cointegration metrics card (ADF test statistic, p-value, half-life in bars).
+  - 1-click simultaneous 2-leg synthetic market execution into `TradingContext.tsx`.
+
+#### User Story 4: Automated Verification & Unit Test Suite (`TC-ARB-05`)
+- **Story:** *As a QA Lead*, I want automated unit tests validating ADF stationarity math, Kalman filter convergence, half-life calculation, and fee friction checks.
+- **Acceptance Criteria:**
+  - 100% test pass rate in `test/statArbEngine.test.mjs`.
+  - Zero TypeScript compilation errors (`npx tsc --noEmit`).
+  - Clean production build (`npm run build`).
+
 ---
 
 ## Completed Sprints Archive
@@ -39,11 +70,6 @@
 - [x] **TC-SBR-03**: Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`).
 - [x] **TC-SBR-04**: Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
 - [x] **TC-SBR-05**: Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/volatilityOptimizerEngine.test.mjs`, `test/volatilitySurfaceEngine.test.mjs`). 68/68 tests passing.
-- [x] **TC-SBR-01**: Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`).
-- [x] **TC-SBR-02**: IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Gatheral arbitrage verification, and multi-leg combinatorial payoff optimizer (`src/lib/volatilitySurfaceEngine.ts`, `src/lib/optionsOptimizerEngine.ts`, `src/types/optionsOptimizer.ts`).
-- [x] **TC-SBR-03**: Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`).
-- [x] **TC-SBR-04**: Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
-- [x] **TC-SBR-05**: Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/volatilityOptimizerEngine.test.mjs`). 61/61 tests passing.
 
 ### Sprint 13: Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Autobalancer
 - [x] **TC-HDG-01**: Author comprehensive BRD-013 specifying analytical Greek hedging math, Delta neutral bounds ($\Delta_{\text{net}} \approx 0$), Gamma curvature protection, and auto-rebalancing thresholds (`docs/brds/BRD-013-options-greeks-hedger-delta-gamma-neutral-autobalancer.md`).
