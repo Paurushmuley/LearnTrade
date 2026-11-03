@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, Brain, Cpu, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { Activity, BarChart3, Brain, Cpu, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -11,6 +11,7 @@ interface HeaderProps {
   onToggleReplay: () => void;
   onOpenOptions: () => void;
   onOpenWebhookBot: () => void;
+  onOpenAnalytics: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -24,6 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleReplay,
   onOpenOptions,
   onOpenWebhookBot,
+  onOpenAnalytics,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -147,6 +149,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Cpu className="h-3.5 w-3.5 text-indigo-400" />
           <span className="hidden md:inline">Algo Webhooks</span>
+        </button>
+
+        {/* Quant Analytics */}
+        <button
+          onClick={onOpenAnalytics}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700/80 text-xs font-medium text-slate-200 border border-slate-700 transition"
+          title="Monte Carlo Ruin Simulator & Hourly P&L Heatmap"
+        >
+          <BarChart3 className="h-3.5 w-3.5 text-amber-400" />
+          <span className="hidden md:inline">Quant Analytics</span>
         </button>
 
         {/* Strategy Backtester */}

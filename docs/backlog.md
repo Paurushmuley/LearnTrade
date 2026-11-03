@@ -5,7 +5,7 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 4 (Tick-by-Tick Bar Replay & Level-2 Market Depth DOM Ladder)
+- **Active Sprint:** Sprint 5 (Trader Performance Analytics, Hourly P&L Heatmaps & Monte Carlo Ruin Simulator)
 - **Status:** COMPLETED & VERIFIED
 - **Updated:** 2026-11-03
 
@@ -15,15 +15,20 @@
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-DOM-01` | Backend / Quant | Replay Slicing Engine & L2 Market Depth Generator (`src/lib/replayEngine.ts`) | Backend Lead | `DONE` | None |
-| `TC-DOM-02` | Frontend / UI | Interactive Bar Replay Control Bar (Play, Pause, Step, Speeds 1x-10x) | Frontend Lead | `DONE` | `TC-DOM-01` |
-| `TC-DOM-03` | Frontend / UI | Level-2 Order Book DOM Ladder (Top 5 Bids/Asks, Imbalance Gauge) | Frontend Lead | `DONE` | `TC-DOM-01` |
-| `TC-DOM-04` | Fullstack / Core | Terminal integration with synchronized playhead and DOM order placement | Fullstack Lead | `DONE` | `TC-DOM-02`, `TC-DOM-03` |
-| `TC-DOM-05` | QA / Test | Comprehensive Unit Tests for Replay Engine & DOM Volume Calculations | QA Lead | `DONE` | `TC-DOM-01` |
+| `TC-QNT-01` | Backend / Quant | Quantitative Risk Engine: Kelly Criterion, Monte Carlo (1k paths), Hourly Aggregator (`src/lib/analyticsEngine.ts`) | Backend Lead | `DONE` | None |
+| `TC-QNT-02` | Frontend / UI | Quantitative Analytics Modal: Hourly P&L Heatmap, Monte Carlo Envelope & Kelly Meter (`src/components/AnalyticsModal.tsx`) | Frontend Lead | `DONE` | `TC-QNT-01` |
+| `TC-QNT-03` | Fullstack / Core | Header Navigation & Terminal data binding | Fullstack Lead | `DONE` | `TC-QNT-02` |
+| `TC-QNT-04` | QA / Test | Comprehensive Unit Tests for Kelly formula, Expectancy & Monte Carlo math | QA Lead | `DONE` | `TC-QNT-01` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 5: Trader Performance Analytics, Hourly Heatmaps & Monte Carlo Simulator
+- [x] **TC-QNT-01**: Closed-form Kelly Criterion position sizing calculation, 1,000-trial Monte Carlo ruin simulation, and Indian market time-of-day aggregation.
+- [x] **TC-QNT-02**: Quantitative Analytics Modal with interactive Hourly P&L Heatmap (9 AM–3:30 PM), Day-of-week expiry table, and SVG Monte Carlo envelope.
+- [x] **TC-QNT-03**: Quant Analytics navigation button in Header and full terminal synchronization.
+- [x] **TC-QNT-04**: Automated unit tests for positive/negative edge Kelly sizing and Monte Carlo percentile envelope monotonicity.
 
 ### Sprint 4: Bar Replay & Level-2 Market Depth (DOM Order Book Ladder)
 - [x] **TC-DOM-01**: Playhead buffer slicing, variable speed timing (1x to 10x), and stochastic Level-2 DOM generation.
