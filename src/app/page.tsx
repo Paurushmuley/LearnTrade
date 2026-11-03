@@ -21,6 +21,11 @@ import { TradebookImportModal } from '../components/TradebookImportModal';
 import { StockScreenerModal } from '../components/StockScreenerModal';
 import { ReplayControlBar } from '../components/ReplayControlBar';
 import { MarketDepthDOM } from '../components/MarketDepthDOM';
+import { UserProfile } from '../types/user';
+import { getCurrentUser, getUserTradingStateKey, DEMO_ACCOUNTS, sanitizeUserProfile, logoutUser } from '../lib/authService';
+import { AuthModal } from '../components/AuthModal';
+import { UserProfileModal } from '../components/UserProfileModal';
+import { LandingPage } from '../components/LandingPage';
 
 export default function TradingTerminalPage() {
   const [tradingState, setTradingState] = useState<TradingState>(INITIAL_TRADING_STATE);
@@ -46,6 +51,13 @@ export default function TradingTerminalPage() {
   const [isTradebookOpen, setIsTradebookOpen] = useState(false);
   const [isScreenerOpen, setIsScreenerOpen] = useState(false);
 
+  // User Account & View State
+  const [currentUser, setCurrentUser] = useState<UserProfile>(sanitizeUserProfile(DEMO_ACCOUNTS[0]));
+  const [currentView, setCurrentView] = useState<'terminal' | 'landing'>('landing');
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authInitialTab, setAuthInitialTab] = useState<'SIGN_IN' | 'REGISTER' | 'FORGOT_PASSWORD'>('SIGN_IN');
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   // BYOK Configuration from localStorage
   const [aiConfig, setAIConfig] = useState<AIConfig>({
     provider: 'gemini',
@@ -57,13 +69,28 @@ export default function TradingTerminalPage() {
   // Load persisted state & AI keys on mount
   useEffect(() => {
     try {
+      const user = getCurrentUser();
+      setCurrentUser(user);
+      const userStateKey = getUserTradingStateKey(user.id);
+      const savedUserState = localStorage.getItem(userStateKey);
+      if (savedUserState) {
+        setTradingState(JSON.parse(savedUserState));
+      } else {
+        const savedState = localStorage.getItem('tradecraft_trading_state');
+        if (savedState) {
+          setTradingState(JSON.parse(savedState));
+        } else {
+          setTradingState({
+            ...INITIAL_TRADING_STATE,
+            startingCapital: user.startingCapital,
+            availableCash: user.startingCapital,
+          });
+        }
+      }
+
       const savedConfig = localStorage.getItem('tradecraft_byok_config');
       if (savedConfig) {
         setAIConfig(JSON.parse(savedConfig));
-      }
-      const savedState = localStorage.getItem('tradecraft_trading_state');
-      if (savedState) {
-        setTradingState(JSON.parse(savedState));
       }
     } catch {
       // fallback to initial
@@ -74,10 +101,13 @@ export default function TradingTerminalPage() {
   useEffect(() => {
     try {
       localStorage.setItem('tradecraft_trading_state', JSON.stringify(tradingState));
+      if (currentUser?.id) {
+        localStorage.setItem(getUserTradingStateKey(currentUser.id), JSON.stringify(tradingState));
+      }
     } catch {
       // ignore quota
     }
-  }, [tradingState]);
+  }, [tradingState, currentUser]);
 
   // Generate initial candles whenever selected ticker or timeframe changes
   useEffect(() => {
@@ -249,10 +279,49 @@ export default function TradingTerminalPage() {
 
   // Reset Account Sandbox
   const handleResetAccount = () => {
-    if (window.confirm('Reset virtual capital to ₹10,00,000 and clear order history?')) {
-      setTradingState(INITIAL_TRADING_STATE);
-      localStorage.removeItem('tradecraft_trading_state');
+    const targetCapital = currentUser?.startingCapital || 1000000;
+    if (window.confirm(`Reset virtual capital for ${currentUser.name} to ₹${targetCapital.toLocaleString('en-IN')} and clear order history?`)) {
+      const freshState: TradingState = {
+        ...INITIAL_TRADING_STATE,
+        startingCapital: targetCapital,
+        availableCash: targetCapital,
+      };
+      setTradingState(freshState);
+      localStorage.setItem('tradecraft_trading_state', JSON.stringify(freshState));
+      if (currentUser?.id) {
+        localStorage.setItem(getUserTradingStateKey(currentUser.id), JSON.stringify(freshState));
+      }
     }
+  };
+
+  // Switch Active User Profile & load their specific portfolio
+  const handleSwitchUser = (newUser: UserProfile) => {
+    setCurrentUser(newUser);
+    try {
+      const userKey = getUserTradingStateKey(newUser.id);
+      const savedUserPortfolio = localStorage.getItem(userKey);
+      if (savedUserPortfolio) {
+        setTradingState(JSON.parse(savedUserPortfolio));
+      } else {
+        const freshState: TradingState = {
+          ...INITIAL_TRADING_STATE,
+          startingCapital: newUser.startingCapital,
+          availableCash: newUser.startingCapital,
+        };
+        setTradingState(freshState);
+        localStorage.setItem(userKey, JSON.stringify(freshState));
+      }
+    } catch (e) {
+      console.error('Error switching user:', e);
+    }
+  };
+
+  // Log Out User
+  const handleLogout = () => {
+    logoutUser();
+    const defaultDemo = sanitizeUserProfile(DEMO_ACCOUNTS[0]);
+    handleSwitchUser(defaultDemo);
+    setCurrentView('landing');
   };
 
   // Save BYOK Config
@@ -344,29 +413,45 @@ export default function TradingTerminalPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0B0E14] text-slate-100">
-      {/* Universal Header with Live Financial Bar */}
-      <Header
-        portfolio={portfolioSummary}
-        aiConfig={aiConfig}
-        isReplayActive={isReplayActive}
-        onToggleReplay={handleToggleReplay}
-        onOpenOptions={() => setIsOptionsOpen(true)}
-        onOpenWebhookBot={() => setIsWebhookBotOpen(true)}
-        onOpenAnalytics={() => setIsAnalyticsOpen(true)}
-        onOpenBreadth={() => setIsBreadthOpen(true)}
-        onOpenTradebook={() => setIsTradebookOpen(true)}
-        onOpenScreener={() => setIsScreenerOpen(true)}
-        onOpenBYOK={() => setIsBYOKOpen(true)}
-        onOpenStrategy={() => setIsStrategyOpen(true)}
-        onOpenCrisis={() => setIsCrisisOpen(true)}
-        onResetAccount={handleResetAccount}
-      />
+      {currentView === 'landing' ? (
+        <LandingPage
+          currentUser={currentUser}
+          onLaunchTerminal={() => setCurrentView('terminal')}
+          onOpenAuth={(tab) => {
+            setAuthInitialTab(tab || 'SIGN_IN');
+            setIsAuthOpen(true);
+          }}
+          onOpenProfile={() => setIsProfileOpen(true)}
+          onSelectDemoUser={(demoUser) => handleSwitchUser(demoUser)}
+        />
+      ) : (
+        <>
+          {/* Universal Header with Live Financial Bar */}
+          <Header
+            portfolio={portfolioSummary}
+            aiConfig={aiConfig}
+            currentUser={currentUser}
+            isReplayActive={isReplayActive}
+            onToggleReplay={handleToggleReplay}
+            onOpenOptions={() => setIsOptionsOpen(true)}
+            onOpenWebhookBot={() => setIsWebhookBotOpen(true)}
+            onOpenAnalytics={() => setIsAnalyticsOpen(true)}
+            onOpenBreadth={() => setIsBreadthOpen(true)}
+            onOpenTradebook={() => setIsTradebookOpen(true)}
+            onOpenScreener={() => setIsScreenerOpen(true)}
+            onOpenBYOK={() => setIsBYOKOpen(true)}
+            onOpenStrategy={() => setIsStrategyOpen(true)}
+            onOpenCrisis={() => setIsCrisisOpen(true)}
+            onResetAccount={handleResetAccount}
+            onOpenProfile={() => setIsProfileOpen(true)}
+            onOpenLanding={() => setCurrentView('landing')}
+          />
 
-      {/* Main Terminal Workspace */}
-      <main className="flex-1 p-3 grid grid-cols-1 lg:grid-cols-12 gap-3 max-w-[1800px] w-full mx-auto">
-        {/* Left Column (8 cols on desktop): Replay Controls + Chart + Portfolio Drawer */}
-        <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-3 min-h-[750px]">
-          {/* Floating/Docked Replay Control Toolbar */}
+          {/* Main Terminal Workspace */}
+          <main className="flex-1 p-3 grid grid-cols-1 lg:grid-cols-12 gap-3 max-w-[1800px] w-full mx-auto">
+            {/* Left Column (8 cols on desktop): Replay Controls + Chart + Portfolio Drawer */}
+            <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-3 min-h-[750px]">
+              {/* Floating/Docked Replay Control Toolbar */}
           {isReplayActive && (
             <ReplayControlBar
               isPlaying={isReplayPlaying}
@@ -439,6 +524,8 @@ export default function TradingTerminalPage() {
           />
         </div>
       </main>
+        </>
+      )}
 
       {/* Modals */}
       <BYOKModal
@@ -515,6 +602,29 @@ export default function TradingTerminalPage() {
           const newCandles = generateHistoricalCandles(ticker.currentPrice, '5m', 70);
           setCandles(newCandles);
           setFullCandleBuffer(newCandles);
+        }}
+      />
+
+      {/* User Account & Authentication Modals */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onAuthSuccess={(user) => {
+          handleSwitchUser(user);
+          setCurrentView('terminal');
+        }}
+        initialTab={authInitialTab}
+      />
+
+      <UserProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        currentUser={currentUser}
+        onUserUpdated={(updatedUser) => handleSwitchUser(updatedUser)}
+        onLogout={handleLogout}
+        onOpenAuth={() => {
+          setAuthInitialTab('SIGN_IN');
+          setIsAuthOpen(true);
         }}
       />
     </div>

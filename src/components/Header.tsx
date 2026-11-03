@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { UserProfile } from '../types/user';
+import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, User, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
   aiConfig: AIConfig;
+  currentUser: UserProfile;
   isReplayActive: boolean;
   onToggleReplay: () => void;
   onOpenOptions: () => void;
@@ -19,11 +21,14 @@ interface HeaderProps {
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
   onResetAccount: () => void;
+  onOpenProfile: () => void;
+  onOpenLanding: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   portfolio,
   aiConfig,
+  currentUser,
   isReplayActive,
   onToggleReplay,
   onOpenOptions,
@@ -36,6 +41,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenStrategy,
   onOpenCrisis,
   onResetAccount,
+  onOpenProfile,
+  onOpenLanding,
 }) => {
   const isAIActive = Boolean(aiConfig.geminiKey || aiConfig.openaiKey || aiConfig.provider === 'ollama');
 
@@ -49,12 +56,20 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="border-b border-slate-800/80 bg-[#0F141F]/90 backdrop-blur-md px-4 py-2.5 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-40">
       {/* Brand & Market Status */}
       <div className="flex items-center gap-3">
-        <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <button
+          onClick={onOpenLanding}
+          className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 hover:scale-105 transition"
+          title="View Landing Page & Platform Overview"
+        >
           <TrendingUp className="h-5 w-5 text-white" />
-        </div>
+        </button>
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-blue-300 bg-clip-text text-transparent">
+            <span
+              onClick={onOpenLanding}
+              className="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-blue-300 bg-clip-text text-transparent cursor-pointer hover:opacity-90"
+              title="View Landing Page"
+            >
               TradeCraft AI
             </span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-medium">
@@ -66,6 +81,15 @@ export const Header: React.FC<HeaderProps> = ({
             NSE Live Sandbox • Taxes & Charges Active
           </p>
         </div>
+
+        <button
+          onClick={onOpenLanding}
+          className="hidden xl:flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-[11px] text-slate-300 hover:text-white transition ml-1"
+          title="Return to TradeCraft AI Overview & Landing Page"
+        >
+          <Home className="h-3 w-3 text-blue-400" />
+          <span>About Platform</span>
+        </button>
       </div>
 
       {/* Portfolio Financial Ticker */}
@@ -229,6 +253,20 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Key className="h-3.5 w-3.5" />
           <span>{isAIActive ? 'AI Coach Active' : 'Setup BYOK Key'}</span>
+        </button>
+
+        {/* User Account & Profile */}
+        <button
+          onClick={onOpenProfile}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-blue-500 text-xs font-semibold text-slate-200 transition group shadow-sm"
+          title="Account Profile, Switch Users & Reset Password"
+        >
+          <div className="h-5 w-5 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-[10px] font-bold text-white shadow-sm">
+            {currentUser?.name ? currentUser.name.charAt(0) : 'U'}
+          </div>
+          <span className="hidden sm:inline font-medium text-slate-200 group-hover:text-white truncate max-w-[90px]">
+            {currentUser?.name ? currentUser.name.split(' ')[0] : 'Profile'}
+          </span>
         </button>
 
         {/* Reset Virtual Sandbox */}

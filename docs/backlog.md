@@ -5,24 +5,31 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 8 (Real-Time Multi-Factor Technical Screener & Stock Scanner)
-- **Status:** IN PROGRESS
+- **Active Sprint:** Sprint 9 (User Account Management, Multi-Persona Authentication & Creative Landing Page)
+- **Status:** COMPLETED & VERIFIED
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 8 Task Board (Multi-Factor Technical Screener & Stock Scanner)
+## Active Sprint 9 Task Board (Account Management & Creative Landing Page)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-SCR-01` | Backend / Quant | Multi-factor scanner engine: Volume Surge, EMA Cross, RSI, VWAP, ORB & Confluence Score (`src/lib/screenerEngine.ts`) | Backend Lead | `DONE` | None |
-| `TC-SCR-02` | Frontend / UI | Stock Screener Modal: Presets, Confluence Score ranking, 1-click Chart Sync, AI Scanner Brief (`src/components/StockScreenerModal.tsx`) | Frontend Lead | `DONE` | `TC-SCR-01` |
-| `TC-SCR-03` | Fullstack / Core | Header navigation button & terminal synchronization (`src/components/Header.tsx`, `src/app/page.tsx`) | Fullstack Lead | `DONE` | `TC-SCR-02` |
-| `TC-SCR-04` | QA / Test | Automated unit tests for screener algorithms and confluence score calculation (`test/screenerEngine.test.mjs`) | QA Lead | `DONE` | `TC-SCR-01` |
+| `TC-USR-01` | Backend / Auth | User Account model, salted password hashing, per-user state keys, and 3 preloaded demo accounts (`src/lib/authService.ts`, `src/types/user.ts`) | Backend Lead | `DONE` | None |
+| `TC-USR-02` | Frontend / UI | Authentication Modal: Sign In, Sign Up, Forgot Password token flow, 1-click demo logins (`src/components/AuthModal.tsx`) | Frontend Lead | `DONE` | `TC-USR-01` |
+| `TC-USR-03` | Frontend / UI | User Profile Modal: Profile overview, stats, edit persona, change password, account switcher, logout (`src/components/UserProfileModal.tsx`) | Frontend Lead | `DONE` | `TC-USR-01` |
+| `TC-USR-04` | Frontend / UI | Creative, informative Landing Page: Hero, live marquee, comparison table, 8-feature grid, demo persona launchers, FAQ (`src/components/LandingPage.tsx`) | Frontend Lead | `DONE` | `TC-USR-01`, `TC-USR-02` |
+| `TC-USR-05` | Fullstack & QA | Header profile pill, view switching, per-user portfolio isolation, and automated unit tests (`test/authEngine.test.mjs`) | Fullstack / QA Lead | `DONE` | `TC-USR-04` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 8: Real-Time Multi-Factor Technical Screener & Stock Scanner
+- [x] **TC-SCR-01**: Multi-factor scanner engine: Volume Surge, EMA Cross, RSI, VWAP, ORB & Confluence Score (`src/lib/screenerEngine.ts`).
+- [x] **TC-SCR-02**: Stock Screener Modal with presets, Confluence Score ranking, 1-click Chart Sync, AI Scanner Brief (`src/components/StockScreenerModal.tsx`).
+- [x] **TC-SCR-03**: Header navigation button & terminal synchronization (`src/components/Header.tsx`, `src/app/page.tsx`).
+- [x] **TC-SCR-04**: Automated unit tests for screener algorithms and confluence score calculation (`test/screenerEngine.test.mjs`).
 
 ### Sprint 7: Broker Tradebook Importer & AI Behavioral Post-Mortem Auditor
 - [x] **TC-IMP-01**: Tradebook CSV parser for Zerodha & Groww + FIFO trade matcher + sample datasets (`src/lib/tradebookEngine.ts`).
