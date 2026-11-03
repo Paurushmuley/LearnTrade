@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, Brain, Cpu, Key, Layers, RefreshCw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { Activity, Brain, Cpu, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
   aiConfig: AIConfig;
+  isReplayActive: boolean;
+  onToggleReplay: () => void;
   onOpenOptions: () => void;
   onOpenWebhookBot: () => void;
   onOpenBYOK: () => void;
@@ -18,6 +20,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   portfolio,
   aiConfig,
+  isReplayActive,
+  onToggleReplay,
   onOpenOptions,
   onOpenWebhookBot,
   onOpenBYOK,
@@ -111,6 +115,20 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Action Controls */}
       <div className="flex items-center gap-2">
+        {/* Bar Replay Mode Toggle */}
+        <button
+          onClick={onToggleReplay}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition shadow-sm ${
+            isReplayActive
+              ? 'bg-blue-600 border-blue-500 text-white shadow-blue-900/30'
+              : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700'
+          }`}
+          title="Toggle Tick-by-Tick Bar Replay Simulation"
+        >
+          <RotateCcw className="h-3.5 w-3.5 text-blue-400" />
+          <span className="hidden sm:inline">{isReplayActive ? 'Replay Active' : 'Bar Replay'}</span>
+        </button>
+
         {/* Options Chain (F&O) */}
         <button
           onClick={onOpenOptions}

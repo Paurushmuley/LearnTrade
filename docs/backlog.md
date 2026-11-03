@@ -5,7 +5,7 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 3 (TradingView Webhook Gateway & Automated Algorithmic Paper Trading Engine)
+- **Active Sprint:** Sprint 4 (Tick-by-Tick Bar Replay & Level-2 Market Depth DOM Ladder)
 - **Status:** COMPLETED & VERIFIED
 - **Updated:** 2026-11-03
 
@@ -15,15 +15,22 @@
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-WH-01` | Backend / Quant | Webhook Bot Engine & PineScript Alert Generator (`src/lib/webhookEngine.ts`) | Backend Lead | `DONE` | None |
-| `TC-WH-02` | Backend / API | Next.js API Route Handler (`src/app/api/webhook/route.ts`) with token auth | Backend Lead | `DONE` | `TC-WH-01` |
-| `TC-WH-03` | Frontend / UI | Webhook Bot Manager Modal & In-Browser Test Playground | Frontend Lead | `DONE` | `TC-WH-01`, `TC-WH-02` |
-| `TC-WH-04` | Fullstack / Core | Terminal integration with bot order stream and auto-refresh | Fullstack Lead | `DONE` | `TC-WH-03` |
-| `TC-WH-05` | QA / Test | Comprehensive Unit & Integration Tests for Webhook Gateway | QA Lead | `DONE` | `TC-WH-01`, `TC-WH-02` |
+| `TC-DOM-01` | Backend / Quant | Replay Slicing Engine & L2 Market Depth Generator (`src/lib/replayEngine.ts`) | Backend Lead | `DONE` | None |
+| `TC-DOM-02` | Frontend / UI | Interactive Bar Replay Control Bar (Play, Pause, Step, Speeds 1x-10x) | Frontend Lead | `DONE` | `TC-DOM-01` |
+| `TC-DOM-03` | Frontend / UI | Level-2 Order Book DOM Ladder (Top 5 Bids/Asks, Imbalance Gauge) | Frontend Lead | `DONE` | `TC-DOM-01` |
+| `TC-DOM-04` | Fullstack / Core | Terminal integration with synchronized playhead and DOM order placement | Fullstack Lead | `DONE` | `TC-DOM-02`, `TC-DOM-03` |
+| `TC-DOM-05` | QA / Test | Comprehensive Unit Tests for Replay Engine & DOM Volume Calculations | QA Lead | `DONE` | `TC-DOM-01` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 4: Bar Replay & Level-2 Market Depth (DOM Order Book Ladder)
+- [x] **TC-DOM-01**: Playhead buffer slicing, variable speed timing (1x to 10x), and stochastic Level-2 DOM generation.
+- [x] **TC-DOM-02**: Floating Replay Toolbar with Play/Pause, 1-bar step forward, timeline scrubber, and speed controls.
+- [x] **TC-DOM-03**: Institutional Level-2 DOM Ladder with Top 5 Bids/Asks, visual volume depth bars, and real-time Imbalance gauge.
+- [x] **TC-DOM-04**: Synchronized execution: click any ladder price rung to instantaneously route limit orders with Indian statutory taxes.
+- [x] **TC-DOM-05**: Automated unit tests for candle slicing bounds, order book rung monotonicity, spread positivity, and imbalance math.
 
 ### Sprint 3: TradingView Webhook Gateway & Automated Algorithmic Trading
 - [x] **TC-WH-01**: Webhook Bot Engine, token validation, Circuit Breaker drawdown protection, and PineScript v5 template generator.

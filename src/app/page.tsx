@@ -5,6 +5,7 @@ import { AIConfig, Candle, Order, OrderSide, OrderType, Position, ProductType, T
 import { POPULAR_TICKERS, generateHistoricalCandles, CrisisScenario } from '../lib/marketData';
 import { checkPendingOrders, getPortfolioSummary, INITIAL_TRADING_STATE, placeOrder, TradingState } from '../lib/tradingEngine';
 import { OptionLeg, StrategyPayoffResult } from '../lib/optionsEngine';
+import { generateLevel2DOM, getReplaySpeedIntervalMs, sliceCandlesForReplay } from '../lib/replayEngine';
 import { Header } from '../components/Header';
 import { ChartTerminal } from '../components/ChartTerminal';
 import { OrderTicket } from '../components/OrderTicket';
@@ -14,12 +15,21 @@ import { StrategyBuilderModal } from '../components/StrategyBuilderModal';
 import { CrisisSimulatorModal } from '../components/CrisisSimulatorModal';
 import { OptionChainModal } from '../components/OptionChainModal';
 import { WebhookBotModal } from '../components/WebhookBotModal';
+import { ReplayControlBar } from '../components/ReplayControlBar';
+import { MarketDepthDOM } from '../components/MarketDepthDOM';
 
 export default function TradingTerminalPage() {
   const [tradingState, setTradingState] = useState<TradingState>(INITIAL_TRADING_STATE);
   const [selectedTicker, setSelectedTicker] = useState<TickerInfo>(POPULAR_TICKERS[0]);
   const [timeframe, setTimeframe] = useState<string>('5m');
   const [candles, setCandles] = useState<Candle[]>([]);
+  const [fullCandleBuffer, setFullCandleBuffer] = useState<Candle[]>([]);
+
+  // Replay State
+  const [isReplayActive, setIsReplayActive] = useState(false);
+  const [isReplayPlaying, setIsReplayPlaying] = useState(false);
+  const [replaySpeed, setReplaySpeed] = useState<1 | 2 | 5 | 10>(1);
+  const [replayIndex, setReplayIndex] = useState(30);
 
   // Modals state
   const [isBYOKOpen, setIsBYOKOpen] = useState(false);
@@ -64,11 +74,17 @@ export default function TradingTerminalPage() {
   // Generate initial candles whenever selected ticker or timeframe changes
   useEffect(() => {
     const initialCandles = generateHistoricalCandles(selectedTicker.currentPrice, timeframe, 80);
+    setFullCandleBuffer(initialCandles);
     setCandles(initialCandles);
+    setReplayIndex(Math.floor(initialCandles.length * 0.5));
+    setIsReplayActive(false);
+    setIsReplayPlaying(false);
   }, [selectedTicker.symbol, timeframe]);
 
-  // Live Real-Time Market Tick Simulation (Every 1.8 seconds)
+  // Live Real-Time Market Tick Simulation (Only active when NOT in Replay mode)
   useEffect(() => {
+    if (isReplayActive) return;
+
     const interval = setInterval(() => {
       setCandles((prevCandles) => {
         if (!prevCandles || prevCandles.length === 0) return prevCandles;
@@ -103,7 +119,85 @@ export default function TradingTerminalPage() {
     }, 1800);
 
     return () => clearInterval(interval);
-  }, [selectedTicker.symbol]);
+  }, [selectedTicker.symbol, isReplayActive]);
+
+  // Automated Replay Playhead Runner
+  useEffect(() => {
+    if (!isReplayActive || !isReplayPlaying) return;
+
+    const intervalMs = getReplaySpeedIntervalMs(replaySpeed);
+    const interval = setInterval(() => {
+      setReplayIndex((prevIndex) => {
+        if (prevIndex >= fullCandleBuffer.length - 1) {
+          setIsReplayPlaying(false);
+          return prevIndex;
+        }
+
+        const nextIndex = prevIndex + 1;
+        const currentSlice = sliceCandlesForReplay(fullCandleBuffer, nextIndex);
+        setCandles(currentSlice);
+
+        const currentCandle = fullCandleBuffer[nextIndex];
+        if (currentCandle) {
+          setSelectedTicker((prev) => ({
+            ...prev,
+            currentPrice: currentCandle.close,
+            change: Number((currentCandle.close - prev.previousClose).toFixed(2)),
+            changePercent: Number((((currentCandle.close - prev.previousClose) / prev.previousClose) * 100).toFixed(2)),
+          }));
+
+          setTradingState((prevState) => {
+            return checkPendingOrders(prevState, { [selectedTicker.symbol]: currentCandle.close });
+          });
+        }
+
+        return nextIndex;
+      });
+    }, intervalMs);
+
+    return () => clearInterval(interval);
+  }, [isReplayActive, isReplayPlaying, replaySpeed, fullCandleBuffer, selectedTicker.symbol]);
+
+  // Manual Step 1 Bar Forward
+  const handleStepForward = () => {
+    if (replayIndex < fullCandleBuffer.length - 1) {
+      const nextIndex = replayIndex + 1;
+      setReplayIndex(nextIndex);
+      const currentSlice = sliceCandlesForReplay(fullCandleBuffer, nextIndex);
+      setCandles(currentSlice);
+
+      const currentCandle = fullCandleBuffer[nextIndex];
+      if (currentCandle) {
+        setSelectedTicker((prev) => ({
+          ...prev,
+          currentPrice: currentCandle.close,
+        }));
+      }
+    }
+  };
+
+  // Rewind Replay
+  const handleRewindToStart = () => {
+    const startIndex = Math.max(5, Math.floor(fullCandleBuffer.length * 0.25));
+    setReplayIndex(startIndex);
+    setCandles(sliceCandlesForReplay(fullCandleBuffer, startIndex));
+    setIsReplayPlaying(false);
+  };
+
+  // Toggle Replay Mode
+  const handleToggleReplay = () => {
+    if (!isReplayActive) {
+      setIsReplayActive(true);
+      const startIndex = Math.floor(fullCandleBuffer.length * 0.4);
+      setReplayIndex(startIndex);
+      setCandles(sliceCandlesForReplay(fullCandleBuffer, startIndex));
+      setIsReplayPlaying(false);
+    } else {
+      setIsReplayActive(false);
+      setIsReplayPlaying(false);
+      setCandles(fullCandleBuffer);
+    }
+  };
 
   // Order Placement
   const handlePlaceOrder = (params: {
@@ -246,6 +340,8 @@ export default function TradingTerminalPage() {
       <Header
         portfolio={portfolioSummary}
         aiConfig={aiConfig}
+        isReplayActive={isReplayActive}
+        onToggleReplay={handleToggleReplay}
         onOpenOptions={() => setIsOptionsOpen(true)}
         onOpenWebhookBot={() => setIsWebhookBotOpen(true)}
         onOpenBYOK={() => setIsBYOKOpen(true)}
@@ -256,8 +352,33 @@ export default function TradingTerminalPage() {
 
       {/* Main Terminal Workspace */}
       <main className="flex-1 p-3 grid grid-cols-1 lg:grid-cols-12 gap-3 max-w-[1800px] w-full mx-auto">
-        {/* Left Column (8 cols on desktop): Chart + Portfolio Drawer */}
+        {/* Left Column (8 cols on desktop): Replay Controls + Chart + Portfolio Drawer */}
         <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-3 min-h-[750px]">
+          {/* Floating/Docked Replay Control Toolbar */}
+          {isReplayActive && (
+            <ReplayControlBar
+              isPlaying={isReplayPlaying}
+              speed={replaySpeed}
+              currentIndex={replayIndex}
+              totalCandles={fullCandleBuffer.length}
+              onTogglePlay={() => setIsReplayPlaying(!isReplayPlaying)}
+              onStepForward={handleStepForward}
+              onRewindToStart={handleRewindToStart}
+              onChangeSpeed={(s) => setReplaySpeed(s)}
+              onScrub={(idx) => {
+                setReplayIndex(idx);
+                setCandles(sliceCandlesForReplay(fullCandleBuffer, idx));
+                const c = fullCandleBuffer[idx];
+                if (c) setSelectedTicker((prev) => ({ ...prev, currentPrice: c.close }));
+              }}
+              onExitReplay={() => {
+                setIsReplayActive(false);
+                setIsReplayPlaying(false);
+                setCandles(fullCandleBuffer);
+              }}
+            />
+          )}
+
           {/* Chart Terminal */}
           <div className="flex-1 min-h-[460px]">
             <ChartTerminal
@@ -282,8 +403,23 @@ export default function TradingTerminalPage() {
           </div>
         </div>
 
-        {/* Right Column (4 cols on desktop): Order Ticket & Pre-Trade Taxes */}
-        <div className="lg:col-span-4 xl:col-span-3">
+        {/* Right Column (4 cols on desktop): Level-2 DOM Ladder & Order Ticket */}
+        <div className="lg:col-span-4 xl:col-span-3 flex flex-col gap-3">
+          <MarketDepthDOM
+            orderBook={generateLevel2DOM(selectedTicker.currentPrice)}
+            symbol={selectedTicker.symbol}
+            onQuickOrder={(side, price) => {
+              handlePlaceOrder({
+                symbol: selectedTicker.symbol,
+                side,
+                type: 'LIMIT',
+                product: 'MIS',
+                quantity: selectedTicker.lotSize,
+                price,
+              });
+            }}
+          />
+
           <OrderTicket
             ticker={selectedTicker}
             availableCash={tradingState.availableCash}
