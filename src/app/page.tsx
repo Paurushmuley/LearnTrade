@@ -26,6 +26,7 @@ import { TradeCopierModal } from '../components/TradeCopierModal';
 import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
 import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal';
 import { MicrostructureModal } from '../components/MicrostructureModal';
+import { StatArbModal } from '../components/StatArbModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -70,6 +71,7 @@ export default function TradingTerminalPage() {
   const [isGreeksHedgerOpen, setIsGreeksHedgerOpen] = useState(false);
   const [isVolOptimizerOpen, setIsVolOptimizerOpen] = useState(false);
   const [isMicrostructureOpen, setIsMicrostructureOpen] = useState(false);
+  const [isStatArbOpen, setIsStatArbOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -467,6 +469,7 @@ export default function TradingTerminalPage() {
             onOpenGreeksHedger={() => setIsGreeksHedgerOpen(true)}
             onOpenVolOptimizer={() => setIsVolOptimizerOpen(true)}
             onOpenMicrostructure={() => setIsMicrostructureOpen(true)}
+            onOpenStatArb={() => setIsStatArbOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -720,6 +723,39 @@ export default function TradingTerminalPage() {
           });
           if (result.newState) {
             setTradingState(result.newState);
+          }
+        }}
+      />
+
+      {/* Multi-Asset Statistical Arbitrage & Cointegration Pairs Modal */}
+      <StatArbModal
+        isOpen={isStatArbOpen}
+        onClose={() => setIsStatArbOpen(false)}
+        onExecutePairTrade={(legY, legX) => {
+          // Execute Leg Y
+          let resY = placeOrder(tradingState, {
+            symbol: legY.symbol,
+            side: legY.side,
+            type: 'MARKET',
+            product: 'MIS',
+            quantity: legY.quantity,
+            currentMarketPrice: legY.price,
+          });
+          let stateAfterY = resY.newState || tradingState;
+
+          // Execute Leg X (Market-Neutral Counter Leg)
+          let resX = placeOrder(stateAfterY, {
+            symbol: legX.symbol,
+            side: legX.side,
+            type: 'MARKET',
+            product: 'MIS',
+            quantity: legX.quantity,
+            currentMarketPrice: legX.price,
+          });
+          if (resX.newState) {
+            setTradingState(resX.newState);
+          } else {
+            setTradingState(stateAfterY);
           }
         }}
       />

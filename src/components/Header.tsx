@@ -3,7 +3,7 @@
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
 import { UserProfile } from '../types/user';
-import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, Scale, Share2, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
+import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, GitCompare, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, Scale, Share2, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -23,6 +23,7 @@ interface HeaderProps {
   onOpenGreeksHedger: () => void;
   onOpenVolOptimizer?: () => void;
   onOpenMicrostructure?: () => void;
+  onOpenStatArb?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -49,6 +50,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGreeksHedger,
   onOpenVolOptimizer,
   onOpenMicrostructure,
+  onOpenStatArb,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -294,6 +296,30 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Layers className="h-3.5 w-3.5 text-cyan-400" />
             <span className="hidden md:inline">🌊 L3 & Dark Pool</span>
+          </button>
+        )}
+
+        {/* Statistical Arbitrage & Cointegration Pairs Trading Engine */}
+        {onOpenStatArb && (
+          <button
+            onClick={onOpenStatArb}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/40 hover:bg-indigo-900/50 text-xs font-semibold text-indigo-300 border border-indigo-800/60 transition shadow-sm"
+            title="Multi-Asset Statistical Arbitrage, Engle-Granger Cointegration & Dynamic Kalman Pairs Trading"
+          >
+            <GitCompare className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden md:inline">⚖️ Pairs Arb</span>
+          </button>
+        )}
+
+        {/* Statistical Arbitrage & Cointegration Pairs Trading Studio */}
+        {onOpenStatArb && (
+          <button
+            onClick={onOpenStatArb}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/40 hover:bg-indigo-900/50 text-xs font-semibold text-indigo-300 border border-indigo-800/60 transition shadow-sm"
+            title="Statistical Arbitrage & Cointegration Pairs Trading Studio (Engle-Granger & Kalman Filter)"
+          >
+            <Scale className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden md:inline">⚖️ Pairs Arb</span>
           </button>
         )}
 

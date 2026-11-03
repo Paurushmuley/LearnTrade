@@ -5,22 +5,33 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 16 (Statistical Arbitrage, Cointegration Pairs Trading & Mean-Reversion Engine)
+- **Active Sprint:** Sprint 17 (High-Frequency VWAP / TWAP Execution Algorithms & Microstructure Slippage Minimizer — Almgren-Chriss Optimal Liquidation Model)
 - **Status:** PLANNING & ARCHITECTURE
-- **Target BRD:** `docs/brds/BRD-016-statistical-arbitrage-cointegration-pairs-trading.md`
+- **Target BRD:** `docs/brds/BRD-017-vwap-twap-execution-almgren-chriss-slippage-minimizer.md`
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 16 Task Board (Statistical Arbitrage & Cointegration Pairs Trading)
+## Active Sprint 17 Task Board (Execution Algorithms & Optimal Liquidation)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-ARB-01` | Research & Architecture | Author BRD-016 specifying Engle-Granger 2-step cointegration, Augmented Dickey-Fuller (ADF) stationarity test, Johansen trace eigenvalue test, dynamic Kalman filter hedge ratios ($\beta_t$), and Ornstein-Uhlenbeck half-life mean-reversion modeling (`docs/brds/BRD-016-...`). | Researcher Lead | `IN_PROGRESS` | None |
-| `TC-ARB-02` | Backend & Engine | StatArb Engine: OLS & Kalman filter cointegrating regression, rolling z-score spread generator ($z = (S_1 - \beta S_2 - \alpha) / \sigma$), Bollinger entry/exit thresholds, and Indian equity/index pair baskets (NIFTY/BANKNIFTY, HDFCBANK/ICICIBANK, TCS/INFY) (`src/lib/statArbEngine.ts`, `src/types/statArb.ts`). | Backend Lead | `READY` | `TC-ARB-01` |
-| `TC-ARB-03` | Frontend / UI | Interactive Pairs Trading Studio Modal: 2D spread z-score chart, cointegration correlation matrix, residual Q-Q normal plot, and live arbitrage signal radar (`src/components/StatArbModal.tsx`). | Frontend Lead | `READY` | `TC-ARB-02` |
-| `TC-ARB-04` | Fullstack & State | Header navigation ("⚖️ Pairs Arb"), 2-leg synthetic market execution into portfolio positions, and auto-hedge execution into `tradingEngine.ts` (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-ARB-03` |
-| `TC-ARB-05` | QA & Testing | Automated test suite verifying ADF stationarity critical values, Kalman filter tracking convergence, residual mean-reversion, and zero-dollar market-neutral cash balance (`test/statArbEngine.test.mjs`). | QA Lead | `READY` | `TC-ARB-02` |
+| `TC-EXE-01` | Research & Architecture | Author comprehensive BRD-017 specifying continuous volume-weighted average price (VWAP) trajectories, time-weighted average price (TWAP) schedules, Almgren-Chriss optimal liquidation trajectories, and quadratic temporary/permanent market impact formulas (`docs/brds/BRD-017-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-EXE-02` | Backend & Engine | Execution Engine: Optimal liquidation solver ($x_j = \frac{\sinh(\kappa(T - t_j))}{\sinh(\kappa T)} X$), dynamic volume curve predictor (U-shaped Indian intraday profile: 9:15-10:00 AM spike, 11:30-1:30 PM lull, 2:30-3:30 PM surge), and adverse selection slippage model (`src/lib/executionEngine.ts`, `src/types/execution.ts`). | Backend Lead | `READY` | `TC-EXE-01` |
+| `TC-EXE-03` | Frontend / UI | Interactive Algorithmic Execution Studio Modal: Slice-by-slice execution progress bars, real-time VWAP benchmark tracking, dynamic slippage breakdown gauge, and child order schedule visualizer (`src/components/ExecutionAlgoModal.tsx`). | Frontend Lead | `READY` | `TC-EXE-02` |
+| `TC-EXE-04` | Fullstack & State | Header navigation ("⏱️ VWAP / TWAP"), scheduled child order dispatcher with background timer simulation, and terminal state synchronization (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-EXE-03` |
+| `TC-EXE-05` | QA & Testing | Automated test suite verifying Almgren-Chriss risk-aversion parameter ($\lambda$) sensitivity, volume profile integration, slice quantity conservation, and post-trade implementation shortfall math (`test/executionEngine.test.mjs`). | QA Lead | `READY` | `TC-EXE-02` |
+
+---
+
+## Completed Sprints Archive
+
+### Sprint 16: Multi-Asset Statistical Arbitrage & Cointegration Pairs Trading Engine (Engle-Granger & Kalman Filter)
+- [x] **TC-ARB-01**: Author comprehensive BRD-016 specifying Engle-Granger 2-step cointegration, Augmented Dickey-Fuller (ADF) stationarity critical values, Ornstein-Uhlenbeck half-life formula, and state-space Kalman filter equations (`docs/brds/BRD-016-statistical-arbitrage-cointegration-pairs-trading.md`).
+- [x] **TC-ARB-02**: StatArb Engine: OLS & Kalman filter dynamic hedge ratio solvers ($\beta_t$), rolling z-score spread generator ($z = (S_1 - \beta_t S_2 - \alpha) / \sigma$), preloaded Indian equity baskets (NIFTY/BANKNIFTY, HDFCBANK/ICICIBANK, TCS/INFY), and pre-trade SEBI statutory hurdle calculator (`src/lib/statArbEngine.ts`, `src/types/statArb.ts`).
+- [x] **TC-ARB-03**: Interactive Pairs Trading Studio Modal: 2D spread z-score chart with Bollinger bands and trigger lines, Kalman vs OLS hedge ratio comparison, and live signal radar (`src/components/StatArbModal.tsx`).
+- [x] **TC-ARB-04**: Header navigation ("⚖️ Pairs Arb"), 2-leg simultaneous market-neutral execution into portfolio positions, and Landing Page feature card (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-ARB-05**: Automated unit test suite verifying OLS regression, ADF stationarity rejection on stationary residuals vs random walk, Ornstein-Uhlenbeck half-life positivity, Kalman convergence, and statutory tax hurdles (`test/statArbEngine.test.mjs`). 85/85 tests passing.
 
 ### Sprint 16 User Stories & Acceptance Criteria
 
