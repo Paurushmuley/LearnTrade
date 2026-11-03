@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { AIConfig, Candle, Order, OrderSide, OrderType, Position, ProductType, TickerInfo } from '../types/trading';
 import { POPULAR_TICKERS, generateHistoricalCandles, CrisisScenario } from '../lib/marketData';
 import { checkPendingOrders, getPortfolioSummary, INITIAL_TRADING_STATE, placeOrder, TradingState } from '../lib/tradingEngine';
 import { OptionLeg, StrategyPayoffResult } from '../lib/optionsEngine';
 import { generateLevel2DOM, getReplaySpeedIntervalMs, sliceCandlesForReplay } from '../lib/replayEngine';
 import { Header } from '../components/Header';
-import { ChartTerminal } from '../components/ChartTerminal';
 import { OrderTicket } from '../components/OrderTicket';
 import { PortfolioDrawer } from '../components/PortfolioDrawer';
 import { BYOKModal } from '../components/BYOKModal';
@@ -19,6 +19,9 @@ import { AnalyticsModal } from '../components/AnalyticsModal';
 import { MarketBreadthModal } from '../components/MarketBreadthModal';
 import { TradebookImportModal } from '../components/TradebookImportModal';
 import { StockScreenerModal } from '../components/StockScreenerModal';
+import { LeagueLeaderboardModal } from '../components/LeagueLeaderboardModal';
+import { ProofOfAlphaModal } from '../components/ProofOfAlphaModal';
+import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
 import { MarketDepthDOM } from '../components/MarketDepthDOM';
 import { UserProfile } from '../types/user';
@@ -26,6 +29,11 @@ import { getCurrentUser, getUserTradingStateKey, DEMO_ACCOUNTS, sanitizeUserProf
 import { AuthModal } from '../components/AuthModal';
 import { UserProfileModal } from '../components/UserProfileModal';
 import { LandingPage } from '../components/LandingPage';
+
+const ChartTerminal = dynamic(
+  () => import('../components/ChartTerminal').then((mod) => mod.ChartTerminal),
+  { ssr: false }
+);
 
 export default function TradingTerminalPage() {
   const [tradingState, setTradingState] = useState<TradingState>(INITIAL_TRADING_STATE);
@@ -50,6 +58,9 @@ export default function TradingTerminalPage() {
   const [isBreadthOpen, setIsBreadthOpen] = useState(false);
   const [isTradebookOpen, setIsTradebookOpen] = useState(false);
   const [isScreenerOpen, setIsScreenerOpen] = useState(false);
+  const [isLeaguesOpen, setIsLeaguesOpen] = useState(false);
+  const [isProofOpen, setIsProofOpen] = useState(false);
+  const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
   // User Account & View State
   const [currentUser, setCurrentUser] = useState<UserProfile>(sanitizeUserProfile(DEMO_ACCOUNTS[0]));
@@ -439,6 +450,7 @@ export default function TradingTerminalPage() {
             onOpenBreadth={() => setIsBreadthOpen(true)}
             onOpenTradebook={() => setIsTradebookOpen(true)}
             onOpenScreener={() => setIsScreenerOpen(true)}
+            onOpenLeagues={() => setIsLeaguesOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -603,6 +615,22 @@ export default function TradingTerminalPage() {
           setCandles(newCandles);
           setFullCandleBuffer(newCandles);
         }}
+      />
+
+      <LeagueLeaderboardModal
+        isOpen={isLeaguesOpen}
+        onClose={() => setIsLeaguesOpen(false)}
+        currentUser={currentUser}
+        onInspectProof={(cert) => {
+          setSelectedProofCertificate(cert);
+          setIsProofOpen(true);
+        }}
+      />
+
+      <ProofOfAlphaModal
+        isOpen={isProofOpen}
+        onClose={() => setIsProofOpen(false)}
+        certificate={selectedProofCertificate}
       />
 
       {/* User Account & Authentication Modals */}

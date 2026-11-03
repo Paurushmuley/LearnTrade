@@ -3,7 +3,7 @@
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
 import { UserProfile } from '../types/user';
-import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, User, Zap } from 'lucide-react';
+import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -17,6 +17,7 @@ interface HeaderProps {
   onOpenBreadth: () => void;
   onOpenTradebook: () => void;
   onOpenScreener: () => void;
+  onOpenLeagues: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -37,6 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenBreadth,
   onOpenTradebook,
   onOpenScreener,
+  onOpenLeagues,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -219,6 +221,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Crosshair className="h-3.5 w-3.5 text-teal-400" />
           <span className="hidden md:inline">Screener</span>
+        </button>
+
+        {/* Social Trading Leagues & Cryptographic Proof-of-Alpha */}
+        <button
+          onClick={onOpenLeagues}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-950/40 hover:bg-amber-900/50 text-xs font-semibold text-amber-300 border border-amber-800/60 transition shadow-sm"
+          title="Social Paper Trading Leagues, Sortino Alpha Leaderboards & Proof-of-Alpha Verifier"
+        >
+          <Trophy className="h-3.5 w-3.5 text-amber-400" />
+          <span className="hidden md:inline">Leagues & PoA</span>
         </button>
 
         {/* Strategy Backtester */}

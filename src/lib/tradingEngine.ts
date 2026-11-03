@@ -58,15 +58,22 @@ export function placeOrder(
   }
 
   const executionPrice = type === 'MARKET' ? currentMarketPrice : (price || currentMarketPrice);
-  const requiredMargin = calculateRequiredMargin(product, executionPrice, quantity);
+  const existingPos = state.positions.find(p => p.symbol === symbol && p.product === product);
+  const isClosing = Boolean(existingPos && (
+    (existingPos.quantity > 0 && side === 'SELL') ||
+    (existingPos.quantity < 0 && side === 'BUY')
+  ));
+  const closingQty = isClosing ? Math.min(Math.abs(existingPos!.quantity), quantity) : 0;
+  const openingQty = quantity - closingQty;
+  const effectiveMargin = calculateRequiredMargin(product, executionPrice, openingQty);
   const charges = calculateStatutoryCharges(side, product, executionPrice, quantity);
 
   // Check margin safety for BUY or opening SHORT
-  if (state.availableCash < requiredMargin + charges.totalCharges) {
+  if (state.availableCash < effectiveMargin + charges.totalCharges) {
     return {
       newState: state,
       order: null as any,
-      error: `Insufficient margin. Required: ₹${(requiredMargin + charges.totalCharges).toLocaleString('en-IN')}, Available: ₹${state.availableCash.toLocaleString('en-IN')}`,
+      error: `Insufficient margin. Required: ₹${(effectiveMargin + charges.totalCharges).toLocaleString('en-IN')}, Available: ₹${state.availableCash.toLocaleString('en-IN')}`,
     };
   }
 
@@ -118,11 +125,11 @@ export function placeOrder(
 
   // If order filled immediately, update positions & margin
   if (initialStatus === 'FILLED') {
-    nextState = processFilledOrder(nextState, order, currentMarketPrice);
+    nextState = processFilledOrder(nextState, order, currentMarketPrice, false);
   } else {
-    // Reserve margin for pending order
-    nextState.availableCash -= requiredMargin;
-    nextState.usedMargin += requiredMargin;
+    // Reserve margin for pending order (only the opening portion)
+    nextState.availableCash -= effectiveMargin;
+    nextState.usedMargin += effectiveMargin;
   }
 
   return { newState: nextState, order };
@@ -134,7 +141,8 @@ export function placeOrder(
 function processFilledOrder(
   state: TradingState,
   order: Order,
-  currentMarketPrice: number
+  currentMarketPrice: number,
+  wasPending: boolean = false
 ): TradingState {
   const { symbol, side, product, quantity, executedPrice = currentMarketPrice, charges } = order;
   const positions = [...state.positions];
@@ -149,8 +157,10 @@ function processFilledOrder(
     // New position
     const signedQty = side === 'BUY' ? quantity : -quantity;
     const requiredMargin = calculateRequiredMargin(product, executedPrice, quantity);
-    availableCash -= requiredMargin;
-    usedMargin += requiredMargin;
+    if (!wasPending) {
+      availableCash -= requiredMargin;
+      usedMargin += requiredMargin;
+    }
 
     positions.push({
       symbol,
@@ -183,8 +193,10 @@ function processFilledOrder(
       pos.netPnL -= charges.totalCharges;
 
       const additionalMargin = calculateRequiredMargin(product, executedPrice, quantity);
-      availableCash -= additionalMargin;
-      usedMargin += additionalMargin;
+      if (!wasPending) {
+        availableCash -= additionalMargin;
+        usedMargin += additionalMargin;
+      }
       positions[existingIndex] = pos;
     } else {
       // Closing or trimming position -> Realize P&L!
@@ -210,6 +222,12 @@ function processFilledOrder(
         grossTradePnL < 0;
 
       const fomo = (side === 'BUY' && currentMarketPrice >= pos.averagePrice * 1.02);
+      const placedTs = new Date(order.placedAt).getTime();
+      const execTs = order.executedAt ? new Date(order.executedAt).getTime() : Date.now();
+      const durationMinutes = Math.max(1, Math.round((execTs - placedTs) / 60000)) || 12;
+      const riskRewardRatio = charges.totalCharges > 0 
+        ? Number((Math.abs(grossTradePnL) / Math.max(50, charges.totalCharges * 2)).toFixed(2)) 
+        : 1.8;
 
       const audit: TradeAudit = {
         tradeId: order.id,
@@ -221,8 +239,8 @@ function processFilledOrder(
         grossPnL: Number(grossTradePnL.toFixed(2)),
         netPnL: Number(netTradePnL.toFixed(2)),
         charges: charges.totalCharges,
-        durationMinutes: 12,
-        riskRewardRatio: 1.8,
+        durationMinutes,
+        riskRewardRatio,
         behavioralFlags: {
           fomoEntry: fomo,
           revengeTrade: isRevenge,
@@ -241,8 +259,32 @@ function processFilledOrder(
       disciplineScoreDelta += audit.disciplineScoreDelta;
 
       const remainingQty = Math.abs(currentQty) - closeQty;
+      const reverseQty = quantity - closeQty;
+
       if (remainingQty === 0) {
         positions.splice(existingIndex, 1);
+        // Handle position flip/reversal
+        if (reverseQty > 0) {
+          const revSignedQty = side === 'BUY' ? reverseQty : -reverseQty;
+          const revMargin = calculateRequiredMargin(product, executedPrice, reverseQty);
+          if (!wasPending) {
+            availableCash -= revMargin;
+            usedMargin += revMargin;
+          }
+          positions.push({
+            symbol,
+            product,
+            quantity: revSignedQty,
+            averagePrice: executedPrice,
+            currentPrice: currentMarketPrice,
+            investedAmount: executedPrice * reverseQty,
+            unrealizedPnL: 0,
+            unrealizedPnLPercent: 0,
+            realizedPnL: 0,
+            totalChargesPaid: 0,
+            netPnL: 0,
+          });
+        }
       } else {
         pos.quantity = currentQty > 0 ? remainingQty : -remainingQty;
         pos.investedAmount = pos.averagePrice * remainingQty;
@@ -307,7 +349,7 @@ export function checkPendingOrders(
         executedPrice: order.price || currentPrice,
         executedAt: new Date().toISOString(),
       };
-      currentState = processFilledOrder(currentState, filledOrder, currentPrice);
+      currentState = processFilledOrder(currentState, filledOrder, currentPrice, true);
       return filledOrder;
     }
 

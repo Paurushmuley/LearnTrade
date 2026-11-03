@@ -24,9 +24,11 @@ import {
   RotateCcw,
   Shield,
   ShieldAlert,
+  ShieldCheck,
   Sparkles,
   TrendingDown,
   TrendingUp,
+  Trophy,
   User,
   Users,
   Zap,
@@ -365,6 +367,28 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Multi-Factor NSE Screener</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Real-time quantitative scanning across Volume Surges, 20/50 EMA crosses, RSI(14), Day VWAP, and 15m ORBs with 1-click terminal stock synchronization.
+            </p>
+          </div>
+
+          {/* Card 7: Social Trading Leagues & Alpha Score */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-amber-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
+              <Trophy className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Social Leagues & Alpha Ranks</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Tournament arenas (NIFTY Expiry, Intraday Sprint, Rookie Sandbox) scored by risk-adjusted Sortino ratio and PQ discipline. Drawdown ceilings instantly disqualify reckless gambling.
+            </p>
+          </div>
+
+          {/* Card 8: Cryptographic Proof-of-Alpha */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Cryptographic Proof-of-Alpha</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Zero-gas SHA-256 tradebook hash chaining with Merkle root aggregation. Generates mathematically tamper-evident digital certificates that eliminate inspected-element P&L fraud.
             </p>
           </div>
         </div>

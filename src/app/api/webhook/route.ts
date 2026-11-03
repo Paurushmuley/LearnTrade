@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { checkCircuitBreaker, DEFAULT_BOT, validateWebhookPayload, WebhookLog } from '@/lib/webhookEngine';
-import { calculateStatutoryCharges } from '@/lib/taxEngine';
-import { POPULAR_TICKERS } from '@/lib/marketData';
+import { checkCircuitBreaker, DEFAULT_BOT, validateWebhookPayload, WebhookLog } from '../../../lib/webhookEngine';
+import { calculateStatutoryCharges } from '../../../lib/taxEngine';
+import { POPULAR_TICKERS } from '../../../lib/marketData';
 
 // In-memory logs for the running server instance
 let webhookLogs: WebhookLog[] = [];
