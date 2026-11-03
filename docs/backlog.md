@@ -5,51 +5,51 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 14 (Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator: SABR & SVI Parametric Models)
-- **Status:** COMPLETED (ALL QUALITY GATES PASSED)
-- **Target BRD:** `docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`
+- **Active Sprint:** Sprint 15 (Real-Time Level-3 Order Book Analytics, Iceberg Detector & Institutional Dark Pool Volume Tracker)
+- **Status:** PLANNING & ARCHITECTURE
+- **Target BRD:** `docs/brds/BRD-015-level3-orderbook-iceberg-darkpool-tracker.md`
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 14 Task Board (IV Surface Calibrator & Strategy Payoff Optimizer)
+## Active Sprint 15 Task Board (Level-3 Microstructure, Iceberg & Dark Pool Tracker)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-SBR-01` | Research & Architecture | Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-...`). | Researcher Lead | `COMPLETED` | None |
-| `TC-SBR-02` | Backend & Options | IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Dupire local volatility extraction, and multi-leg combinatorial payoff optimizer (`src/lib/volatilitySurfaceEngine.ts`, `src/types/optionsOptimizer.ts`). | Backend Lead | `COMPLETED` | `TC-SBR-01` |
-| `TC-SBR-03` | Frontend / UI | Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`). | Frontend Lead | `COMPLETED` | `TC-SBR-02` |
-| `TC-SBR-04` | Fullstack & State | Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `COMPLETED` | `TC-SBR-03` |
-| `TC-SBR-05` | QA & Testing | Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/volatilityOptimizerEngine.test.mjs`). | QA Lead | `COMPLETED` | `TC-SBR-02` |
+| `TC-OB3-01` | Research & Architecture | Author comprehensive BRD-015 specifying Level-3 Order-by-Order (OBO) queuing dynamics, Iceberg replenishment detection heuristics, and Dark Pool block trade impact models (`docs/brds/BRD-015-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-OB3-02` | Backend & Engine | Level-3 Microstructure Engine: Queue position tracker (FIFO queue-ahead calculation), hidden Iceberg order replenishment detector, and institutional Dark Pool block trade aggregator (`src/lib/orderBookL3Engine.ts`, `src/types/orderBookL3.ts`). | Backend Lead | `READY` | `TC-OB3-01` |
+| `TC-OB3-03` | Frontend / UI | Interactive Level-3 Depth & Iceberg Radar Modal: Granular tick-by-tick order queue ladder, live Iceberg order alert stream, institutional block tape, and queue-wait visualizer (`src/components/Level3OrderBookModal.tsx`). | Frontend Lead | `READY` | `TC-OB3-02` |
+| `TC-OB3-04` | Fullstack & State | Header navigation ("🧊 Level-3 Depth"), real-time terminal synchronization, and 1-click iceberg liquidity join execution (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-OB3-03` |
+| `TC-OB3-05` | QA & Testing | Automated unit test suite verifying order queue FIFO positioning, replenishment anomaly detection, and dark pool VWAP volume math (`test/orderBookL3Engine.test.mjs`). | QA Lead | `READY` | `TC-OB3-02` |
 
-### Sprint 14 User Stories & Acceptance Criteria
+### Sprint 15 User Stories & Acceptance Criteria
 
-#### User Story 1: Parametric IV Surface Calibration (`TC-SBR-01`, `TC-SBR-02`)
-- **Story:** *As an options quantitative analyst*, I want the platform to calibrate Hagan's SABR and Gatheral's SVI parametric volatility models across NSE option strikes and expiries, so that I have smooth, arbitrage-free implied volatilities for fair options pricing and Greek calculations.
+#### User Story 1: Level-3 Order-by-Order Queue Tracking & Microstructure Modeling (`TC-OB3-01`, `TC-OB3-02`)
+- **Story:** *As an institutional scalper and market maker*, I want full Level-3 order book visibility with order-by-order (OBO) queue positions and queue-ahead volume estimations, so that I can accurately predict time-to-fill and avoid getting adversely selected behind large institutional orders.
 - **Acceptance Criteria:**
-  - Calibrate SABR parameters ($\alpha, \beta, \rho, \nu$) with fixed $\beta = 0.5$ for equity index skew.
-  - Implement Raw SVI parameterization $w(k) = a + b(\rho(k-m) + \sqrt{(k-m)^2 + \sigma^2})$ with $b \ge 0, |\rho| < 1, \sigma > 0$.
-  - Detect and flag butterfly arbitrage violations ($g(k) < 0$) and calendar spread arbitrage across consecutive expiries.
-  - Compute theoretical mispricing spreads between market quotes and calibrated SABR/SVI fair values.
+  - Maintain a price-time priority (FIFO) order book maintaining individual order tickets at each price rung.
+  - Calculate queue-ahead volume: $V_{\text{ahead}} = \sum_{j < i} Q_j$ for any incoming limit order.
+  - Estimate fill probability and queue wait time based on recent order arrival intensity ($\lambda$) and cancellation rates ($\mu$).
 
-#### User Story 2: Combinatorial Multi-Leg Strategy Payoff Optimizer (`TC-SBR-02`, `TC-SBR-03`)
-- **Story:** *As a derivative trader*, I want a strategy optimizer that scans multi-leg combinations (e.g. Iron Condors, Ratio Spreads, Jade Lizards, Calendars) to maximize risk-reward or probability of profit (POP) given an expected market view, so that I can discover optimal high-edge setups.
+#### User Story 2: Algorithmic Iceberg Order Detection (`TC-OB3-02`, `TC-OB3-03`)
+- **Story:** *As a momentum breakout trader*, I want the system to continuously detect algorithmic Iceberg orders that replenish displayed quantity after repeated executions, so that I can identify hidden institutional accumulation/distribution walls.
 - **Acceptance Criteria:**
-  - Evaluates multi-leg structures against trader market view (Bullish, Bearish, Range-bound, Volatility Expansion).
-  - Maximizes objective function: $\text{Obj} = w_1 \cdot \text{POP} + w_2 \cdot \frac{\text{MaxProfit}}{\text{MaxLoss}} - w_3 \cdot \text{StatutoryTaxes}$.
-  - Filters out candidates with unacceptable tail risk or negative edge after Indian statutory taxes.
+  - Track cumulative trade prints against displayed depth at price level $P$:
+    $$\text{If } \sum \text{VolumeExecuted}(P) > 3 \times \text{PeakVisibleSize}(P) \implies \text{Flag Iceberg Alert}$$
+  - Calculate estimated hidden quantity: $Q_{\text{hidden}} = Q_{\text{total\_replenished}} - Q_{\text{visible}}$.
+  - Classify confidence rating (`HIGH`, `MEDIUM`, `CONFIRMED`) based on inter-replenishment latency variance ($\sigma_{\tau} < 50\text{ms}$).
 
-#### User Story 3: Interactive IV Surface Studio UI (`TC-SBR-03`, `TC-SBR-04`)
-- **Story:** *As a trader*, I want an intuitive visual studio showing the 2D/3D volatility surface, moneyness skews, and optimized strategy blueprints with 1-click execution into paper trading.
+#### User Story 3: Institutional Dark Pool & Block Deal Tape (`TC-OB3-03`, `TC-OB3-04`)
+- **Story:** *As an active equity trader*, I want a dedicated institutional block deal and dark pool tape showing off-market prints and large VWAP crossed transactions, so that I can anticipate major institutional positioning in NSE equities.
 - **Acceptance Criteria:**
-  - Interactive multi-strike volatility smile chart showing Market IV vs Calibrated SVI/SABR curves.
-  - Term structure curve comparing near, next, and far-month implied vols.
-  - Top 3 recommended strategy setups with entry strikes, net credit/debit, max profit/loss, and 1-click execution.
+  - Ingest simulated off-market block/bulk deal transactions ($> ₹5\text{ Crore}$ or $> 0.5\%$ equity float).
+  - Compute Dark Pool VWAP and premium/discount spread against prevailing lit exchange mid-price.
+  - Display institutional sentiment score (Bullish Accumulation vs Bearish Unloading).
 
-#### User Story 4: Automated Verification & Quality Gates (`TC-SBR-05`)
-- **Story:** *As a QA engineer*, I want automated tests validating formula fidelity, parameter constraints, and optimizer convergence.
+#### User Story 4: Automated Verification & Microstructure Tests (`TC-OB3-05`)
+- **Story:** *As a QA engineer*, I want automated tests verifying queue-ahead calculation, iceberg detection thresholds, and block deal aggregations.
 - **Acceptance Criteria:**
-  - 100% test pass rate in `test/ivSurfaceEngine.test.mjs`.
+  - 100% test pass rate in `test/orderBookL3Engine.test.mjs`.
   - Zero TypeScript compiler errors (`npx tsc --noEmit`).
   - Production build succeeds without warnings (`npm run build`).
 
@@ -58,6 +58,11 @@
 ## Completed Sprints Archive
 
 ### Sprint 14: Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator (SABR / SVI Models)
+- [x] **TC-SBR-01**: Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`).
+- [x] **TC-SBR-02**: IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Dupire local volatility extraction, and multi-leg combinatorial payoff optimizer (`src/lib/volatilitySurfaceEngine.ts`, `src/types/optionsOptimizer.ts`).
+- [x] **TC-SBR-03**: Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`).
+- [x] **TC-SBR-04**: Header navigation ("⚡ IV Surface"), option chain data binding, 1-click optimized strategy execution into terminal positions (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-SBR-05**: Automated unit test suite verifying SABR formula accuracy, SVI arbitrage-free constraints, ATM volatility consistency, and payoff optimization bounds (`test/volatilityOptimizerEngine.test.mjs`, `test/volatilitySurfaceEngine.test.mjs`). 68/68 tests passing.
 - [x] **TC-SBR-01**: Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`).
 - [x] **TC-SBR-02**: IV Surface Engine: Non-linear calibration of SABR & Raw SVI models across NSE strike grids, Gatheral arbitrage verification, and multi-leg combinatorial payoff optimizer (`src/lib/volatilitySurfaceEngine.ts`, `src/lib/optionsOptimizerEngine.ts`, `src/types/optionsOptimizer.ts`).
 - [x] **TC-SBR-03**: Interactive IV Surface & Payoff Optimizer Modal: 3D/2D volatility smile visualizer, term structure curves, arbitrage violation flags, and target risk-reward strategy generator (`src/components/VolatilityOptimizerModal.tsx`).
