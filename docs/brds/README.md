@@ -30,4 +30,5 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-007`](./BRD-007-broker-tradebook-importer-behavioral-audit.md) | Broker Tradebook Importer (Zerodha/Groww) & AI Behavioral Bias Auditor | Sprint 7 | `COMPLETED` |
 | [`BRD-008`](./BRD-008-technical-screener-stock-scanner.md) | Real-Time Multi-Factor Technical Screener & Confluence Scanner | Sprint 8 | `COMPLETED` |
 | [`BRD-009`](./BRD-009-account-management-creative-landing-page.md) | User Account Management, Multi-Persona Auth & Creative Landing Page | Sprint 9 | `COMPLETED` |
-| [`BRD-010`](./BRD-010-social-paper-trading-leagues-leaderboards-proof-of-alpha.md) | Social Paper Trading Leagues, Public Leaderboards & Cryptographically Verifiable Trade Proofs (Proof-of-Alpha) | Sprint 10 | `READY FOR IMPLEMENTATION` |
+| [`BRD-010`](./BRD-010-social-paper-trading-leagues-leaderboards-proof-of-alpha.md) | Social Paper Trading Leagues, Public Leaderboards & Cryptographically Verifiable Trade Proofs (Proof-of-Alpha) | Sprint 10 | `COMPLETED` |
+| [`BRD-011`](./BRD-011-autonomous-ai-quant-desk-multi-agent-virtual-hedge-fund.md) | Autonomous AI Quant Desk & Multi-Agent Virtual Hedge Fund War Room | Sprint 11 | `READY FOR IMPLEMENTATION` |

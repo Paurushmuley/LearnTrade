@@ -5,26 +5,33 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 11 (Autonomous AI Quant Desk & Multi-Agent Virtual Hedge Fund War Room: Macro, Momentum Alpha, Risk Officer & Execution Algorist)
+- **Active Sprint:** Sprint 12 (Institutional Trade Copier & Cross-Account Multi-Broker Execution Bridge: Zerodha, Groww & Upstox Slippage Simulator)
 - **Status:** PLANNING & ARCHITECTURE
-- **Target BRD:** `docs/brds/BRD-011-autonomous-ai-quant-desk-multi-agent-virtual-hedge-fund.md`
+- **Target BRD:** `docs/brds/BRD-012-institutional-trade-copier-cross-account-multi-broker-bridge.md`
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 11 Task Board (Autonomous AI Quant Desk & Multi-Agent War Room)
+## Active Sprint 12 Task Board (Institutional Trade Copier & Cross-Account Bridge)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-QNT-01` | Research & Architecture | Author comprehensive BRD-011 specifying multi-agent debate protocols, voting consensus schemas, persona parameters, and risk audit rules (`docs/brds/BRD-011-...`). | Researcher Lead | `IN_PROGRESS` | None |
-| `TC-QNT-02` | Backend & AI | Multi-Agent Quant Engine: Prompt chains, consensus engine, real-time market observation ingestion, position risk scoring (`src/lib/quantDeskEngine.ts`). | Backend Lead | `READY` | `TC-QNT-01` |
-| `TC-QNT-03` | Frontend / UI | Interactive AI Quant Desk War Room Modal: Live transcript stream, agent persona badges, consensus vote meter, and proposed trade ticket approvals (`src/components/QuantDeskModal.tsx`). | Frontend Lead | `READY` | `TC-QNT-02` |
-| `TC-QNT-04` | Fullstack & State | Header navigation, auto-trading toggles, execution feedback loop, and terminal portfolio synchronization (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-QNT-03` |
-| `TC-QNT-05` | QA & Testing | Automated unit test suite verifying consensus calculation, persona risk boundaries, and execution trigger integrity (`test/quantDeskEngine.test.mjs`). | QA Lead | `READY` | `TC-QNT-02` |
+| `TC-COP-01` | Research & Architecture | Author comprehensive BRD-012 specifying master/slave copier ratios, multiplier rules, slippage latency models, and multi-broker API payload adapters (`docs/brds/BRD-012-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-COP-02` | Backend & Engines | Multi-Broker Bridge Engine: Master-to-slave account mirroring, order multiplier sizing, latency-slippage distributor (`src/lib/tradeCopierEngine.ts`). | Backend Lead | `READY` | `TC-COP-01` |
+| `TC-COP-03` | Frontend / UI | Interactive Trade Copier & Broker Gateway Modal: Slave account manager, allocation ratios, live sync toggle, and execution latency monitor (`src/components/TradeCopierModal.tsx`). | Frontend Lead | `READY` | `TC-COP-02` |
+| `TC-COP-04` | Fullstack & State | Header navigation, auto-mirror execution hooks in `tradingEngine.ts`, and per-user multi-account state binding (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-COP-03` |
+| `TC-COP-05` | QA & Testing | Automated unit tests for copier multiplier math, proportional lot sizing, and slippage latency distribution (`test/tradeCopierEngine.test.mjs`). | QA Lead | `READY` | `TC-COP-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 11: Autonomous AI Quant Desk & Multi-Agent Virtual Hedge Fund War Room
+- [x] **TC-QNT-01**: Author comprehensive BRD-011 specifying 4-phase debate protocol, consensus schemas, and risk audit rules (`docs/brds/BRD-011-autonomous-ai-quant-desk-multi-agent-virtual-hedge-fund.md`).
+- [x] **TC-QNT-02**: Multi-Agent Quant Engine: 4 autonomous personas (Dr. Vance Macro, Vikram Alpha Hunter, Elena CRO, Kavita Algorist), VaR limits, Almgren-Chriss DOM impact, and mathematical consensus calculator (`src/lib/quantDeskEngine.ts`, `src/types/quantDesk.ts`).
+- [x] **TC-QNT-03**: Interactive AI Quant Desk War Room Modal: Agent podiums, live 4-round debate stream, consensus verdict banner, approved sizing gauges, and 1-click execution (`src/components/QuantWarRoomModal.tsx`).
+- [x] **TC-QNT-04**: Header navigation ("🤖 Quant Desk"), Landing Page feature card, terminal synchronization, and 1-click paper trading order placement (`src/components/Header.tsx`, `src/components/LandingPage.tsx`, `src/app/page.tsx`).
+- [x] **TC-QNT-05**: Automated unit test suite verifying macro scoring, CRO 6% drawdown veto, counter-trend veto, 99% VaR haircut, and DOM routing logic (`test/quantDeskEngine.test.mjs`). 42/42 tests passing.
 
 ### Sprint 10: Social Paper Trading Leagues, Public Leaderboards & Cryptographically Verifiable Proof-of-Alpha Trade Receipts
 - [x] **TC-LGE-01**: Native Cryptographic Proof Engine: SHA-256 tradebook hash chain ($H_i$), Platform Execution Oracle with ECDSA/HMAC digital signature, Merkle root tree aggregation, and tamper-detection validator (`src/lib/proofEngine.ts`).

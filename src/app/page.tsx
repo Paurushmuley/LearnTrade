@@ -21,6 +21,8 @@ import { TradebookImportModal } from '../components/TradebookImportModal';
 import { StockScreenerModal } from '../components/StockScreenerModal';
 import { LeagueLeaderboardModal } from '../components/LeagueLeaderboardModal';
 import { ProofOfAlphaModal } from '../components/ProofOfAlphaModal';
+import { QuantWarRoomModal } from '../components/QuantWarRoomModal';
+import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
 import { MarketDepthDOM } from '../components/MarketDepthDOM';
@@ -59,6 +61,7 @@ export default function TradingTerminalPage() {
   const [isTradebookOpen, setIsTradebookOpen] = useState(false);
   const [isScreenerOpen, setIsScreenerOpen] = useState(false);
   const [isLeaguesOpen, setIsLeaguesOpen] = useState(false);
+  const [isQuantDeskOpen, setIsQuantDeskOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -451,6 +454,7 @@ export default function TradingTerminalPage() {
             onOpenTradebook={() => setIsTradebookOpen(true)}
             onOpenScreener={() => setIsScreenerOpen(true)}
             onOpenLeagues={() => setIsLeaguesOpen(true)}
+            onOpenQuantDesk={() => setIsQuantDeskOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -631,6 +635,39 @@ export default function TradingTerminalPage() {
         isOpen={isProofOpen}
         onClose={() => setIsProofOpen(false)}
         certificate={selectedProofCertificate}
+      />
+
+      {/* Autonomous AI Quant Desk War Room Modal */}
+      <QuantWarRoomModal
+        isOpen={isQuantDeskOpen}
+        onClose={() => setIsQuantDeskOpen(false)}
+        selectedTicker={selectedTicker}
+        candles={candles}
+        portfolioEquity={portfolioSummary.availableCash + portfolioSummary.usedMargin}
+        currentDrawdownPct={
+          portfolioSummary.netPnL < 0
+            ? Math.abs((portfolioSummary.netPnL / Math.max(1, portfolioSummary.startingCapital)) * 100)
+            : 0
+        }
+        onExecuteApprovedTrade={(trade) => {
+          const result = placeOrder(tradingState, {
+            symbol: trade.symbol,
+            side: trade.side,
+            type: 'MARKET',
+            product: 'MIS',
+            quantity: trade.quantity,
+            currentMarketPrice: trade.price,
+          });
+          if (result.newState) {
+            setTradingState(result.newState);
+          }
+        }}
+        onSelectStock={(ticker) => {
+          setSelectedTicker(ticker);
+          const newCandles = generateHistoricalCandles(ticker.currentPrice, '5m', 70);
+          setCandles(newCandles);
+          setFullCandleBuffer(newCandles);
+        }}
       />
 
       {/* User Account & Authentication Modals */}

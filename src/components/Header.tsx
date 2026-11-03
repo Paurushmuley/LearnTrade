@@ -18,6 +18,7 @@ interface HeaderProps {
   onOpenTradebook: () => void;
   onOpenScreener: () => void;
   onOpenLeagues: () => void;
+  onOpenQuantDesk: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -39,6 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenTradebook,
   onOpenScreener,
   onOpenLeagues,
+  onOpenQuantDesk,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -231,6 +233,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Trophy className="h-3.5 w-3.5 text-amber-400" />
           <span className="hidden md:inline">Leagues & PoA</span>
+        </button>
+
+        {/* Autonomous AI Quant Desk War Room */}
+        <button
+          onClick={onOpenQuantDesk}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 text-xs font-semibold text-cyan-300 border border-cyan-800/60 transition shadow-sm"
+          title="Autonomous AI Quant Desk: Multi-Agent Virtual Hedge Fund War Room (Macro, Alpha, Risk, Algorist)"
+        >
+          <Brain className="h-3.5 w-3.5 text-cyan-400" />
+          <span className="hidden md:inline">Quant Desk</span>
         </button>
 
         {/* Strategy Backtester */}
