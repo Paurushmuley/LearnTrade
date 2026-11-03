@@ -5,24 +5,30 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 6 (Real-Time Market Breadth, FII/DII Institutional Flows & Indian Sectoral Heatmap)
+- **Active Sprint:** Sprint 7 (Broker Tradebook Importer & AI Behavioral Post-Mortem Auditor - Zerodha/Groww)
 - **Status:** IN PROGRESS
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 6 Task Board (Market Breadth & Institutional Flows)
+## Active Sprint 7 Task Board (Broker Statement Importer & Behavioral Auditor)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-BRD-01` | Backend / Quant | Breadth Engine, FII/DII Net Flow & Sectoral Model (`src/lib/breadthEngine.ts`) | Backend Lead | `IN_PROGRESS` | None |
-| `TC-BRD-02` | Frontend / UI | Market Breadth Modal: A/D Gauge, FII/DII Tracker, Sectoral Heatmap (`src/components/MarketBreadthModal.tsx`) | Frontend Lead | `TODO` | `TC-BRD-01` |
-| `TC-BRD-03` | Fullstack / Core | Header Navigation & Terminal data binding | Fullstack Lead | `TODO` | `TC-BRD-02` |
-| `TC-BRD-04` | QA / Test | Comprehensive Unit Tests for A/D Ratio, Institutional Net Flow & Sectoral Math | QA Lead | `TODO` | `TC-BRD-01` |
+| `TC-IMP-01` | Backend / Quant | Tradebook CSV parser for Zerodha & Groww + FIFO trade matcher + sample datasets (`src/lib/tradebookEngine.ts`) | Backend Lead | `DONE` | None |
+| `TC-IMP-02` | Backend / Quant | Behavioral bias scoring engine: Disposition Effect, Revenge Trading Index, Fee Erosion, Martingale Score | Backend Lead | `DONE` | `TC-IMP-01` |
+| `TC-IMP-03` | Frontend / UI | Tradebook Importer Modal: Drag-and-drop CSV upload, bias metrics, trade list, sample loaders, AI Post-Mortem | Frontend Lead | `DONE` | `TC-IMP-01`, `TC-IMP-02` |
+| `TC-IMP-04` | Fullstack & QA | Header navigation link, terminal state integration, and automated unit tests (`test/tradebookEngine.test.mjs`) | Fullstack / QA Lead | `DONE` | `TC-IMP-03` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 6: Real-Time Market Breadth, FII/DII Institutional Flows & Indian Sectoral Heatmap
+- [x] **TC-BRD-01**: Breadth Engine, FII/DII Net Flow & Sectoral Model (`src/lib/breadthEngine.ts`).
+- [x] **TC-BRD-02**: Market Breadth Modal with Advance/Decline Gauge, FII/DII Tracker, and 7-sector heatmap (`src/components/MarketBreadthModal.tsx`).
+- [x] **TC-BRD-03**: Header Navigation & Terminal data binding (`src/components/Header.tsx`, `src/app/page.tsx`).
+- [x] **TC-BRD-04**: Automated unit tests for A/D Ratio, Institutional Net Flow, and Sectoral Math (`test/breadthEngine.test.mjs`).
 
 ### Sprint 5: Trader Performance Analytics, Hourly Heatmaps & Monte Carlo Simulator
 - [x] **TC-QNT-01**: Closed-form Kelly Criterion position sizing calculation, 1,000-trial Monte Carlo ruin simulation, and Indian market time-of-day aggregation.

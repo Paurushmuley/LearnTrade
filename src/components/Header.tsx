@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, BarChart3, Brain, Cpu, Globe2, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { Activity, BarChart3, Brain, Cpu, FileSpreadsheet, Globe2, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -13,6 +13,7 @@ interface HeaderProps {
   onOpenWebhookBot: () => void;
   onOpenAnalytics: () => void;
   onOpenBreadth: () => void;
+  onOpenTradebook: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -28,6 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenWebhookBot,
   onOpenAnalytics,
   onOpenBreadth,
+  onOpenTradebook,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -171,6 +173,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Globe2 className="h-3.5 w-3.5 text-teal-400" />
           <span className="hidden md:inline">Market Breadth</span>
+        </button>
+
+        {/* Broker Tradebook Importer & AI Auditor */}
+        <button
+          onClick={onOpenTradebook}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-950/40 hover:bg-purple-900/40 text-xs font-semibold text-purple-300 border border-purple-800/60 transition shadow-sm"
+          title="Import Zerodha/Groww Tradebook & Run Psychological AI Bias Audit"
+        >
+          <FileSpreadsheet className="h-3.5 w-3.5 text-purple-400" />
+          <span className="hidden md:inline">Trade Importer</span>
         </button>
 
         {/* Strategy Backtester */}
