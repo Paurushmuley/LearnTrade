@@ -22,6 +22,7 @@ import {
   Lock,
   Play,
   RotateCcw,
+  Share2,
   Shield,
   ShieldAlert,
   ShieldCheck,
@@ -400,6 +401,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Autonomous AI Quant Desk</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Virtual Hedge Fund Investment Committee: Macro Strategist, Momentum Alpha Hunter, Chief Risk Officer (with 99% VaR & unilateral veto), and Execution Algorist with DOM/Iceberg/TWAP routing.
+            </p>
+          </div>
+
+          {/* Card 10: Multi-Broker Trade Copier Bridge */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-indigo-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4 group-hover:scale-110 transition">
+              <Share2 className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Multi-Broker Trade Copier</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Mirror trades across simulated Zerodha Kite, Groww, and Upstox accounts with proportional risk multipliers, exchange lot rounding, broker latency, slippage guards, and an Emergency Global Kill Switch.
             </p>
           </div>
         </div>

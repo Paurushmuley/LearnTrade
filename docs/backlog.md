@@ -5,26 +5,33 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 12 (Institutional Trade Copier & Cross-Account Multi-Broker Execution Bridge: Zerodha, Groww & Upstox Slippage Simulator)
+- **Active Sprint:** Sprint 13 (Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Portfolio Autobalancer)
 - **Status:** PLANNING & ARCHITECTURE
-- **Target BRD:** `docs/brds/BRD-012-institutional-trade-copier-cross-account-multi-broker-bridge.md`
+- **Target BRD:** `docs/brds/BRD-013-options-greeks-hedger-delta-gamma-neutral-autobalancer.md`
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 12 Task Board (Institutional Trade Copier & Cross-Account Bridge)
+## Active Sprint 13 Task Board (Dynamic Options Greeks Hedger & Delta-Gamma Autobalancer)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-COP-01` | Research & Architecture | Author comprehensive BRD-012 specifying master/slave copier ratios, multiplier rules, slippage latency models, and multi-broker API payload adapters (`docs/brds/BRD-012-...`). | Researcher Lead | `IN_PROGRESS` | None |
-| `TC-COP-02` | Backend & Engines | Multi-Broker Bridge Engine: Master-to-slave account mirroring, order multiplier sizing, latency-slippage distributor (`src/lib/tradeCopierEngine.ts`). | Backend Lead | `READY` | `TC-COP-01` |
-| `TC-COP-03` | Frontend / UI | Interactive Trade Copier & Broker Gateway Modal: Slave account manager, allocation ratios, live sync toggle, and execution latency monitor (`src/components/TradeCopierModal.tsx`). | Frontend Lead | `READY` | `TC-COP-02` |
-| `TC-COP-04` | Fullstack & State | Header navigation, auto-mirror execution hooks in `tradingEngine.ts`, and per-user multi-account state binding (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-COP-03` |
-| `TC-COP-05` | QA & Testing | Automated unit tests for copier multiplier math, proportional lot sizing, and slippage latency distribution (`test/tradeCopierEngine.test.mjs`). | QA Lead | `READY` | `TC-COP-02` |
+| `TC-HDG-01` | Research & Architecture | Author comprehensive BRD-013 specifying analytical Greek hedging math, Delta neutral bounds ($\Delta_{\text{net}} \approx 0$), Gamma curvature protection, and auto-rebalancing thresholds (`docs/brds/BRD-013-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-HDG-02` | Backend & Options | Greeks Hedging Engine: Aggregate portfolio Delta ($\Delta$), Gamma ($\Gamma$), Vega ($\nu$), Theta ($\Theta$), auto-hedge order solver for ATM/OTM options or futures (`src/lib/greeksHedgerEngine.ts`). | Backend Lead | `READY` | `TC-HDG-01` |
+| `TC-HDG-03` | Frontend / UI | Interactive Greeks Hedging Studio Modal: Real-time Greeks risk radar, 2D curvature payoff visualizer, 1-click "Neutralize Delta" solver, and autobalancer daemon controls (`src/components/GreeksHedgerModal.tsx`). | Frontend Lead | `READY` | `TC-HDG-02` |
+| `TC-HDG-04` | Fullstack & State | Header navigation ("🛡️ Delta Hedger"), auto-hedging daemon interval, and terminal options chain synchronization (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-HDG-03` |
+| `TC-HDG-05` | QA & Testing | Automated unit tests for portfolio Greek aggregation, zero-delta solver accuracy, and hedge rebalancing trigger points (`test/greeksHedgerEngine.test.mjs`). | QA Lead | `READY` | `TC-HDG-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 12: Institutional Trade Copier & Cross-Account Multi-Broker Execution Bridge
+- [x] **TC-COP-01**: Author comprehensive BRD-012 specifying master/slave copier ratios, lot size rounding, latency models, and multi-broker API payload adapters (`docs/brds/BRD-012-institutional-trade-copier-cross-account-multi-broker-bridge.md`).
+- [x] **TC-COP-02**: Multi-Broker Bridge Engine: Master-to-slave account mirroring, Equity-Proportional / Fixed Multiplier / Risk Parity sizing, broker latency distribution ($\mu, \sigma$ for Zerodha, Groww, Upstox), adverse slippage, and Slippage Guard filter (`src/lib/tradeCopierEngine.ts`, `src/types/tradeCopier.ts`).
+- [x] **TC-COP-03**: Interactive Trade Copier Modal: Slave accounts matrix, live sync toggle, risk multiplier sliders (0.1x to 3.0x), broadcast order simulator, live latency/slippage audit stream, and Emergency Global Kill Switch (`src/components/TradeCopierModal.tsx`).
+- [x] **TC-COP-04**: Header navigation ("🔗 Trade Copier"), Landing Page feature card, terminal synchronization, and multi-account state persistence (`src/components/Header.tsx`, `src/components/LandingPage.tsx`, `src/app/page.tsx`).
+- [x] **TC-COP-05**: Automated unit test suite verifying proportional sizing math, Indian exchange lot size rounding (NIFTY 25, BANKNIFTY 15), margin haircuts, broker latency profiles, slippage guard breaches, and emergency liquidation (`test/tradeCopierEngine.test.mjs`). 48/48 tests passing.
 
 ### Sprint 11: Autonomous AI Quant Desk & Multi-Agent Virtual Hedge Fund War Room
 - [x] **TC-QNT-01**: Author comprehensive BRD-011 specifying 4-phase debate protocol, consensus schemas, and risk audit rules (`docs/brds/BRD-011-autonomous-ai-quant-desk-multi-agent-virtual-hedge-fund.md`).

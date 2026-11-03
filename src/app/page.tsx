@@ -22,6 +22,7 @@ import { StockScreenerModal } from '../components/StockScreenerModal';
 import { LeagueLeaderboardModal } from '../components/LeagueLeaderboardModal';
 import { ProofOfAlphaModal } from '../components/ProofOfAlphaModal';
 import { QuantWarRoomModal } from '../components/QuantWarRoomModal';
+import { TradeCopierModal } from '../components/TradeCopierModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -62,6 +63,7 @@ export default function TradingTerminalPage() {
   const [isScreenerOpen, setIsScreenerOpen] = useState(false);
   const [isLeaguesOpen, setIsLeaguesOpen] = useState(false);
   const [isQuantDeskOpen, setIsQuantDeskOpen] = useState(false);
+  const [isCopierOpen, setIsCopierOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -455,6 +457,7 @@ export default function TradingTerminalPage() {
             onOpenScreener={() => setIsScreenerOpen(true)}
             onOpenLeagues={() => setIsLeaguesOpen(true)}
             onOpenQuantDesk={() => setIsQuantDeskOpen(true)}
+            onOpenCopier={() => setIsCopierOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -668,6 +671,14 @@ export default function TradingTerminalPage() {
           setCandles(newCandles);
           setFullCandleBuffer(newCandles);
         }}
+      />
+
+      {/* Institutional Trade Copier & Cross-Account Multi-Broker Modal */}
+      <TradeCopierModal
+        isOpen={isCopierOpen}
+        onClose={() => setIsCopierOpen(false)}
+        masterEquity={portfolioSummary.availableCash + portfolioSummary.usedMargin}
+        selectedTicker={selectedTicker}
       />
 
       {/* User Account & Authentication Modals */}
