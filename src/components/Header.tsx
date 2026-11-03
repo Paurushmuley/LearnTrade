@@ -22,6 +22,7 @@ interface HeaderProps {
   onOpenCopier: () => void;
   onOpenGreeksHedger: () => void;
   onOpenVolOptimizer?: () => void;
+  onOpenMicrostructure?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -47,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCopier,
   onOpenGreeksHedger,
   onOpenVolOptimizer,
+  onOpenMicrostructure,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -280,6 +282,18 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <TrendingUp className="h-3.5 w-3.5 text-amber-400" />
             <span className="hidden md:inline">⚡ IV Surface</span>
+          </button>
+        )}
+
+        {/* Level-3 Order Book Analytics, Iceberg Detector & Dark Pool Tracker */}
+        {onOpenMicrostructure && (
+          <button
+            onClick={onOpenMicrostructure}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 text-xs font-semibold text-cyan-300 border border-cyan-800/60 transition shadow-sm"
+            title="Level-3 Order Book Analytics, Iceberg Replenishment Detector & SEBI Block Deals"
+          >
+            <Layers className="h-3.5 w-3.5 text-cyan-400" />
+            <span className="hidden md:inline">🌊 L3 & Dark Pool</span>
           </button>
         )}
 

@@ -35,3 +35,5 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-012`](./BRD-012-institutional-trade-copier-cross-account-multi-broker-bridge.md) | Institutional Trade Copier & Cross-Account Multi-Broker Execution Bridge | Sprint 12 | `COMPLETED` |
 | [`BRD-013`](./BRD-013-real-time-options-greeks-hedger-delta-gamma-autobalancer.md) | Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Autobalancer | Sprint 13 | `COMPLETED` |
 | [`BRD-014`](./BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md) | Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator (SABR / SVI Models) | Sprint 14 | `COMPLETED` |
+| [`BRD-015`](./BRD-015-level3-order-book-iceberg-detector-dark-pool-tracker.md) | Real-Time Level-3 Order Book Analytics, Iceberg Detector & Institutional Dark Pool Volume Tracker | Sprint 15 | `COMPLETED` |
+| [`BRD-016`](./BRD-016-statistical-arbitrage-cointegration-pairs-trading.md) | Multi-Asset Statistical Arbitrage & Cointegration Pairs Trading Engine (Engle-Granger & Kalman Filter) | Sprint 16 | `READY FOR IMPLEMENTATION` |

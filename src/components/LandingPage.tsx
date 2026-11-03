@@ -437,6 +437,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Parametric volatility smile calibration via Hagan SABR (α, β, ρ, ν) and Gatheral SVI models. Detects mispriced options contracts with real-time relative value radar and optimizes multi-leg spreads for maximum PoP and Sharpe expectancy.
             </p>
           </div>
+
+          {/* Card 13: Level-3 Order Book & Institutional Iceberg Radar */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Layers className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Level-3 Order Book & Iceberg Radar</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Full 10-rung Market-By-Order (MBO) depth ladder with sub-45ms algorithmic iceberg replenishment detection, volume-weighted Micro-Price, multi-depth OBI, VPIN flow toxicity, and SEBI ₹10 Cr institutional block deal tracking.
+            </p>
+          </div>
         </div>
       </section>
 

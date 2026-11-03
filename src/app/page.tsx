@@ -25,6 +25,7 @@ import { QuantWarRoomModal } from '../components/QuantWarRoomModal';
 import { TradeCopierModal } from '../components/TradeCopierModal';
 import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
 import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal';
+import { MicrostructureModal } from '../components/MicrostructureModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -68,6 +69,7 @@ export default function TradingTerminalPage() {
   const [isCopierOpen, setIsCopierOpen] = useState(false);
   const [isGreeksHedgerOpen, setIsGreeksHedgerOpen] = useState(false);
   const [isVolOptimizerOpen, setIsVolOptimizerOpen] = useState(false);
+  const [isMicrostructureOpen, setIsMicrostructureOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -464,6 +466,7 @@ export default function TradingTerminalPage() {
             onOpenCopier={() => setIsCopierOpen(true)}
             onOpenGreeksHedger={() => setIsGreeksHedgerOpen(true)}
             onOpenVolOptimizer={() => setIsVolOptimizerOpen(true)}
+            onOpenMicrostructure={() => setIsMicrostructureOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -699,6 +702,26 @@ export default function TradingTerminalPage() {
         isOpen={isVolOptimizerOpen}
         onClose={() => setIsVolOptimizerOpen(false)}
         currentSpotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Level-3 Order Book Analytics, Iceberg Detector & Dark Pool Tracker Modal */}
+      <MicrostructureModal
+        isOpen={isMicrostructureOpen}
+        onClose={() => setIsMicrostructureOpen(false)}
+        selectedTicker={selectedTicker}
+        onExecuteTrade={(sym, side, price, qty) => {
+          const result = placeOrder(tradingState, {
+            symbol: sym,
+            side,
+            type: 'MARKET',
+            product: 'MIS',
+            quantity: qty,
+            currentMarketPrice: price,
+          });
+          if (result.newState) {
+            setTradingState(result.newState);
+          }
+        }}
       />
 
       {/* User Account & Authentication Modals */}

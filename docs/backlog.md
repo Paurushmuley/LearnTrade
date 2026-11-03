@@ -5,57 +5,33 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 15 (Real-Time Level-3 Order Book Analytics, Iceberg Detector & Institutional Dark Pool Volume Tracker)
+- **Active Sprint:** Sprint 16 (Statistical Arbitrage, Cointegration Pairs Trading & Mean-Reversion Engine)
 - **Status:** PLANNING & ARCHITECTURE
-- **Target BRD:** `docs/brds/BRD-015-level3-orderbook-iceberg-darkpool-tracker.md`
+- **Target BRD:** `docs/brds/BRD-016-statistical-arbitrage-cointegration-pairs-trading.md`
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 15 Task Board (Level-3 Microstructure, Iceberg & Dark Pool Tracker)
+## Active Sprint 16 Task Board (Statistical Arbitrage & Cointegration Pairs Trading)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-OB3-01` | Research & Architecture | Author comprehensive BRD-015 specifying Level-3 Order-by-Order (OBO) queuing dynamics, Iceberg replenishment detection heuristics, and Dark Pool block trade impact models (`docs/brds/BRD-015-...`). | Researcher Lead | `IN_PROGRESS` | None |
-| `TC-OB3-02` | Backend & Engine | Level-3 Microstructure Engine: Queue position tracker (FIFO queue-ahead calculation), hidden Iceberg order replenishment detector, and institutional Dark Pool block trade aggregator (`src/lib/orderBookL3Engine.ts`, `src/types/orderBookL3.ts`). | Backend Lead | `READY` | `TC-OB3-01` |
-| `TC-OB3-03` | Frontend / UI | Interactive Level-3 Depth & Iceberg Radar Modal: Granular tick-by-tick order queue ladder, live Iceberg order alert stream, institutional block tape, and queue-wait visualizer (`src/components/Level3OrderBookModal.tsx`). | Frontend Lead | `READY` | `TC-OB3-02` |
-| `TC-OB3-04` | Fullstack & State | Header navigation ("🧊 Level-3 Depth"), real-time terminal synchronization, and 1-click iceberg liquidity join execution (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `READY` | `TC-OB3-03` |
-| `TC-OB3-05` | QA & Testing | Automated unit test suite verifying order queue FIFO positioning, replenishment anomaly detection, and dark pool VWAP volume math (`test/orderBookL3Engine.test.mjs`). | QA Lead | `READY` | `TC-OB3-02` |
-
-### Sprint 15 User Stories & Acceptance Criteria
-
-#### User Story 1: Level-3 Order-by-Order Queue Tracking & Microstructure Modeling (`TC-OB3-01`, `TC-OB3-02`)
-- **Story:** *As an institutional scalper and market maker*, I want full Level-3 order book visibility with order-by-order (OBO) queue positions and queue-ahead volume estimations, so that I can accurately predict time-to-fill and avoid getting adversely selected behind large institutional orders.
-- **Acceptance Criteria:**
-  - Maintain a price-time priority (FIFO) order book maintaining individual order tickets at each price rung.
-  - Calculate queue-ahead volume: $V_{\text{ahead}} = \sum_{j < i} Q_j$ for any incoming limit order.
-  - Estimate fill probability and queue wait time based on recent order arrival intensity ($\lambda$) and cancellation rates ($\mu$).
-
-#### User Story 2: Algorithmic Iceberg Order Detection (`TC-OB3-02`, `TC-OB3-03`)
-- **Story:** *As a momentum breakout trader*, I want the system to continuously detect algorithmic Iceberg orders that replenish displayed quantity after repeated executions, so that I can identify hidden institutional accumulation/distribution walls.
-- **Acceptance Criteria:**
-  - Track cumulative trade prints against displayed depth at price level $P$:
-    $$\text{If } \sum \text{VolumeExecuted}(P) > 3 \times \text{PeakVisibleSize}(P) \implies \text{Flag Iceberg Alert}$$
-  - Calculate estimated hidden quantity: $Q_{\text{hidden}} = Q_{\text{total\_replenished}} - Q_{\text{visible}}$.
-  - Classify confidence rating (`HIGH`, `MEDIUM`, `CONFIRMED`) based on inter-replenishment latency variance ($\sigma_{\tau} < 50\text{ms}$).
-
-#### User Story 3: Institutional Dark Pool & Block Deal Tape (`TC-OB3-03`, `TC-OB3-04`)
-- **Story:** *As an active equity trader*, I want a dedicated institutional block deal and dark pool tape showing off-market prints and large VWAP crossed transactions, so that I can anticipate major institutional positioning in NSE equities.
-- **Acceptance Criteria:**
-  - Ingest simulated off-market block/bulk deal transactions ($> ₹5\text{ Crore}$ or $> 0.5\%$ equity float).
-  - Compute Dark Pool VWAP and premium/discount spread against prevailing lit exchange mid-price.
-  - Display institutional sentiment score (Bullish Accumulation vs Bearish Unloading).
-
-#### User Story 4: Automated Verification & Microstructure Tests (`TC-OB3-05`)
-- **Story:** *As a QA engineer*, I want automated tests verifying queue-ahead calculation, iceberg detection thresholds, and block deal aggregations.
-- **Acceptance Criteria:**
-  - 100% test pass rate in `test/orderBookL3Engine.test.mjs`.
-  - Zero TypeScript compiler errors (`npx tsc --noEmit`).
-  - Production build succeeds without warnings (`npm run build`).
+| `TC-ARB-01` | Research & Architecture | Author BRD-016 specifying Engle-Granger 2-step cointegration, Augmented Dickey-Fuller (ADF) stationarity test, Johansen trace eigenvalue test, dynamic Kalman filter hedge ratios ($\beta_t$), and Ornstein-Uhlenbeck half-life mean-reversion modeling (`docs/brds/BRD-016-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-ARB-02` | Backend & Engine | StatArb Engine: OLS & Kalman filter cointegrating regression, rolling z-score spread generator ($z = (S_1 - \beta S_2 - \alpha) / \sigma$), Bollinger entry/exit thresholds, and Indian equity/index pair baskets (NIFTY/BANKNIFTY, HDFCBANK/ICICIBANK, TCS/INFY) (`src/lib/statArbEngine.ts`, `src/types/statArb.ts`). | Backend Lead | `READY` | `TC-ARB-01` |
+| `TC-ARB-03` | Frontend / UI | Interactive Pairs Trading Studio Modal: 2D spread z-score chart, cointegration correlation matrix, residual Q-Q normal plot, and live arbitrage signal radar (`src/components/StatArbModal.tsx`). | Frontend Lead | `READY` | `TC-ARB-02` |
+| `TC-ARB-04` | Fullstack & State | Header navigation ("⚖️ Pairs Arb"), 2-leg synthetic market execution into portfolio positions, and auto-hedge execution into `tradingEngine.ts` (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-ARB-03` |
+| `TC-ARB-05` | QA & Testing | Automated test suite verifying ADF stationarity critical values, Kalman filter tracking convergence, residual mean-reversion, and zero-dollar market-neutral cash balance (`test/statArbEngine.test.mjs`). | QA Lead | `READY` | `TC-ARB-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 15: Level-3 Order Book Analytics, Iceberg Detector & Institutional Dark Pool Volume Tracker
+- [x] **TC-OB3-01**: Author comprehensive BRD-015 specifying Level-3 Order-by-Order (OBO) queuing dynamics, Iceberg replenishment detection heuristics, and Dark Pool block trade impact models (`docs/brds/BRD-015-level3-order-book-iceberg-detector-dark-pool-tracker.md`).
+- [x] **TC-OB3-02**: Level-3 Microstructure Engine: Queue position tracker (FIFO queue-ahead calculation), hidden Iceberg order replenishment detector, Volume-Weighted Micro-Price (P_micro), OBI, VPIN toxicity, and institutional Dark Pool block trade aggregator (`src/lib/microstructureEngine.ts`, `src/lib/orderBookL3Engine.ts`, `src/types/microstructure.ts`).
+- [x] **TC-OB3-03**: Interactive Level-3 Depth & Iceberg Radar Modal: Granular tick-by-tick order queue ladder, live Iceberg order alert stream, institutional block tape, and queue-wait visualizer (`src/components/MicrostructureModal.tsx`, `src/components/OrderBookL3Modal.tsx`).
+- [x] **TC-OB3-04**: Header navigation ("🌊 L3 & Dark Pool"), real-time terminal synchronization, and 1-click iceberg liquidity join execution (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-OB3-05**: Automated unit test suite verifying order queue FIFO positioning, replenishment anomaly detection, VPIN toxicity bounds, and dark pool VWAP volume math (`test/microstructureEngine.test.mjs`, `test/orderBookL3Engine.test.mjs`). 78/78 tests passing.
 
 ### Sprint 14: Multi-Leg Options Strategy Payoff Optimizer & Implied Volatility Surface Calibrator (SABR / SVI Models)
 - [x] **TC-SBR-01**: Author comprehensive BRD-014 specifying SABR ($\alpha, \beta, \rho, \nu$) and SVI parametric smile models, butterfly/calendar arbitrage constraints, and multi-leg genetic payoff optimizer (`docs/brds/BRD-014-options-payoff-optimizer-volatility-surface-calibrator.md`).
