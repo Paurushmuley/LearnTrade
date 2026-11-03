@@ -3,7 +3,7 @@
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
 import { UserProfile } from '../types/user';
-import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, Share2, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
+import { Activity, BarChart3, Brain, Cpu, Crosshair, FileSpreadsheet, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, Scale, Share2, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -20,6 +20,7 @@ interface HeaderProps {
   onOpenLeagues: () => void;
   onOpenQuantDesk: () => void;
   onOpenCopier: () => void;
+  onOpenGreeksHedger: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -43,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenLeagues,
   onOpenQuantDesk,
   onOpenCopier,
+  onOpenGreeksHedger,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -255,6 +257,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Share2 className="h-3.5 w-3.5 text-indigo-400" />
           <span className="hidden md:inline">Trade Copier</span>
+        </button>
+
+        {/* Dynamic Options Greeks Hedger & Delta-Gamma Autobalancer */}
+        <button
+          onClick={onOpenGreeksHedger}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 text-xs font-semibold text-cyan-300 border border-cyan-800/60 transition shadow-sm"
+          title="Dynamic Options Greeks Hedger & Delta-Gamma Autobalancer (Greeks Radar & Curvature Payoff)"
+        >
+          <Scale className="h-3.5 w-3.5 text-cyan-400" />
+          <span className="hidden md:inline">Delta Hedger</span>
         </button>
 
         {/* Strategy Backtester */}

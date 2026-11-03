@@ -22,6 +22,7 @@ import {
   Lock,
   Play,
   RotateCcw,
+  Scale,
   Share2,
   Shield,
   ShieldAlert,
@@ -412,6 +413,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Multi-Broker Trade Copier</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Mirror trades across simulated Zerodha Kite, Groww, and Upstox accounts with proportional risk multipliers, exchange lot rounding, broker latency, slippage guards, and an Emergency Global Kill Switch.
+            </p>
+          </div>
+
+          {/* Card 11: Real-Time Options Greeks Hedger & Autobalancer */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Scale className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Options Greeks Hedger & Autobalancer</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Aggregate portfolio Delta, Gamma, Theta, and Vega across all open options and futures. Features an automated Delta-Neutral counter-order solver, non-linear 2D Taylor curvature visualizer, and customizable rebalance daemon thresholds.
             </p>
           </div>
         </div>

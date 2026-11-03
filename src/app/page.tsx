@@ -23,6 +23,7 @@ import { LeagueLeaderboardModal } from '../components/LeagueLeaderboardModal';
 import { ProofOfAlphaModal } from '../components/ProofOfAlphaModal';
 import { QuantWarRoomModal } from '../components/QuantWarRoomModal';
 import { TradeCopierModal } from '../components/TradeCopierModal';
+import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -64,6 +65,7 @@ export default function TradingTerminalPage() {
   const [isLeaguesOpen, setIsLeaguesOpen] = useState(false);
   const [isQuantDeskOpen, setIsQuantDeskOpen] = useState(false);
   const [isCopierOpen, setIsCopierOpen] = useState(false);
+  const [isGreeksHedgerOpen, setIsGreeksHedgerOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -458,6 +460,7 @@ export default function TradingTerminalPage() {
             onOpenLeagues={() => setIsLeaguesOpen(true)}
             onOpenQuantDesk={() => setIsQuantDeskOpen(true)}
             onOpenCopier={() => setIsCopierOpen(true)}
+            onOpenGreeksHedger={() => setIsGreeksHedgerOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -679,6 +682,13 @@ export default function TradingTerminalPage() {
         onClose={() => setIsCopierOpen(false)}
         masterEquity={portfolioSummary.availableCash + portfolioSummary.usedMargin}
         selectedTicker={selectedTicker}
+      />
+
+      {/* Real-Time Options Greeks Hedger & Delta-Gamma Autobalancer Modal */}
+      <GreeksHedgerModal
+        isOpen={isGreeksHedgerOpen}
+        onClose={() => setIsGreeksHedgerOpen(false)}
+        currentSpotPrice={selectedTicker.currentPrice}
       />
 
       {/* User Account & Authentication Modals */}

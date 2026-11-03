@@ -6,7 +6,7 @@
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
 - **Active Sprint:** Sprint 13 (Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Portfolio Autobalancer)
-- **Status:** IN PROGRESS (ENGINEERING & TESTS)
+- **Status:** COMPLETED (ALL QUALITY GATES PASSED)
 - **Target BRD:** `docs/brds/BRD-013-options-greeks-hedger-delta-gamma-neutral-autobalancer.md`
 - **Updated:** 2026-11-03
 
@@ -17,10 +17,10 @@
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `TC-HDG-01` | Research & Architecture | Author comprehensive BRD-013 specifying analytical Greek hedging math, Delta neutral bounds ($\Delta_{\text{net}} \approx 0$), Gamma curvature protection, and auto-rebalancing thresholds (`docs/brds/BRD-013-...`). | Researcher Lead | `COMPLETED` | None |
-| `TC-HDG-02` | Backend & Options | Greeks Hedging Engine: Aggregate portfolio Delta ($\Delta$), Gamma ($\Gamma$), Vega ($\nu$), Theta ($\Theta$), auto-hedge order solver for ATM/OTM options or futures (`src/lib/greeksHedgerEngine.ts`). | Backend Lead | `IN_PROGRESS` | `TC-HDG-01` |
-| `TC-HDG-03` | Frontend / UI | Interactive Greeks Hedging Studio Modal: Real-time Greeks risk radar, 2D curvature payoff visualizer, 1-click "Neutralize Delta" solver, and autobalancer daemon controls (`src/components/GreeksHedgerModal.tsx`). | Frontend Lead | `IN_PROGRESS` | `TC-HDG-02` |
-| `TC-HDG-04` | Fullstack & State | Header navigation ("🛡️ Delta Hedger"), auto-hedging daemon interval, and terminal options chain synchronization (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `IN_PROGRESS` | `TC-HDG-03` |
-| `TC-HDG-05` | QA & Testing | Automated unit tests for portfolio Greek aggregation, zero-delta solver accuracy, and hedge rebalancing trigger points (`test/greeksHedgerEngine.test.mjs`). | QA Lead | `IN_PROGRESS` | `TC-HDG-02` |
+| `TC-HDG-02` | Backend & Options | Greeks Hedging Engine: Aggregate portfolio Delta ($\Delta$), Gamma ($\Gamma$), Vega ($\nu$), Theta ($\Theta$), auto-hedge order solver for ATM/OTM options or futures (`src/lib/greeksHedgerEngine.ts`). | Backend Lead | `COMPLETED` | `TC-HDG-01` |
+| `TC-HDG-03` | Frontend / UI | Interactive Greeks Hedging Studio Modal: Real-time Greeks risk radar, 2D curvature payoff visualizer, 1-click "Neutralize Delta" solver, and autobalancer daemon controls (`src/components/GreeksHedgerModal.tsx`). | Frontend Lead | `COMPLETED` | `TC-HDG-02` |
+| `TC-HDG-04` | Fullstack & State | Header navigation ("🛡️ Delta Hedger"), auto-hedging daemon interval, and terminal options chain synchronization (`src/components/Header.tsx`, `src/app/page.tsx`). | Fullstack Lead | `COMPLETED` | `TC-HDG-03` |
+| `TC-HDG-05` | QA & Testing | Automated unit tests for portfolio Greek aggregation, zero-delta solver accuracy, and hedge rebalancing trigger points (`test/greeksHedgerEngine.test.mjs`). | QA Lead | `COMPLETED` | `TC-HDG-02` |
 
 ### Sprint 13 User Stories & Acceptance Criteria
 
@@ -59,6 +59,13 @@
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 13: Real-Time Options Greeks Hedger & Dynamic Delta-Gamma Neutral Autobalancer
+- [x] **TC-HDG-01**: Author comprehensive BRD-013 specifying analytical Greek hedging math, Delta neutral bounds ($\Delta_{\text{net}} \approx 0$), Gamma curvature protection, and auto-rebalancing thresholds (`docs/brds/BRD-013-options-greeks-hedger-delta-gamma-neutral-autobalancer.md`).
+- [x] **TC-HDG-02**: Greeks Hedging Engine: Aggregate portfolio Delta ($\Delta$), Gamma ($\Gamma$), Vega ($\nu$), Theta ($\Theta$), auto-hedge order solver for ATM/OTM options or futures (`src/lib/greeksHedgerEngine.ts`, `src/types/greeksHedger.ts`).
+- [x] **TC-HDG-03**: Interactive Greeks Hedging Studio Modal: Real-time Greeks risk radar, 2D curvature payoff visualizer, 1-click "Neutralize Delta" solver, and autobalancer daemon controls (`src/components/GreeksHedgerModal.tsx`).
+- [x] **TC-HDG-04**: Header navigation ("🛡️ Delta Hedger"), auto-hedging daemon interval, and terminal options chain synchronization (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-HDG-05**: Automated unit test suite verifying portfolio Greek aggregation, zero-delta solver accuracy, lot size rounding, Taylor curvature shocks, and autobalance trigger bounds (`test/greeksHedgerEngine.test.mjs`). 55/55 tests passing.
 
 ### Sprint 12: Institutional Trade Copier & Cross-Account Multi-Broker Execution Bridge
 - [x] **TC-COP-01**: Author comprehensive BRD-012 specifying master/slave copier ratios, lot size rounding, latency models, and multi-broker API payload adapters (`docs/brds/BRD-012-institutional-trade-copier-cross-account-multi-broker-bridge.md`).
