@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
-import { Activity, BarChart3, Brain, Cpu, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
+import { Activity, BarChart3, Brain, Cpu, Globe2, Key, Layers, RefreshCw, RotateCcw, ShieldAlert, TrendingUp, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -12,6 +12,7 @@ interface HeaderProps {
   onOpenOptions: () => void;
   onOpenWebhookBot: () => void;
   onOpenAnalytics: () => void;
+  onOpenBreadth: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -26,6 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenOptions,
   onOpenWebhookBot,
   onOpenAnalytics,
+  onOpenBreadth,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -159,6 +161,16 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <BarChart3 className="h-3.5 w-3.5 text-amber-400" />
           <span className="hidden md:inline">Quant Analytics</span>
+        </button>
+
+        {/* Market Breadth & FII/DII */}
+        <button
+          onClick={onOpenBreadth}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-950/40 hover:bg-teal-900/40 text-xs font-semibold text-teal-300 border border-teal-800/60 transition shadow-sm"
+          title="NSE Market Breadth, FII/DII Net Institutional Flows & Sectoral Heatmap"
+        >
+          <Globe2 className="h-3.5 w-3.5 text-teal-400" />
+          <span className="hidden md:inline">Market Breadth</span>
         </button>
 
         {/* Strategy Backtester */}

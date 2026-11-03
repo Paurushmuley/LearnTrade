@@ -16,6 +16,7 @@ import { CrisisSimulatorModal } from '../components/CrisisSimulatorModal';
 import { OptionChainModal } from '../components/OptionChainModal';
 import { WebhookBotModal } from '../components/WebhookBotModal';
 import { AnalyticsModal } from '../components/AnalyticsModal';
+import { MarketBreadthModal } from '../components/MarketBreadthModal';
 import { ReplayControlBar } from '../components/ReplayControlBar';
 import { MarketDepthDOM } from '../components/MarketDepthDOM';
 
@@ -39,6 +40,7 @@ export default function TradingTerminalPage() {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isWebhookBotOpen, setIsWebhookBotOpen] = useState(false);
   const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
+  const [isBreadthOpen, setIsBreadthOpen] = useState(false);
 
   // BYOK Configuration from localStorage
   const [aiConfig, setAIConfig] = useState<AIConfig>({
@@ -347,6 +349,7 @@ export default function TradingTerminalPage() {
         onOpenOptions={() => setIsOptionsOpen(true)}
         onOpenWebhookBot={() => setIsWebhookBotOpen(true)}
         onOpenAnalytics={() => setIsAnalyticsOpen(true)}
+        onOpenBreadth={() => setIsBreadthOpen(true)}
         onOpenBYOK={() => setIsBYOKOpen(true)}
         onOpenStrategy={() => setIsStrategyOpen(true)}
         onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -479,6 +482,12 @@ export default function TradingTerminalPage() {
         tradeAudits={tradingState.tradeAudits}
         aiConfig={aiConfig}
         startingCapital={tradingState.startingCapital}
+      />
+
+      <MarketBreadthModal
+        isOpen={isBreadthOpen}
+        onClose={() => setIsBreadthOpen(false)}
+        aiConfig={aiConfig}
       />
     </div>
   );

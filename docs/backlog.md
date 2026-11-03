@@ -5,20 +5,20 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 5 (Trader Performance Analytics, Hourly P&L Heatmaps & Monte Carlo Ruin Simulator)
-- **Status:** COMPLETED & VERIFIED
+- **Active Sprint:** Sprint 6 (Real-Time Market Breadth, FII/DII Institutional Flows & Indian Sectoral Heatmap)
+- **Status:** IN PROGRESS
 - **Updated:** 2026-11-03
 
 ---
 
-## Master Task Board
+## Active Sprint 6 Task Board (Market Breadth & Institutional Flows)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-QNT-01` | Backend / Quant | Quantitative Risk Engine: Kelly Criterion, Monte Carlo (1k paths), Hourly Aggregator (`src/lib/analyticsEngine.ts`) | Backend Lead | `DONE` | None |
-| `TC-QNT-02` | Frontend / UI | Quantitative Analytics Modal: Hourly P&L Heatmap, Monte Carlo Envelope & Kelly Meter (`src/components/AnalyticsModal.tsx`) | Frontend Lead | `DONE` | `TC-QNT-01` |
-| `TC-QNT-03` | Fullstack / Core | Header Navigation & Terminal data binding | Fullstack Lead | `DONE` | `TC-QNT-02` |
-| `TC-QNT-04` | QA / Test | Comprehensive Unit Tests for Kelly formula, Expectancy & Monte Carlo math | QA Lead | `DONE` | `TC-QNT-01` |
+| `TC-BRD-01` | Backend / Quant | Breadth Engine, FII/DII Net Flow & Sectoral Model (`src/lib/breadthEngine.ts`) | Backend Lead | `IN_PROGRESS` | None |
+| `TC-BRD-02` | Frontend / UI | Market Breadth Modal: A/D Gauge, FII/DII Tracker, Sectoral Heatmap (`src/components/MarketBreadthModal.tsx`) | Frontend Lead | `TODO` | `TC-BRD-01` |
+| `TC-BRD-03` | Fullstack / Core | Header Navigation & Terminal data binding | Fullstack Lead | `TODO` | `TC-BRD-02` |
+| `TC-BRD-04` | QA / Test | Comprehensive Unit Tests for A/D Ratio, Institutional Net Flow & Sectoral Math | QA Lead | `TODO` | `TC-BRD-01` |
 
 ---
 
