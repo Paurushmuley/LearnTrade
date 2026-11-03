@@ -18,6 +18,7 @@ import { WebhookBotModal } from '../components/WebhookBotModal';
 import { AnalyticsModal } from '../components/AnalyticsModal';
 import { MarketBreadthModal } from '../components/MarketBreadthModal';
 import { TradebookImportModal } from '../components/TradebookImportModal';
+import { StockScreenerModal } from '../components/StockScreenerModal';
 import { ReplayControlBar } from '../components/ReplayControlBar';
 import { MarketDepthDOM } from '../components/MarketDepthDOM';
 
@@ -43,6 +44,7 @@ export default function TradingTerminalPage() {
   const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
   const [isBreadthOpen, setIsBreadthOpen] = useState(false);
   const [isTradebookOpen, setIsTradebookOpen] = useState(false);
+  const [isScreenerOpen, setIsScreenerOpen] = useState(false);
 
   // BYOK Configuration from localStorage
   const [aiConfig, setAIConfig] = useState<AIConfig>({
@@ -353,6 +355,7 @@ export default function TradingTerminalPage() {
         onOpenAnalytics={() => setIsAnalyticsOpen(true)}
         onOpenBreadth={() => setIsBreadthOpen(true)}
         onOpenTradebook={() => setIsTradebookOpen(true)}
+        onOpenScreener={() => setIsScreenerOpen(true)}
         onOpenBYOK={() => setIsBYOKOpen(true)}
         onOpenStrategy={() => setIsStrategyOpen(true)}
         onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -500,6 +503,18 @@ export default function TradingTerminalPage() {
         onOpenByok={() => {
           setIsTradebookOpen(false);
           setIsBYOKOpen(true);
+        }}
+      />
+
+      <StockScreenerModal
+        isOpen={isScreenerOpen}
+        onClose={() => setIsScreenerOpen(false)}
+        aiConfig={aiConfig}
+        onSelectStock={(ticker) => {
+          setSelectedTicker(ticker);
+          const newCandles = generateHistoricalCandles(ticker.currentPrice, '5m', 70);
+          setCandles(newCandles);
+          setFullCandleBuffer(newCandles);
         }}
       />
     </div>

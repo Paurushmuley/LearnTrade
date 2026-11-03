@@ -5,24 +5,30 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 7 (Broker Tradebook Importer & AI Behavioral Post-Mortem Auditor - Zerodha/Groww)
+- **Active Sprint:** Sprint 8 (Real-Time Multi-Factor Technical Screener & Stock Scanner)
 - **Status:** IN PROGRESS
 - **Updated:** 2026-11-03
 
 ---
 
-## Active Sprint 7 Task Board (Broker Statement Importer & Behavioral Auditor)
+## Active Sprint 8 Task Board (Multi-Factor Technical Screener & Stock Scanner)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-IMP-01` | Backend / Quant | Tradebook CSV parser for Zerodha & Groww + FIFO trade matcher + sample datasets (`src/lib/tradebookEngine.ts`) | Backend Lead | `DONE` | None |
-| `TC-IMP-02` | Backend / Quant | Behavioral bias scoring engine: Disposition Effect, Revenge Trading Index, Fee Erosion, Martingale Score | Backend Lead | `DONE` | `TC-IMP-01` |
-| `TC-IMP-03` | Frontend / UI | Tradebook Importer Modal: Drag-and-drop CSV upload, bias metrics, trade list, sample loaders, AI Post-Mortem | Frontend Lead | `DONE` | `TC-IMP-01`, `TC-IMP-02` |
-| `TC-IMP-04` | Fullstack & QA | Header navigation link, terminal state integration, and automated unit tests (`test/tradebookEngine.test.mjs`) | Fullstack / QA Lead | `DONE` | `TC-IMP-03` |
+| `TC-SCR-01` | Backend / Quant | Multi-factor scanner engine: Volume Surge, EMA Cross, RSI, VWAP, ORB & Confluence Score (`src/lib/screenerEngine.ts`) | Backend Lead | `DONE` | None |
+| `TC-SCR-02` | Frontend / UI | Stock Screener Modal: Presets, Confluence Score ranking, 1-click Chart Sync, AI Scanner Brief (`src/components/StockScreenerModal.tsx`) | Frontend Lead | `DONE` | `TC-SCR-01` |
+| `TC-SCR-03` | Fullstack / Core | Header navigation button & terminal synchronization (`src/components/Header.tsx`, `src/app/page.tsx`) | Fullstack Lead | `DONE` | `TC-SCR-02` |
+| `TC-SCR-04` | QA / Test | Automated unit tests for screener algorithms and confluence score calculation (`test/screenerEngine.test.mjs`) | QA Lead | `DONE` | `TC-SCR-01` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 7: Broker Tradebook Importer & AI Behavioral Post-Mortem Auditor
+- [x] **TC-IMP-01**: Tradebook CSV parser for Zerodha & Groww + FIFO trade matcher + sample datasets (`src/lib/tradebookEngine.ts`).
+- [x] **TC-IMP-02**: Behavioral bias scoring engine: Disposition Effect, Revenge Trading Index, Fee Erosion, Martingale Score.
+- [x] **TC-IMP-03**: Tradebook Importer Modal with drag-and-drop CSV upload, bias metrics, trade list, sample loaders, AI Post-Mortem (`src/components/TradebookImportModal.tsx`).
+- [x] **TC-IMP-04**: Header navigation link, terminal state integration, and automated unit tests (`test/tradebookEngine.test.mjs`).
 
 ### Sprint 6: Real-Time Market Breadth, FII/DII Institutional Flows & Indian Sectoral Heatmap
 - [x] **TC-BRD-01**: Breadth Engine, FII/DII Net Flow & Sectoral Model (`src/lib/breadthEngine.ts`).
