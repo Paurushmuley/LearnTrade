@@ -27,6 +27,7 @@ import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
 import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal';
 import { MicrostructureModal } from '../components/MicrostructureModal';
 import { StatArbModal } from '../components/StatArbModal';
+import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -72,6 +73,7 @@ export default function TradingTerminalPage() {
   const [isVolOptimizerOpen, setIsVolOptimizerOpen] = useState(false);
   const [isMicrostructureOpen, setIsMicrostructureOpen] = useState(false);
   const [isStatArbOpen, setIsStatArbOpen] = useState(false);
+  const [isExecutionOpen, setIsExecutionOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -470,6 +472,7 @@ export default function TradingTerminalPage() {
             onOpenVolOptimizer={() => setIsVolOptimizerOpen(true)}
             onOpenMicrostructure={() => setIsMicrostructureOpen(true)}
             onOpenStatArb={() => setIsStatArbOpen(true)}
+            onOpenExecution={() => setIsExecutionOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -758,6 +761,14 @@ export default function TradingTerminalPage() {
             setTradingState(stateAfterY);
           }
         }}
+      />
+
+      {/* VWAP / TWAP Execution Engine & Almgren-Chriss Optimal Liquidation Modal */}
+      <ExecutionAlgoModal
+        isOpen={isExecutionOpen}
+        onClose={() => setIsExecutionOpen(false)}
+        defaultTicker={selectedTicker.symbol}
+        defaultPrice={selectedTicker.currentPrice}
       />
 
       {/* User Account & Authentication Modals */}

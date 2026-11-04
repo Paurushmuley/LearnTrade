@@ -11,6 +11,7 @@ import {
   Brain,
   CheckCircle2,
   ChevronRight,
+  Clock,
   Cpu,
   Crosshair,
   FileSpreadsheet,
@@ -457,6 +458,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Statistical Arbitrage & Pairs Studio</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Engle-Granger 2-step cointegration testing, Augmented Dickey-Fuller stationarity, Ornstein-Uhlenbeck half-life mean reversion, and dynamic recursive Kalman filter hedge ratios with 1-click market-neutral pair execution.
+            </p>
+          </div>
+
+          {/* Card 15: VWAP/TWAP Execution Engine & Almgren-Chriss Optimal Liquidation */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-blue-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition">
+              <Clock className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">VWAP / TWAP Execution Studio</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Institutional order slicing algorithms powered by the Almgren-Chriss (2000) optimal liquidation model, empirical Indian NSE U-shaped volume profile weighting, and complete Perold Implementation Shortfall attribution breakdown.
             </p>
           </div>
         </div>

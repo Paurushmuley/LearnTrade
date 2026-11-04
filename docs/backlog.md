@@ -5,26 +5,33 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 17 (High-Frequency VWAP / TWAP Execution Algorithms & Microstructure Slippage Minimizer — Almgren-Chriss Optimal Liquidation Model)
+- **Active Sprint:** Sprint 18 (Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE)
 - **Status:** PLANNING & ARCHITECTURE
-- **Target BRD:** `docs/brds/BRD-017-vwap-twap-execution-almgren-chriss-slippage-minimizer.md`
-- **Updated:** 2026-11-03
+- **Target BRD:** `docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`
+- **Updated:** 2026-11-04
 
 ---
 
-## Active Sprint 17 Task Board (Execution Algorithms & Optimal Liquidation)
+## Active Sprint 18 Task Board (Macro Sentiment & News Event Risk)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-EXE-01` | Research & Architecture | Author comprehensive BRD-017 specifying continuous volume-weighted average price (VWAP) trajectories, time-weighted average price (TWAP) schedules, Almgren-Chriss optimal liquidation trajectories, and quadratic temporary/permanent market impact formulas (`docs/brds/BRD-017-...`). | Researcher Lead | `IN_PROGRESS` | None |
-| `TC-EXE-02` | Backend & Engine | Execution Engine: Optimal liquidation solver ($x_j = \frac{\sinh(\kappa(T - t_j))}{\sinh(\kappa T)} X$), dynamic volume curve predictor (U-shaped Indian intraday profile: 9:15-10:00 AM spike, 11:30-1:30 PM lull, 2:30-3:30 PM surge), and adverse selection slippage model (`src/lib/executionEngine.ts`, `src/types/execution.ts`). | Backend Lead | `READY` | `TC-EXE-01` |
-| `TC-EXE-03` | Frontend / UI | Interactive Algorithmic Execution Studio Modal: Slice-by-slice execution progress bars, real-time VWAP benchmark tracking, dynamic slippage breakdown gauge, and child order schedule visualizer (`src/components/ExecutionAlgoModal.tsx`). | Frontend Lead | `READY` | `TC-EXE-02` |
-| `TC-EXE-04` | Fullstack & State | Header navigation ("⏱️ VWAP / TWAP"), scheduled child order dispatcher with background timer simulation, and terminal state synchronization (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-EXE-03` |
-| `TC-EXE-05` | QA & Testing | Automated test suite verifying Almgren-Chriss risk-aversion parameter ($\lambda$) sensitivity, volume profile integration, slice quantity conservation, and post-trade implementation shortfall math (`test/executionEngine.test.mjs`). | QA Lead | `READY` | `TC-EXE-02` |
+| `TC-EVT-01` | Research & Architecture | Author comprehensive BRD-018 for RBI MPC rate decisions, Union Budget, US Fed FOMC spillover, quarterly corporate earnings calendar, and live NLP sentiment volatility impact on Indian equities (`docs/brds/BRD-018-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-EVT-02` | Backend & Engine | Event Risk Engine: Macroeconomic event shock impact matrices, implied volatility expansion predictor, and Bayesian earnings surprises (`src/lib/macroEventEngine.ts`, `src/types/macroEvent.ts`). | Backend Lead | `READY` | `TC-EVT-01` |
+| `TC-EVT-03` | Frontend / UI | Macro Event & Sentiment Risk Radar Modal: Economic calendar timeline, implied volatility jump cones, and pre-event position hedging advisor (`src/components/MacroEventModal.tsx`). | Frontend Lead | `READY` | `TC-EVT-02` |
+| `TC-EVT-04` | Fullstack & State | Header navigation ("🌐 Macro Risk"), portfolio event beta exposure calculation, and Landing Page feature card (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-EVT-03` |
+| `TC-EVT-05` | QA & Testing | Automated test suite verifying event volatility jump calculations, earnings surprise z-scores, and macroeconomic risk scoring (`test/macroEventEngine.test.mjs`). | QA Lead | `READY` | `TC-EVT-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 17: High-Frequency VWAP / TWAP Execution Algorithms & Microstructure Slippage Minimizer (Almgren-Chriss Optimal Liquidation Model)
+- [x] **TC-EXE-01**: Author comprehensive BRD-017 specifying continuous volume-weighted average price (VWAP) trajectories, time-weighted average price (TWAP) schedules, Almgren-Chriss optimal liquidation trajectories, and Perold Implementation Shortfall attribution (`docs/brds/BRD-017-vwap-twap-execution-almgren-chriss-slippage-minimizer.md`).
+- [x] **TC-EXE-02**: Execution Engine: Almgren-Chriss optimal liquidation solver ($x_j = \frac{\sinh(\kappa(T - t_j))}{\sinh(\kappa T)} X$), empirical Indian NSE U-shaped intraday volume profile (9:15-10:00 AM rush, midday lull, 2:30-3:30 PM closing surge), TWAP uniform slices, temporary & permanent market impact simulation, and Perold Implementation Shortfall decomposition (`src/lib/executionEngine.ts`, `src/types/execution.ts`).
+- [x] **TC-EXE-03**: Interactive Algorithmic Execution Studio Modal: Slice-by-slice execution timeline with slippage color coding, risk aversion $\lambda$ log-slider, IS attribution breakdown bars, and 3-way algorithm comparison arena (`src/components/ExecutionAlgoModal.tsx`).
+- [x] **TC-EXE-04**: Header navigation ("⏱️ VWAP/TWAP"), modal integration in terminal workspace, and Landing Page Feature Card 15 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-EXE-05**: Automated unit test suite verifying boundary conditions, risk-aversion monotonicity, volume profile normalization, and TWAP/VWAP quantity conservation (`test/executionEngine.test.mjs`). 92/92 tests passing.
 
 ### Sprint 16: Multi-Asset Statistical Arbitrage & Cointegration Pairs Trading Engine (Engle-Granger & Kalman Filter)
 - [x] **TC-ARB-01**: Author comprehensive BRD-016 specifying Engle-Granger 2-step cointegration, Augmented Dickey-Fuller (ADF) stationarity critical values, Ornstein-Uhlenbeck half-life formula, and state-space Kalman filter equations (`docs/brds/BRD-016-statistical-arbitrage-cointegration-pairs-trading.md`).
