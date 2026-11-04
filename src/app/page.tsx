@@ -28,6 +28,7 @@ import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal
 import { MicrostructureModal } from '../components/MicrostructureModal';
 import { StatArbModal } from '../components/StatArbModal';
 import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
+import { MacroEventModal } from '../components/MacroEventModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -74,6 +75,7 @@ export default function TradingTerminalPage() {
   const [isMicrostructureOpen, setIsMicrostructureOpen] = useState(false);
   const [isStatArbOpen, setIsStatArbOpen] = useState(false);
   const [isExecutionOpen, setIsExecutionOpen] = useState(false);
+  const [isMacroEventOpen, setIsMacroEventOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -473,6 +475,7 @@ export default function TradingTerminalPage() {
             onOpenMicrostructure={() => setIsMicrostructureOpen(true)}
             onOpenStatArb={() => setIsStatArbOpen(true)}
             onOpenExecution={() => setIsExecutionOpen(true)}
+            onOpenMacroEvent={() => setIsMacroEventOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -769,6 +772,13 @@ export default function TradingTerminalPage() {
         onClose={() => setIsExecutionOpen(false)}
         defaultTicker={selectedTicker.symbol}
         defaultPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Macroeconomic Sentiment Analysis & News Event Risk Radar Modal */}
+      <MacroEventModal
+        isOpen={isMacroEventOpen}
+        onClose={() => setIsMacroEventOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
       />
 
       {/* User Account & Authentication Modals */}

@@ -529,17 +529,17 @@ function AlgoComparisonTab({
   }
 
   const algos = [
-    { key: 'vwap', label: 'VWAP', color: 'blue', summary: comparison.vwap! },
-    { key: 'twap', label: 'TWAP', color: 'purple', summary: comparison.twap! },
-    { key: 'almgrenChriss', label: 'Almgren-Chriss', color: 'emerald', summary: comparison.almgrenChriss! },
+    { key: 'vwap', label: 'VWAP', borderClass: 'border-blue-500/20', textClass: 'text-blue-400', summary: comparison.vwap! },
+    { key: 'twap', label: 'TWAP', borderClass: 'border-purple-500/20', textClass: 'text-purple-400', summary: comparison.twap! },
+    { key: 'almgrenChriss', label: 'Almgren-Chriss', borderClass: 'border-emerald-500/20', textClass: 'text-emerald-400', summary: comparison.almgrenChriss! },
   ] as const;
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-4">
-        {algos.map(({ label, color, summary }) => (
-          <div key={label} className={`bg-gray-800/60 rounded-xl p-4 border border-${color}-500/20`}>
-            <div className={`text-sm font-bold text-${color}-400 mb-3`}>{label}</div>
+        {algos.map(({ label, borderClass, textClass, summary }) => (
+          <div key={label} className={`bg-gray-800/60 rounded-xl p-4 border ${borderClass}`}>
+            <div className={`text-sm font-bold ${textClass} mb-3`}>{label}</div>
             <div className="space-y-2 text-xs">
               <div className="flex justify-between">
                 <span className="text-gray-500">IS vs Arrival</span>

@@ -6,7 +6,7 @@
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
 - **Active Sprint:** Sprint 18 (Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE)
-- **Status:** PLANNING & ARCHITECTURE
+- **Status:** IN PROGRESS (ENGINEERING & IMPLEMENTATION)
 - **Target BRD:** `docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`
 - **Updated:** 2026-11-04
 
@@ -16,11 +16,41 @@
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-EVT-01` | Research & Architecture | Author comprehensive BRD-018 for RBI MPC rate decisions, Union Budget, US Fed FOMC spillover, quarterly corporate earnings calendar, and live NLP sentiment volatility impact on Indian equities (`docs/brds/BRD-018-...`). | Researcher Lead | `IN_PROGRESS` | None |
+| `TC-EVT-01` | Research & Architecture | Author comprehensive BRD-018 for RBI MPC rate decisions, Union Budget, US Fed FOMC spillover, quarterly corporate earnings calendar, and live NLP sentiment volatility impact on Indian equities (`docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`). | Researcher Lead | `COMPLETED` | None |
 | `TC-EVT-02` | Backend & Engine | Event Risk Engine: Macroeconomic event shock impact matrices, implied volatility expansion predictor, and Bayesian earnings surprises (`src/lib/macroEventEngine.ts`, `src/types/macroEvent.ts`). | Backend Lead | `READY` | `TC-EVT-01` |
 | `TC-EVT-03` | Frontend / UI | Macro Event & Sentiment Risk Radar Modal: Economic calendar timeline, implied volatility jump cones, and pre-event position hedging advisor (`src/components/MacroEventModal.tsx`). | Frontend Lead | `READY` | `TC-EVT-02` |
 | `TC-EVT-04` | Fullstack & State | Header navigation ("🌐 Macro Risk"), portfolio event beta exposure calculation, and Landing Page feature card (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-EVT-03` |
 | `TC-EVT-05` | QA & Testing | Automated test suite verifying event volatility jump calculations, earnings surprise z-scores, and macroeconomic risk scoring (`test/macroEventEngine.test.mjs`). | QA Lead | `READY` | `TC-EVT-02` |
+
+### Sprint 18 User Stories & Acceptance Criteria
+
+#### User Story 1: Macroeconomic Calendar & Event Shock Modeling (`TC-EVT-01`, `TC-EVT-02`)
+- **Story:** *As a Systematic Risk Manager*, I want to track scheduled macro events (RBI MPC Rate Decisions, Union Budget, US FOMC, GDP, CPI Inflation) with historical volatility shock multipliers, so that positions can be stress-tested against interest rate and liquidity shocks.
+- **Acceptance Criteria:**
+  - Structured event calendar with shock categories (Monetary Policy, Fiscal Policy, Inflation, Global Spillovers).
+  - Historical volatility multiplier: $IV_{\text{event}} = IV_{\text{base}} \times \sqrt{1 + k \cdot \sigma_{\text{shock}}}$.
+  - Beta-weighted portfolio shock sensitivity: $\Delta P = \sum \beta_i w_i \Delta S_{\text{shock}}$.
+
+#### User Story 2: Corporate Earnings Surprises & IV Crush Dynamics (`TC-EVT-02`)
+- **Story:** *As an Options & Derivatives Trader*, I want automated tracking of NSE quarterly earnings releases with Bayesian consensus vs actual surprises, implied move straddle pricing, and post-event IV crush predictions.
+- **Acceptance Criteria:**
+  - Standardized earnings surprise metric: $Z_{\text{surprise}} = \frac{EPS_{\text{actual}} - EPS_{\text{est}}}{\sigma_{\text{est}}}$.
+  - Pre-earnings implied move calculated from ATM straddles: $\text{Move}_{\text{implied}} \approx 0.8 \times (C_{\text{ATM}} + P_{\text{ATM}})$.
+  - Post-earnings IV crush model forecasting post-announcement implied volatility deflation.
+
+#### User Story 3: Interactive Macro Event & Sentiment Risk Radar Modal (`TC-EVT-03`, `TC-EVT-04`)
+- **Story:** *As an Active Trader*, I want an interactive Macro Event & Sentiment Risk Radar Modal featuring an event calendar timeline, volatility jump cones, sentiment polarity meter, and 1-click protective delta/vega hedging triggers.
+- **Acceptance Criteria:**
+  - Chronological event timeline with impact badges (Critical, High, Moderate).
+  - Volatility jump cone visualizer illustrating expected price dispersion windows.
+  - Live sentiment score indicator bounded between $[-1.0, +1.0]$.
+  - 1-click hedging suggestions linking into `TradingContext.tsx`.
+
+#### User Story 4: Automated Verification & Unit Test Suite (`TC-EVT-05`)
+- **Story:** *As a QA Lead*, I want automated unit tests validating shock multipliers, earnings surprise z-scores, IV expansion math, and portfolio event beta aggregation.
+- **Acceptance Criteria:**
+  - 100% test pass rate in `test/macroEventEngine.test.mjs`.
+  - Zero TypeScript compilation errors (`npx tsc --noEmit`).
 
 ---
 
@@ -32,6 +62,40 @@
 - [x] **TC-EXE-03**: Interactive Algorithmic Execution Studio Modal: Slice-by-slice execution timeline with slippage color coding, risk aversion $\lambda$ log-slider, IS attribution breakdown bars, and 3-way algorithm comparison arena (`src/components/ExecutionAlgoModal.tsx`).
 - [x] **TC-EXE-04**: Header navigation ("⏱️ VWAP/TWAP"), modal integration in terminal workspace, and Landing Page Feature Card 15 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
 - [x] **TC-EXE-05**: Automated unit test suite verifying boundary conditions, risk-aversion monotonicity, volume profile normalization, and TWAP/VWAP quantity conservation (`test/executionEngine.test.mjs`). 92/92 tests passing.
+
+#### Sprint 17 User Stories & Acceptance Criteria
+
+##### User Story 1: Almgren-Chriss Optimal Liquidation Solver (`TC-EXE-01`, `TC-EXE-02`)
+- **Story:** *As an Institutional Quant*, I want optimal liquidation schedules calculated using the Almgren-Chriss model balancing market impact against timing risk with decay rate $\kappa = \sqrt{\frac{\lambda \sigma^2}{\eta}}$, so that large institutional parent orders minimize total expected execution cost.
+- **Acceptance Criteria:**
+  - Analytical trajectory solver: $x_j = \frac{\sinh(\kappa(T - t_j))}{\sinh(\kappa T)} X$.
+  - Boundary limits: $x_0 = X$ and $x_N = 0$.
+  - Monotonicity: Higher risk aversion $\lambda$ produces faster initial liquidation (front-loaded schedule).
+  - Quantity conservation: $\sum_{j=1}^N \Delta x_j = X$.
+
+##### User Story 2: Empirical NSE Volume Profile & Execution Benchmarks (`TC-EXE-02`)
+- **Story:** *As an Algorithmic Trader*, I want intraday child orders scheduled against the Indian NSE U-shaped volume curve (morning open rush 9:15–10:00, midday consolidation 11:30–13:30, closing auction ramp 14:30–15:30) for continuous VWAP and uniform TWAP execution.
+- **Acceptance Criteria:**
+  - Discrete 13-bucket normalized intraday profile ($\sum v_j = 1.0$).
+  - VWAP slice sizing proportional to interval volume expectation: $x_{j,\text{VWAP}} = X \cdot v_j$.
+  - TWAP uniform interval slicing: $x_{j,\text{TWAP}} = X / N$.
+  - Dynamic slippage simulation incorporating permanent impact ($\gamma \cdot x_j$) and temporary impact ($\eta \cdot (x_j / \tau)$).
+
+##### User Story 3: Interactive Algorithmic Execution Studio Modal (`TC-EXE-03`, `TC-EXE-04`)
+- **Story:** *As a Platform Trader*, I want an Algorithmic Execution Studio Modal displaying slice-by-slice progress, slippage heatmaps, Perold Implementation Shortfall decomposition (Delay, Impact, Fee), and 3-way algorithm comparison arena.
+- **Acceptance Criteria:**
+  - Visual timeline of scheduled vs filled child slices.
+  - Interactive risk aversion $\lambda$ slider updating Almgren-Chriss curvature in real-time.
+  - Perold Implementation Shortfall metric cards ($IS = \text{Actual Execution Cost} - \text{Paper Benchmark Cost}$).
+  - Integrated into terminal header ("⏱️ VWAP/TWAP") and Landing Page showcase.
+
+##### User Story 4: Automated Verification & Unit Test Suite (`TC-EXE-05`)
+- **Story:** *As a QA Lead*, I want automated tests validating Almgren-Chriss math, volume profile integrals, TWAP/VWAP conservation, and implementation shortfall attribution.
+- **Acceptance Criteria:**
+  - 100% test pass rate across `test/executionEngine.test.mjs` (7 test suites, 14 assertions).
+  - Zero TypeScript compilation errors (`npx tsc --noEmit`).
+
+---
 
 ### Sprint 16: Multi-Asset Statistical Arbitrage & Cointegration Pairs Trading Engine (Engle-Granger & Kalman Filter)
 - [x] **TC-ARB-01**: Author comprehensive BRD-016 specifying Engle-Granger 2-step cointegration, Augmented Dickey-Fuller (ADF) stationarity critical values, Ornstein-Uhlenbeck half-life formula, and state-space Kalman filter equations (`docs/brds/BRD-016-statistical-arbitrage-cointegration-pairs-trading.md`).
@@ -72,8 +136,6 @@
   - Clean production build (`npm run build`).
 
 ---
-
-## Completed Sprints Archive
 
 ### Sprint 15: Level-3 Order Book Analytics, Iceberg Detector & Institutional Dark Pool Volume Tracker
 - [x] **TC-OB3-01**: Author comprehensive BRD-015 specifying Level-3 Order-by-Order (OBO) queuing dynamics, Iceberg replenishment detection heuristics, and Dark Pool block trade impact models (`docs/brds/BRD-015-level3-order-book-iceberg-detector-dark-pool-tracker.md`).

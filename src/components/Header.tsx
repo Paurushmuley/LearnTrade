@@ -25,6 +25,7 @@ interface HeaderProps {
   onOpenMicrostructure?: () => void;
   onOpenStatArb?: () => void;
   onOpenExecution?: () => void;
+  onOpenMacroEvent?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -53,6 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMicrostructure,
   onOpenStatArb,
   onOpenExecution,
+  onOpenMacroEvent,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -303,6 +305,17 @@ export const Header: React.FC<HeaderProps> = ({
 
 
         {/* Statistical Arbitrage & Cointegration Pairs Trading Engine */}
+        {onOpenStatArb && (
+          <button
+            onClick={onOpenStatArb}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/40 hover:bg-indigo-900/50 text-xs font-semibold text-indigo-300 border border-indigo-800/60 transition shadow-sm"
+            title="Statistical Arbitrage & Cointegration Pairs Trading Studio (Engle-Granger & Kalman Filter)"
+          >
+            <Scale className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden md:inline">⚖️ Pairs Arb</span>
+          </button>
+        )}
+
         {/* VWAP/TWAP Execution Engine & Almgren-Chriss Optimal Liquidation */}
         {onOpenExecution && (
           <button
@@ -312,6 +325,18 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Clock className="h-3.5 w-3.5 text-blue-400" />
             <span className="hidden md:inline">⏱️ VWAP/TWAP</span>
+          </button>
+        )}
+
+        {/* Macroeconomic Sentiment Analysis & News Event Risk Engine */}
+        {onOpenMacroEvent && (
+          <button
+            onClick={onOpenMacroEvent}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/40 hover:bg-indigo-900/50 text-xs font-semibold text-indigo-300 border border-indigo-800/60 transition shadow-sm"
+            title="Macroeconomic Sentiment Analysis, Pre-Event IV Jump Cones, Post-Event Crush & Economic Calendar"
+          >
+            <Globe2 className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden md:inline">🌐 Macro Risk</span>
           </button>
         )}
 

@@ -471,6 +471,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Institutional order slicing algorithms powered by the Almgren-Chriss (2000) optimal liquidation model, empirical Indian NSE U-shaped volume profile weighting, and complete Perold Implementation Shortfall attribution breakdown.
             </p>
           </div>
+
+          {/* Card 16: Macroeconomic Sentiment & Event Risk Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Globe2 className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Macro Sentiment & Event Risk Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Dubinsky-Johannes (2006) discrete event variance decomposition, pre-event IV jump cones, instantaneous post-event crush forecasting, Loughran-McDonald NLP financial sentiment scoring, and pre-event delta/vega hedging.
+            </p>
+          </div>
         </div>
       </section>
 
