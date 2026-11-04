@@ -5,26 +5,72 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 19 (Cross-Exchange Arbitrage & Latency-Aware Smart Order Router for NSE vs BSE)
-- **Status:** COMPLETED & VERIFIED
-- **Target BRD:** `docs/brds/BRD-019-cross-exchange-arbitrage-smart-order-router.md`
-- **Updated:** 2026-11-04
+- **Active Cycle:** Sprints 1–19 Fully Delivered, Integrated & DoD-Verified; Sprint 20 Backlog Grooming Active
+- **Status:** ALL QUALITY GATES PASSED (140/140 Tests Passing, Strict TypeScript Clean)
+- **Current Milestone:** Sprint 19 (Cross-Exchange Arbitrage & Latency-Aware Smart Order Router) Delivered; UI Declutter & Institutional Command Palette (`Ctrl+K`) Integrated
+- **Candidate Sprint 20:** Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine)
+- **Updated:** 2026-11-04 11:35 IST
 
 ---
 
-## Active Sprint 19 Task Board (Cross-Exchange Arbitrage & Smart Order Router)
+## Active / Upcoming Sprint 20 Candidate Board (FIX Protocol Gateway & Order Flow Simulator)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-SOR-01` | Research & Architecture | Author comprehensive BRD-019 specifying Indian NBBO (INBBO) aggregation across NSE and BSE, inter-market fee netting, sub-millisecond execution latency modeling with exponential fill decay, and atomic split-liquidity sweep order routing (`docs/brds/BRD-019-cross-exchange-arbitrage-smart-order-router.md`). | Researcher Lead | `COMPLETED` | None |
-| `TC-SOR-02` | Backend & Engine | Smart Order Router Engine: Dual-exchange Level-2 depth aggregator (`calculateINBBO`), cross-exchange arbitrage detector with statutory fee netting, latency fill probability decay model ($P(\text{Fill}) = \exp(-\lambda \tau)$), greedy split liquidity sweep solver, and 2-leg atomic arbitrage executor with bailout (`src/lib/sorEngine.ts`, `src/types/sor.ts`). | Backend Lead | `COMPLETED` | `TC-SOR-01` |
-| `TC-SOR-03` | Frontend / UI | Interactive Cross-Exchange SOR Studio Modal: Synchronized dual-exchange DOM ladders (NSE vs BSE), crossed spread arbitrage radar with 1-click execution, and routing policy telemetry table (`src/components/CrossExchangeSORModal.tsx`). | Frontend Lead | `COMPLETED` | `TC-SOR-02` |
-| `TC-SOR-04` | Fullstack & State | Header navigation ("⚡ SOR / Arb"), terminal integration with live spot prices, and Landing Page Feature Card 17 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `COMPLETED` | `TC-SOR-03` |
-| `TC-SOR-05` | QA & Testing | Automated test suite verifying INBBO best bid/ask aggregation, crossed spread detection, statutory fee netting, latency decay, and split liquidity greedy sort (`test/sorEngine.test.mjs`). 140/140 tests passing. | QA Lead | `COMPLETED` | `TC-SOR-02` |
+| :--- | :--- | :--- | :--- | :---: | :--- |
+| `TC-FIX-01` | Research & Architecture | Author comprehensive BRD-020 specifying FIX 4.4 protocol dictionary, tag value serialization (Tag 35=D, Tag 35=8), drop-copy session architecture, heartbeat interval timing, and institutional audit logging. | Researcher Lead | `PLANNED` | None |
+| `TC-FIX-02` | Backend & Engine | FIX Protocol Engine: Tag-value parser and serializer, session state machine (Logon, Heartbeat, ResendRequest, ExecutionReport), deterministic synthetic exchange simulator, and drop-copy journal logger. | Backend Lead | `PLANNED` | `TC-FIX-01` |
+| `TC-FIX-03` | Frontend / UI | Interactive FIX Protocol Console Modal: Raw tag-value message stream viewer, session state indicator, manual FIX order injection terminal, and latency benchmark telemetry graph. | Frontend Lead | `PLANNED` | `TC-FIX-02` |
+| `TC-FIX-04` | Fullstack & State | Header navigation suite binding ("Execution & Algorithms" suite), terminal order router bridge, and Landing Page showcase card. | Fullstack Lead | `PLANNED` | `TC-FIX-03` |
+| `TC-FIX-05` | QA & Testing | Automated test suite verifying FIX tag serialization, checksum verification, sequence number resend recovery, and message rejection handling. | QA Lead | `PLANNED` | `TC-FIX-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 19: Cross-Exchange Arbitrage & Latency-Aware Smart Order Router (SOR) for NSE vs BSE
+- [x] **TC-SOR-01**: Author comprehensive BRD-019 specifying Indian NBBO (INBBO) aggregation across NSE and BSE, inter-market fee netting, sub-millisecond execution latency modeling with exponential fill decay, and atomic split-liquidity sweep order routing (`docs/brds/BRD-019-cross-exchange-arbitrage-smart-order-router.md`).
+- [x] **TC-SOR-02**: Smart Order Router Engine: Dual-exchange Level-2 depth aggregator (`calculateINBBO`), cross-exchange arbitrage detector with statutory fee netting, latency fill probability decay model ($P(\text{Fill}) = \exp(-\lambda \tau)$), greedy split liquidity sweep solver, and 2-leg atomic arbitrage executor with bailout (`src/lib/sorEngine.ts`, `src/types/sor.ts`).
+- [x] **TC-SOR-03**: Interactive Cross-Exchange SOR Studio Modal: Synchronized dual-exchange DOM ladders (NSE vs BSE), crossed spread arbitrage radar with 1-click execution, and routing policy telemetry table (`src/components/CrossExchangeSORModal.tsx`).
+- [x] **TC-SOR-04**: Header navigation ("⚡ SOR / Arb"), terminal integration with live spot prices, and Landing Page Feature Card 17 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-SOR-05**: Automated test suite verifying INBBO best bid/ask aggregation, crossed spread detection, statutory fee netting, latency decay, and split liquidity greedy sort (`test/sorEngine.test.mjs`). 140/140 tests passing.
+
+#### Sprint 19 User Stories & Acceptance Criteria
+
+##### User Story 1: Indian NBBO (INBBO) & Dual-Exchange Depth Aggregation (`TC-SOR-01`, `TC-SOR-02`)
+- **Story:** *As an Execution Algorist*, I want real-time aggregation of Top 5 Level-2 order books from NSE and BSE into an Indian National Best Bid and Offer (INBBO) ladder, so that I can route child orders to the venue offering the best execution price.
+- **Acceptance Criteria:**
+  - Synthesize virtual INBBO: $\text{INBBO}_{\text{Bid}} = \max(\text{Bid}_{\text{NSE}}, \text{Bid}_{\text{BSE}})$, $\text{INBBO}_{\text{Ask}} = \min(\text{Ask}_{\text{NSE}}, \text{Ask}_{\text{BSE}})$.
+  - Support configurable routing policies: Best Price NBBO, Fee-Adjusted Net Yield, Split Sweep Routing.
+  - Zero performance lag on dynamic dual-book updates.
+
+##### User Story 2: Cross-Exchange Arbitrage & Statutory Fee Friction Netting (`TC-SOR-02`)
+- **Story:** *As an Arbitrage Desk Quant*, I want automated detection of crossed inter-market spreads ($\text{Spread}_{\text{gross}} = \text{Bid}_A - \text{Ask}_B > 0$) with exact Indian statutory fee hurdles subtracted (SEBI turnover fees, Stamp Duty, GST, Exchange charges), so that false-positive phantom spreads are rejected.
+- **Acceptance Criteria:**
+  - Net spread calculation: $\text{Spread}_{\text{net}} = \text{Spread}_{\text{gross}} - \text{Fees}_{\text{Leg1}} - \text{Fees}_{\text{Leg2}}$.
+  - Classify opportunities by profitability tier: High Alpha ($> ₹0.50$), Marginal ($₹0.10–₹0.50$), Unprofitable ($< 0$).
+  - Two-leg simultaneous IOC dispatch with microsecond bailout unwinding if Leg 2 fails.
+
+##### User Story 3: Latency-Aware Fill Probability Decay (`TC-SOR-02`)
+- **Story:** *As a High-Frequency Trader*, I want sub-millisecond execution latency modeling against competing co-located HFT desks using exponential fill decay $P(\text{Fill}) = \exp(-\lambda \tau)$, so that race condition risks are quantified prior to order dispatch.
+- **Acceptance Criteria:**
+  - Simulates network cross-connect latency, broker API gateway delay, and exchange matching queue jitter.
+  - Decays fill probability monotonically as round-trip latency $\tau$ increases.
+  - Generates realistic partial-fill and unhedge variance simulation.
+
+##### User Story 4: Interactive Cross-Exchange Studio Modal & Telemetry (`TC-SOR-03`, `TC-SOR-04`)
+- **Story:** *As a Platform Trader*, I want an interactive Cross-Exchange SOR Studio Modal featuring synchronized dual DOM ladders, real-time crossed spread radar, and routing telemetry.
+- **Acceptance Criteria:**
+  - Side-by-side comparative DOM ladders for NSE and BSE with highlighted best bids/asks.
+  - 1-click execution for arbitrage pairs and smart routed split sweeps.
+  - Integrated into Header ("⚡ SOR / Arb") and Landing Page feature showcase.
+
+##### User Story 5: Automated Verification & Unit Test Suite (`TC-SOR-05`)
+- **Story:** *As a QA Lead*, I want automated unit tests validating INBBO aggregation, fee-deduction accuracy, exponential latency decay, and greedy split liquidity sort.
+- **Acceptance Criteria:**
+  - 100% test pass rate in `test/sorEngine.test.mjs`.
+  - Zero TypeScript compilation errors (`npx tsc --noEmit`).
+
+---
 
 ### Sprint 18: Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE
 - [x] **TC-EVT-01**: Author comprehensive BRD-018 for RBI MPC rate decisions, Union Budget, US Fed FOMC spillover, quarterly corporate earnings calendar, and live NLP sentiment volatility impact on Indian equities (`docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`).
