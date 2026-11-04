@@ -29,6 +29,7 @@ import { MicrostructureModal } from '../components/MicrostructureModal';
 import { StatArbModal } from '../components/StatArbModal';
 import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
 import { MacroEventModal } from '../components/MacroEventModal';
+import { CrossExchangeSORModal } from '../components/CrossExchangeSORModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -76,6 +77,7 @@ export default function TradingTerminalPage() {
   const [isStatArbOpen, setIsStatArbOpen] = useState(false);
   const [isExecutionOpen, setIsExecutionOpen] = useState(false);
   const [isMacroEventOpen, setIsMacroEventOpen] = useState(false);
+  const [isSOROpen, setIsSOROpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -476,6 +478,7 @@ export default function TradingTerminalPage() {
             onOpenStatArb={() => setIsStatArbOpen(true)}
             onOpenExecution={() => setIsExecutionOpen(true)}
             onOpenMacroEvent={() => setIsMacroEventOpen(true)}
+            onOpenSOR={() => setIsSOROpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -779,6 +782,14 @@ export default function TradingTerminalPage() {
         isOpen={isMacroEventOpen}
         onClose={() => setIsMacroEventOpen(false)}
         spotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Cross-Exchange Arbitrage & Smart Order Router Modal */}
+      <CrossExchangeSORModal
+        isOpen={isSOROpen}
+        onClose={() => setIsSOROpen(false)}
+        defaultSymbol={selectedTicker.symbol}
+        defaultPrice={selectedTicker.currentPrice}
       />
 
       {/* User Account & Authentication Modals */}

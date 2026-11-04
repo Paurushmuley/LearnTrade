@@ -6,6 +6,7 @@ import { DEMO_ACCOUNTS, sanitizeUserProfile } from '../lib/authService';
 import {
   Activity,
   ArrowRight,
+  ArrowRightLeft,
   BarChart2,
   BarChart3,
   Brain,
@@ -480,6 +481,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Macro Sentiment & Event Risk Engine</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Dubinsky-Johannes (2006) discrete event variance decomposition, pre-event IV jump cones, instantaneous post-event crush forecasting, Loughran-McDonald NLP financial sentiment scoring, and pre-event delta/vega hedging.
+            </p>
+          </div>
+
+          {/* Card 17: Cross-Exchange Arbitrage & Smart Order Router (SOR) */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-emerald-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
+              <ArrowRightLeft className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Cross-Exchange Arbitrage & SOR</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Indian NBBO (INBBO) multi-market aggregation across NSE and BSE, inter-market fee netting, sub-millisecond execution latency modeling with exponential fill decay, and atomic split-liquidity sweep order routing.
             </p>
           </div>
         </div>

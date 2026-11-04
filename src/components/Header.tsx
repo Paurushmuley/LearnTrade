@@ -3,7 +3,7 @@
 import React from 'react';
 import { AIConfig, PortfolioSummary } from '../types/trading';
 import { UserProfile } from '../types/user';
-import { Activity, BarChart3, Brain, Clock, Cpu, Crosshair, FileSpreadsheet, GitCompare, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, Scale, Share2, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
+import { Activity, ArrowRightLeft, BarChart3, Brain, Clock, Cpu, Crosshair, FileSpreadsheet, GitCompare, Globe2, Home, Key, Layers, RefreshCw, RotateCcw, Scale, Share2, ShieldAlert, TrendingUp, Trophy, User, Zap } from 'lucide-react';
 
 interface HeaderProps {
   portfolio: PortfolioSummary;
@@ -26,6 +26,7 @@ interface HeaderProps {
   onOpenStatArb?: () => void;
   onOpenExecution?: () => void;
   onOpenMacroEvent?: () => void;
+  onOpenSOR?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -55,6 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenStatArb,
   onOpenExecution,
   onOpenMacroEvent,
+  onOpenSOR,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -337,6 +339,18 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Globe2 className="h-3.5 w-3.5 text-indigo-400" />
             <span className="hidden md:inline">🌐 Macro Risk</span>
+          </button>
+        )}
+
+        {/* Cross-Exchange Arbitrage & Smart Order Router */}
+        {onOpenSOR && (
+          <button
+            onClick={onOpenSOR}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/50 text-xs font-semibold text-cyan-300 border border-cyan-800/60 transition shadow-sm"
+            title="Cross-Exchange Arbitrage & Smart Order Router (NSE vs BSE Depth, Latency Modeling, Split Sweep)"
+          >
+            <ArrowRightLeft className="h-3.5 w-3.5 text-cyan-400" />
+            <span className="hidden md:inline">⚡ SOR / Arb</span>
           </button>
         )}
 

@@ -5,22 +5,33 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Sprint:** Sprint 18 (Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE)
-- **Status:** IN PROGRESS (ENGINEERING & IMPLEMENTATION)
-- **Target BRD:** `docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`
+- **Active Sprint:** Sprint 19 (Cross-Exchange Arbitrage & Latency-Aware Smart Order Router for NSE vs BSE)
+- **Status:** COMPLETED & VERIFIED
+- **Target BRD:** `docs/brds/BRD-019-cross-exchange-arbitrage-smart-order-router.md`
 - **Updated:** 2026-11-04
 
 ---
 
-## Active Sprint 18 Task Board (Macro Sentiment & News Event Risk)
+## Active Sprint 19 Task Board (Cross-Exchange Arbitrage & Smart Order Router)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TC-EVT-01` | Research & Architecture | Author comprehensive BRD-018 for RBI MPC rate decisions, Union Budget, US Fed FOMC spillover, quarterly corporate earnings calendar, and live NLP sentiment volatility impact on Indian equities (`docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`). | Researcher Lead | `COMPLETED` | None |
-| `TC-EVT-02` | Backend & Engine | Event Risk Engine: Macroeconomic event shock impact matrices, implied volatility expansion predictor, and Bayesian earnings surprises (`src/lib/macroEventEngine.ts`, `src/types/macroEvent.ts`). | Backend Lead | `READY` | `TC-EVT-01` |
-| `TC-EVT-03` | Frontend / UI | Macro Event & Sentiment Risk Radar Modal: Economic calendar timeline, implied volatility jump cones, and pre-event position hedging advisor (`src/components/MacroEventModal.tsx`). | Frontend Lead | `READY` | `TC-EVT-02` |
-| `TC-EVT-04` | Fullstack & State | Header navigation ("🌐 Macro Risk"), portfolio event beta exposure calculation, and Landing Page feature card (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `READY` | `TC-EVT-03` |
-| `TC-EVT-05` | QA & Testing | Automated test suite verifying event volatility jump calculations, earnings surprise z-scores, and macroeconomic risk scoring (`test/macroEventEngine.test.mjs`). | QA Lead | `READY` | `TC-EVT-02` |
+| `TC-SOR-01` | Research & Architecture | Author comprehensive BRD-019 specifying Indian NBBO (INBBO) aggregation across NSE and BSE, inter-market fee netting, sub-millisecond execution latency modeling with exponential fill decay, and atomic split-liquidity sweep order routing (`docs/brds/BRD-019-cross-exchange-arbitrage-smart-order-router.md`). | Researcher Lead | `COMPLETED` | None |
+| `TC-SOR-02` | Backend & Engine | Smart Order Router Engine: Dual-exchange Level-2 depth aggregator (`calculateINBBO`), cross-exchange arbitrage detector with statutory fee netting, latency fill probability decay model ($P(\text{Fill}) = \exp(-\lambda \tau)$), greedy split liquidity sweep solver, and 2-leg atomic arbitrage executor with bailout (`src/lib/sorEngine.ts`, `src/types/sor.ts`). | Backend Lead | `COMPLETED` | `TC-SOR-01` |
+| `TC-SOR-03` | Frontend / UI | Interactive Cross-Exchange SOR Studio Modal: Synchronized dual-exchange DOM ladders (NSE vs BSE), crossed spread arbitrage radar with 1-click execution, and routing policy telemetry table (`src/components/CrossExchangeSORModal.tsx`). | Frontend Lead | `COMPLETED` | `TC-SOR-02` |
+| `TC-SOR-04` | Fullstack & State | Header navigation ("⚡ SOR / Arb"), terminal integration with live spot prices, and Landing Page Feature Card 17 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`). | Fullstack Lead | `COMPLETED` | `TC-SOR-03` |
+| `TC-SOR-05` | QA & Testing | Automated test suite verifying INBBO best bid/ask aggregation, crossed spread detection, statutory fee netting, latency decay, and split liquidity greedy sort (`test/sorEngine.test.mjs`). 140/140 tests passing. | QA Lead | `COMPLETED` | `TC-SOR-02` |
+
+---
+
+## Completed Sprints Archive
+
+### Sprint 18: Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE
+- [x] **TC-EVT-01**: Author comprehensive BRD-018 for RBI MPC rate decisions, Union Budget, US Fed FOMC spillover, quarterly corporate earnings calendar, and live NLP sentiment volatility impact on Indian equities (`docs/brds/BRD-018-macroeconomic-sentiment-event-risk-engine.md`).
+- [x] **TC-EVT-02**: Event Risk Engine: Dubinsky-Johannes (2006) discrete event variance decomposition ($\sigma_{\text{implied}} = \sqrt{\sigma_{\text{diff}}^2 + V_{\text{event}} / T}$), instantaneous post-event crush forecasting, Loughran-McDonald NLP financial sentiment scoring with hawk/dove stance detection, and pre-event delta/vega hedging (`src/lib/macroEventEngine.ts`, `src/types/macroEvent.ts`).
+- [x] **TC-EVT-03**: Macro Event & Sentiment Risk Radar Modal: Economic calendar timeline, 2D SVG volatility smile comparison, implied straddle move extraction, and pre-event position hedging advisor (`src/components/MacroEventModal.tsx`).
+- [x] **TC-EVT-04**: Header navigation ("🌐 Macro Risk"), portfolio event beta calculation, and Landing Page Feature Card 16 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-EVT-05**: Automated test harness verifying event volatility jump calculations, earnings surprise z-scores, and macroeconomic risk scoring (`test/macroEventEngine.test.mjs`). 42 unit test assertions.
 
 ### Sprint 18 User Stories & Acceptance Criteria
 

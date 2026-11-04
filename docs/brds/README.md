@@ -38,5 +38,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-015`](./BRD-015-level3-order-book-iceberg-detector-dark-pool-tracker.md) | Real-Time Level-3 Order Book Analytics, Iceberg Detector & Institutional Dark Pool Volume Tracker | Sprint 15 | `COMPLETED` |
 | [`BRD-016`](./BRD-016-statistical-arbitrage-cointegration-pairs-trading.md) | Multi-Asset Statistical Arbitrage & Cointegration Pairs Trading Engine (Engle-Granger & Kalman Filter) | Sprint 16 | `COMPLETED` |
 | [`BRD-017`](./BRD-017-vwap-twap-execution-almgren-chriss-slippage-minimizer.md) | High-Frequency VWAP / TWAP Execution Algorithms & Microstructure Slippage Minimizer (Almgren-Chriss Optimal Liquidation Model) | Sprint 17 | `COMPLETED` |
-| [`BRD-018`](./BRD-018-macroeconomic-sentiment-event-risk-engine.md) | Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE (RBI MPC, Union Budget, US Fed FOMC & Pre-Event Options IV Jump Models) | Sprint 18 | `READY FOR IMPLEMENTATION` |
+| [`BRD-018`](./BRD-018-macroeconomic-sentiment-event-risk-engine.md) | Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE (RBI MPC, Union Budget, US Fed FOMC & Pre-Event Options IV Jump Models) | Sprint 18 | `COMPLETED` |
+| [`BRD-019`](./BRD-019-cross-exchange-arbitrage-smart-order-router.md) | Cross-Exchange Arbitrage & Latency-Aware Smart Order Router (SOR) for NSE vs BSE Inter-Market Arbitrage | Sprint 19 | `READY FOR IMPLEMENTATION` |
+
 
