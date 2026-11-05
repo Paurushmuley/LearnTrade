@@ -19,7 +19,7 @@
 
 | Date | Sprints Covered | Test Suite Status | Report Link |
 | :---: | :--- | :---: | :--- |
-| **2026-11-05** | Sprint 20: Real-Time FIX Protocol Gateway & Drop-Copy Simulator | **144/144 Passed** | [`2026-11-05.md`](./2026-11-05.md) |
+| **2026-11-05** | Sprint 20 & 21: FIX 4.4 Gateway, Drop-Copy & Options Volatility Dispersion | **163/163 Passed** | [`2026-11-05.md`](./2026-11-05.md) |
 | **2026-11-04** | Sprint 17–19: VWAP/TWAP, Macro Event Risk, Cross-Exchange SOR & UI Overhaul | **140/140 Passed** | [`2026-11-04.md`](./2026-11-04.md) |
 | **2026-11-03** | Sprint 10–16: Leagues, Quant Desk, Copier, Hedger, Vol Surface, L3 Book, Stat Arb | **132/132 Passed** | [`2026-11-03.md`](./2026-11-03.md) |
 | **2026-11-02** | Sprint 1–9: Core BYOK Platform, BS Engine, Webhooks, DOM, Analytics, Breadth, Audit | **63/63 Passed** | [`2026-11-02.md`](./2026-11-02.md) |

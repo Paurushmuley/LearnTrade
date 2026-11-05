@@ -25,6 +25,7 @@ import { QuantWarRoomModal } from '../components/QuantWarRoomModal';
 import { TradeCopierModal } from '../components/TradeCopierModal';
 import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
 import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal';
+import { VolatilityDispersionModal } from '../components/VolatilityDispersionModal';
 import { MicrostructureModal } from '../components/MicrostructureModal';
 import { StatArbModal } from '../components/StatArbModal';
 import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
@@ -74,6 +75,7 @@ export default function TradingTerminalPage() {
   const [isCopierOpen, setIsCopierOpen] = useState(false);
   const [isGreeksHedgerOpen, setIsGreeksHedgerOpen] = useState(false);
   const [isVolOptimizerOpen, setIsVolOptimizerOpen] = useState(false);
+  const [isVolDispersionOpen, setIsVolDispersionOpen] = useState(false);
   const [isMicrostructureOpen, setIsMicrostructureOpen] = useState(false);
   const [isStatArbOpen, setIsStatArbOpen] = useState(false);
   const [isExecutionOpen, setIsExecutionOpen] = useState(false);
@@ -476,6 +478,7 @@ export default function TradingTerminalPage() {
             onOpenCopier={() => setIsCopierOpen(true)}
             onOpenGreeksHedger={() => setIsGreeksHedgerOpen(true)}
             onOpenVolOptimizer={() => setIsVolOptimizerOpen(true)}
+            onOpenVolDispersion={() => setIsVolDispersionOpen(true)}
             onOpenMicrostructure={() => setIsMicrostructureOpen(true)}
             onOpenStatArb={() => setIsStatArbOpen(true)}
             onOpenExecution={() => setIsExecutionOpen(true)}
@@ -717,6 +720,14 @@ export default function TradingTerminalPage() {
         isOpen={isVolOptimizerOpen}
         onClose={() => setIsVolOptimizerOpen(false)}
         currentSpotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Sprint 21: Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine */}
+      <VolatilityDispersionModal
+        isOpen={isVolDispersionOpen}
+        onClose={() => setIsVolDispersionOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
+        symbol={selectedTicker.symbol}
       />
 
       {/* Level-3 Order Book Analytics, Iceberg Detector & Dark Pool Tracker Modal */}

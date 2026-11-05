@@ -49,6 +49,7 @@ interface HeaderProps {
   onOpenCopier: () => void;
   onOpenGreeksHedger: () => void;
   onOpenVolOptimizer?: () => void;
+  onOpenVolDispersion?: () => void;
   onOpenMicrostructure?: () => void;
   onOpenStatArb?: () => void;
   onOpenExecution?: () => void;
@@ -93,6 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCopier,
   onOpenGreeksHedger,
   onOpenVolOptimizer,
+  onOpenVolDispersion,
   onOpenMicrostructure,
   onOpenStatArb,
   onOpenExecution,
@@ -227,6 +229,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'vol-dispersion',
+      name: 'Options Vol Dispersion & Skew',
+      badge: 'Sprint 21',
+      description: 'Multi-expiry smile ribbon, implied correlation radar & gamma scalper',
+      icon: <Zap className="h-4 w-4 text-cyan-400" />,
+      action: onOpenVolDispersion,
+      category: 'Quant Lab',
+      accent: 'cyan',
+    },
     {
       id: 'greeks-hedger',
       name: 'Delta-Gamma Hedger',
@@ -617,7 +629,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
                       <Sparkles className="h-3 w-3" /> Quant Lab & AI Desk
                     </span>
-                    <span className="text-[9px] text-slate-500">5 Models</span>
+                    <span className="text-[9px] text-slate-500">{quantTools.length} Models</span>
                   </div>
                   <div className="space-y-0.5">
                     {quantTools.map((tool) => (

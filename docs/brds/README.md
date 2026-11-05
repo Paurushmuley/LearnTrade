@@ -41,5 +41,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-018`](./BRD-018-macroeconomic-sentiment-event-risk-engine.md) | Macroeconomic Sentiment Analysis & News Event Risk Engine for NSE/BSE (RBI MPC, Union Budget, US Fed FOMC & Pre-Event Options IV Jump Models) | Sprint 18 | `COMPLETED` |
 | [`BRD-019`](./BRD-019-cross-exchange-arbitrage-smart-order-router.md) | Cross-Exchange Arbitrage & Latency-Aware Smart Order Router (SOR) for NSE vs BSE Inter-Market Arbitrage | Sprint 19 | `COMPLETED` |
 | [`BRD-020`](./BRD-020-fix-protocol-gateway-order-flow-simulator.md) | Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine) | Sprint 20 | `COMPLETED` |
+| [`BRD-021`](./BRD-021-options-volatility-dispersion-skew-hedging-engine.md) | Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine | Sprint 21 | `IN_PROGRESS` |
+
 
 

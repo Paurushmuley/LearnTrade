@@ -506,6 +506,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Institutional tag-value socket wire stream (35=D, 35=8), Modulo 256 checksum engine, synthetic matching engine execution reports, and dedicated compliance Drop-Copy audit journal.
             </p>
           </div>
+
+          {/* Card 19: Options Volatility Dispersion & Skew Hedging */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-amber-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Options Vol Dispersion & Skew</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Index vs constituent implied volatility dispersion, correlation risk premium (CRP), multi-expiry term-structure smile ribbon, and automated delta-neutral gamma scalping triggers.
+            </p>
+          </div>
         </div>
       </section>
 
