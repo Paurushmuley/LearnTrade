@@ -14,91 +14,65 @@
 
 ---
 
-## Active Sprint 21 Task Board (Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine)
+## Active / Upcoming Sprint 22 Candidate Board (High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-DISP-01` | Research & Architecture | Author comprehensive BRD-021: Mathematical formulation of Index vs Constituent Implied Volatility Dispersion, Implied Correlation ($\rho_{\text{impl}}$) extraction, Multi-Expiry Skew Slopes ($d\sigma/dK$), and Gamma Scalping Bands. | Researcher Lead | 5 SP | `COMPLETED` | None | BRD-021 approved in `docs/brds/` & registered in `README.md` |
-| `TC-DISP-02` | Backend & Quantitative Engine | Volatility Dispersion Engine: Correlation-weighted basket variance solver ($\sigma_{\text{basket}}^2 = \sum w_i^2 \sigma_i^2 + 2\sum_{i<j} w_i w_j \rho_{ij} \sigma_i \sigma_j$), dirty dispersion spread identifier, delta/vega neutral hedge solver, and gamma scalping step simulator (`src/lib/dispersionEngine.ts`, `src/types/dispersion.ts`). | Backend Lead | 8 SP | `COMPLETED` | `TC-DISP-01` | Pure functional TS, 0 compilation errors, deterministic outputs |
-| `TC-DISP-03` | Frontend / UI Components | Interactive Volatility Dispersion & Skew Studio Modal: Multi-expiry term-structure smile visualizer, constituent correlation & dispersion radar matrix, 1-click basket arbitrage order generator, and real-time gamma scalping band tracker (`src/components/VolatilityDispersionModal.tsx`). | Frontend Lead | 5 SP | `COMPLETED` | `TC-DISP-02` | High-tech dark theme, zero layout shifts, accessible controls |
-| `TC-DISP-04` | Fullstack & State Integration | Header navigation suite binding ("🧠 Quant Lab" dropdown), Command Palette (`Ctrl+K`) integration, terminal spot feed wiring in `src/app/page.tsx`, and Landing Page Feature Card 19 showcase in `src/components/LandingPage.tsx`. | Fullstack Lead | 3 SP | `COMPLETED` | `TC-DISP-03` | Modal opens seamlessly, responsive across viewport breakpoints |
-| `TC-DISP-05` | QA & Automated Testing | Comprehensive unit test suite in `test/dispersionEngine.test.mjs` verifying implied correlation bounds $[-1, 1]$, basket variance calculations, delta-neutral rebalancing, gamma scalping trigger bands, and pre-trade statutory tax integration. | QA Lead | 5 SP | `COMPLETED` | `TC-DISP-02` | 100% test pass rate, $\ge 15$ new unit test assertions |
+| `TC-RISK-01` | Research & Architecture | Author comprehensive BRD-022: Formulate standard SPAN margin methodology (16 scenario risk array grid), Extreme Value Theory (EVT) Generalized Pareto Distribution for Expected Shortfall ($\text{ES}_{99.9\%}$), portfolio Greek stress shock matrices, and SEBI dynamic volatility circuit breaker rules. | Researcher Lead | 5 SP | `READY` | None | BRD-022 approved in `docs/brds/` & registered in `README.md` |
+| `TC-RISK-02` | Backend & Risk Engine | SPAN Margin & Stress Testing Engine (`src/lib/riskEngine.ts`, `src/types/risk.ts`): Multi-asset scenario matrix (price movement $\pm 3\sigma$, IV shift $\pm 10\%$, calendar spread charge), tail-risk EVT Expected Shortfall solver, and real-time pre-trade order veto filter. | Backend Lead | 8 SP | `PLANNED` | `TC-RISK-01` | Pure functional TS, 0 compilation errors, deterministic outputs |
+| `TC-RISK-03` | Frontend / UI Components | Interactive Pre-Trade Risk & Stress Desk Modal (`src/components/PreTradeRiskModal.tsx`): 16-scenario SPAN risk surface heatmap, EVT loss distribution tail chart, portfolio Greek sensitivity stress dials ($\pm 10\%$ NIFTY shock), and dynamic circuit breaker monitor. | Frontend Lead | 5 SP | `PLANNED` | `TC-RISK-02` | High-tech dark theme, zero layout shifts, accessible controls |
+| `TC-RISK-04` | Fullstack & Integration | Header navigation suite binding ("⚡ Execution" suite), Command Palette (`Ctrl+K`) integration, pre-trade order interceptor wiring in order submission flow, and Landing Page showcase Feature Card 20. | Fullstack Lead | 3 SP | `PLANNED` | `TC-RISK-03` | Seamless modal trigger, responsive across viewport breakpoints |
+| `TC-RISK-05` | QA & Verification | Rigorous unit test suite in `test/riskEngine.test.mjs` verifying SPAN risk array bounds, EVT Pareto tail shape parameters, stress matrix monotonicity, and pre-trade veto rejection. | QA Lead | 5 SP | `PLANNED` | `TC-RISK-02` | 100% test pass rate, $\ge 15$ new unit test assertions |
 
 ---
 
-### Sprint 21 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 21 must strictly satisfy the following quality gates prior to sprint closeout:
-- [x] **Mathematical Rigor:** Implied correlation mathematically bounded $\rho_{\text{impl}} \in [-1.0, +1.0]$, variance positive semi-definite.
-- [x] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [x] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests).
-- [x] **Production Next.js Build:** Production compilation (`npm run build`) builds cleanly with zero SSR/hydration mismatches.
-- [x] **SEBI Statutory Compliance:** Pre-trade margin verification and exact Indian statutory fee integration (STT on option turnover, exchange turnover charges, GST, SEBI charges, stamp duty).
-- [x] **UI/UX Consistency:** Visual design conforms to TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `rose-400`).
-- [x] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-021-*.md`, and `docs/daily-reports/YYYY-MM-DD.md`.
+### Sprint 22 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 22 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** 16-scenario SPAN risk array accurately models simultaneous underlying price shifts ($\pm 3\sigma$) and volatility shifts ($\pm 10\%$). EVT Expected Shortfall parameter estimation converges stably.
+- [ ] **Pre-Trade Enforcement:** Pre-trade margin veto prevents order dispatch within $<1$ms latency overhead if post-trade margin requirement exceeds available collateral.
+- [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests).
+- [ ] **Production Next.js Build:** Production compilation (`npm run build`) builds cleanly with zero SSR/hydration mismatches.
+- [ ] **UI/UX Consistency:** Visual design conforms to TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `rose-400`).
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-022-*.md`, and `docs/daily-reports/YYYY-MM-DD.md`.
 
 ---
 
-### Sprint 21 User Stories & Acceptance Criteria
+### Sprint 22 User Stories & Acceptance Criteria
 
-#### User Story 1: Volatility Dispersion & Implied Correlation Analytics (`TC-DISP-01`, `TC-DISP-02`)
-- **Story:** *As a Quantitative Derivatives Trader*, I want to measure the spread between Index Implied Volatility (NIFTY 50) and the weighted Implied Volatility of its top constituents, calculating the implied pairwise correlation ($\rho_{\text{implied}}$), so that I can trade the Correlation Risk Premium via volatility dispersion arbitrage.
-- **Mathematical Specification:**
-  - Index Variance vs Constituent Variance:
-    $$\sigma_{\text{index}}^2 = \sum_{i=1}^n w_i^2 \sigma_i^2 + 2 \sum_{i < j} w_i w_j \rho_{ij} \sigma_i \sigma_j$$
-  - Average Implied Correlation extraction assuming uniform pair correlation $\bar{\rho}_{\text{impl}}$:
-    $$\bar{\rho}_{\text{impl}} = \frac{\sigma_{\text{index}}^2 - \sum_{i=1}^n w_i^2 \sigma_i^2}{\left(\sum_{i=1}^n w_i \sigma_i\right)^2 - \sum_{i=1}^n w_i^2 \sigma_i^2}$$
-  - Dirty Dispersion Spread:
-    $$S_{\text{disp}} = \sum_{i=1}^n w_i \sigma_i - \sigma_{\text{index}}$$
-  - Correlation Risk Premium: $\text{CRP} = \bar{\rho}_{\text{impl}} - \bar{\rho}_{\text{realized}}$.
+#### User Story 1: SPAN Margin Multi-Scenario Risk Array Grid (`TC-RISK-01`, `TC-RISK-02`)
+- **Story:** *As an Institutional Risk Manager*, I want standard SPAN (Standard Portfolio Analysis of Risk) margin evaluation computing loss arrays across 16 price and volatility stress points, so that dynamic portfolio leverage and worst-case margin requirements reflect clearinghouse exchange standards.
 - **Acceptance Criteria:**
-  - Implied correlation $\bar{\rho}_{\text{impl}}$ is strictly clamped to valid mathematical range $[-1.0, +1.0]$.
-  - Supports Top 10 Nifty constituents (RELIANCE, HDFCBANK, ICICIBANK, INFY, TCS, ITC, LT, SBIN, BHARTIARTL, KOTAKBANK) with normalized index weights $\sum w_i = 1$.
-  - Generates clear trading signals:
-    - **Long Dispersion (Short Correlation):** When $S_{\text{disp}} > \tau$ (Buy component straddles / Sell index straddle).
-    - **Short Dispersion (Long Correlation):** When $S_{\text{disp}} < -\tau$ (Sell component straddles / Buy index straddle).
+  - Evaluates 16 standard scenario states spanning underlying moves ($-3\sigma, -2\sigma, -\sigma, 0, +\sigma, +2\sigma, +3\sigma$) and volatility shocks ($-10\%, 0\%, +10\%$).
+  - Incorporates inter-month calendar spread charges and short option minimum margin buffers.
+  - Returns active SPAN requirement, margin utilization percentage, and liquid capital buffer.
 
-#### User Story 2: Multi-Expiry Term Structure Skew & Smile Calibrator (`TC-DISP-02`)
-- **Story:** *As an Options Market Maker*, I want to model multi-expiry volatility smiles across near-week, next-week, and monthly expiry cycles, extracting at-the-money skew slopes ($d\sigma/dK$) and term structure contango/backwardation, so that strike-relative mispricings can be systematically exploited.
+#### User Story 2: Extreme Value Theory (EVT) Expected Shortfall Desk (`TC-RISK-02`)
+- **Story:** *As a Quantitative Risk Officer*, I want tail risk estimation using Extreme Value Theory (Pickands-Balkema-de Haan Generalized Pareto Distribution) for VaR and Expected Shortfall ($99.9\%$), so that fat-tailed black swan losses are accurately quantified beyond Gaussian normal assumptions.
 - **Acceptance Criteria:**
-  - Computes Term Structure Slope: $\text{Slope}_{T_1, T_2} = \frac{\sigma(T_2) - \sigma(T_1)}{T_2 - T_1}$.
-  - Identifies Volatility Smile Curvature (Butterfly / Fly 25D) and Risk Reversal (RR 25D):
-    $$\text{RR}_{25\Delta} = \sigma_{25\Delta \text{ Call}} - \sigma_{25\Delta \text{ Put}}$$
-    $$\text{Fly}_{25\Delta} = \frac{\sigma_{25\Delta \text{ Call}} + \sigma_{25\Delta \text{ Put}}}{2} - \sigma_{\text{ATM}}$$
-  - Provides instant classification of Term Structure regime: Contango ($\sigma_{T_2} > \sigma_{T_1}$), Flat, or Inverted/Backwardation ($\sigma_{T_2} < \sigma_{T_1}$).
+  - Fits Generalized Pareto Distribution parameters ($\xi$ shape parameter, $\beta$ scale parameter) to historical tail losses exceeding high quantile threshold $u$.
+  - Generates $\text{VaR}_{99.9\%}$ and Expected Shortfall $\text{ES}_{99.9\%} = \frac{\text{VaR}}{1 - \xi} + \frac{\beta - \xi u}{1 - \xi}$.
+  - Flags tail fatness warning if shape parameter $\xi > 0.2$ (Fréchet heavy-tail domain).
 
-#### User Story 3: Delta-Neutral & Vega-Weighted Rebalancer (`TC-DISP-02`)
-- **Story:** *As a Quantitative Risk Manager*, I want automated calculation of delta-neutral hedge ratios and vega-weighted basket allocations between the Index and individual single-stock options, so that the dispersion portfolio remains immune to directional market shocks.
+#### User Story 3: Pre-Trade Order Interceptor & Circuit Breaker Engine (`TC-RISK-02`, `TC-RISK-04`)
+- **Story:** *As a Platform User*, I want real-time pre-trade risk interception that blocks orders violating max position limits, fat-finger size limits, or SEBI volatility circuit breakers before execution.
 - **Acceptance Criteria:**
-  - Portfolio Greeks Aggregation:
-    $$\Delta_{\text{port}} = \Delta_{\text{index}} \cdot Q_{\text{index}} + \sum_{i=1}^n \Delta_i \cdot Q_i$$
-    $$\mathcal{V}_{\text{port}} = \mathcal{V}_{\text{index}} \cdot Q_{\text{index}} + \sum_{i=1}^n \mathcal{V}_i \cdot Q_i = 0$$
-  - Automatic computation of required underlying futures/cash rebalance units to drive $\Delta_{\text{port}} \approx 0$.
-  - Indian lot size rounding for NIFTY 50 (lot size 25) and constituent single stocks (e.g., RELIANCE 250, HDFCBANK 550, TCS 175).
+  - Evaluates prospective order margin and enforces max capital risk veto.
+  - Enforces SEBI dynamic price bands and halts trading if index circuit breaker triggers ($10\%, 15\%, 20\%$).
+  - Pre-trade veto latency is bounded under 2 milliseconds.
 
-#### User Story 4: Gamma Scalping Trigger Simulator (`TC-DISP-02`, `TC-DISP-03`)
-- **Story:** *As a Systematic Options Scalper*, I want dynamic gamma scalping band triggers ($\pm \Delta_{\text{thresh}}$ or underlying spot bands $\pm k \cdot \sigma \sqrt{\Delta t}$), showing real-time rebalancing actions and net P&L attribution (accumulated gamma scalp profit vs theta decay drag minus transaction costs).
+#### User Story 4: Interactive Pre-Trade Risk & Stress Desk Modal (`TC-RISK-03`, `TC-RISK-04`)
+- **Story:** *As a Quantitative Portfolio Manager*, I want an interactive Pre-Trade Risk & Stress Desk modal accessible via Header Execution suite and Command Palette (`Ctrl+K`), showcasing the 16-scenario SPAN risk heatmap, EVT tail loss distribution, and Greek sensitivity dials.
 - **Acceptance Criteria:**
-  - Configurable rebalance threshold band: $\Delta S_{\text{band}} = S_0 \times \frac{\text{BandThreshold}}{100}$.
-  - Real-time P&L decomposition:
-    $$\text{PnL}_{\text{net}} = \sum \text{Scalp Profit} - \int \Theta \, dt - \sum \text{Friction Fees}$$
-  - Full display of scalp trigger events with timestamp, trigger price, hedge volume, and realized scalp gain.
+  - High-tech 16-scenario SVG risk matrix with interactive tooltip loss readouts.
+  - EVT tail chart displaying empirical loss histogram vs Pareto fitted curve.
+  - 1-click risk override or portfolio de-risking rebalance trigger.
 
-#### User Story 5: Interactive Volatility Dispersion Modal & Terminal Binding (`TC-DISP-03`, `TC-DISP-04`)
-- **Story:** *As an Active Platform Trader*, I want an intuitive, institutional-grade Volatility Dispersion & Multi-Expiry Skew Studio accessible directly from the Header ("🧠 Quant Lab" suite) and Quick Finder (`Ctrl+K`), with 3D term-structure visualizer, constituent correlation heatmap, and 1-click basket execution.
+#### User Story 5: Automated Verification & Unit Test Suite (`TC-RISK-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite validating SPAN margin array monotonicity, EVT Pareto tail parameter convergence, pre-trade order veto filters, and statutory compliance.
 - **Acceptance Criteria:**
-  - Modal provides 4 specialized views:
-    1. **Dispersion Radar:** Implied vs Realized correlation gauge, dirty dispersion spread, component table with weights, IV, and strike.
-    2. **Term Structure & Skew:** Multi-expiry smile curves (Near, Next, Monthly) with 25-Delta RR & Fly metrics.
-    3. **Gamma Scalper:** Live scalping trigger bands visualizer, scalp history log, and Theta vs Gamma breakdown.
-    4. **Basket Dispatcher:** 1-click execution for Long/Short dispersion with Indian statutory tax breakdown.
-  - Header integration in "🧠 Quant Lab" dropdown with icon badge.
-  - Landing Page Feature Card 19 showcasing the new capability.
-
-#### User Story 6: Automated Verification & Unit Test Suite (`TC-DISP-05`)
-- **Story:** *As a QA Lead*, I want an automated test suite validating all mathematical invariants, correlation bounds, multi-expiry skew slopes, delta-neutral rebalancing, and statutory fees.
-- **Acceptance Criteria:**
-  - Comprehensive unit test file: `test/dispersionEngine.test.mjs`.
-  - Minimum of 15 rigorous test cases covering all edge cases.
+  - Unit test suite: `test/riskEngine.test.mjs`.
+  - Minimum of 15 test assertions covering boundary stress scenarios and veto rejections.
   - 100% passing tests with 0 regressions across the entire suite.
 
 ---
@@ -112,11 +86,58 @@ All stories in Sprint 21 must strictly satisfy the following quality gates prior
 | **Sprint 18** | 26 | 26 | 134 | `DELIVERED` | Macroeconomic Sentiment Analysis & Event Risk Engine |
 | **Sprint 19** | 26 | 26 | 140 | `DELIVERED` | Cross-Exchange Arbitrage & Latency-Aware SOR (NSE vs BSE) |
 | **Sprint 20** | 26 | 26 | 144 | `DELIVERED` | FIX 4.4 Protocol Gateway & Drop-Copy Simulator |
-| **Sprint 21** | **26** | **0 (Active)** | **144** | `IN_FLIGHT` | **Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine** |
+| **Sprint 21** | 26 | 26 | 163 | `DELIVERED` | Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine |
+| **Sprint 22** | **26** | **0 (Active)** | **163** | `GROOMING` | **High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk** |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 21: Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine
+- [x] **TC-DISP-01**: Author comprehensive BRD-021: Mathematical formulation of Index vs Constituent Implied Volatility Dispersion, Implied Correlation ($\rho_{\text{impl}}$) extraction, Multi-Expiry Skew Slopes ($d\sigma/dK$), and Gamma Scalping Bands (`docs/brds/BRD-021-options-volatility-dispersion-skew-hedging-engine.md`).
+- [x] **TC-DISP-02**: Volatility Dispersion Engine: Correlation-weighted basket variance solver ($\sigma_{\text{basket}}^2 = \sum w_i^2 \sigma_i^2 + 2\sum_{i<j} w_i w_j \rho_{ij} \sigma_i \sigma_j$), dirty dispersion spread identifier, delta/vega neutral hedge solver, and gamma scalping step simulator (`src/lib/dispersionEngine.ts`, `src/types/dispersion.ts`).
+- [x] **TC-DISP-03**: Interactive Volatility Dispersion & Skew Studio Modal: Multi-expiry term-structure smile visualizer, constituent correlation & dispersion radar matrix, 1-click basket arbitrage order generator, and real-time gamma scalping band tracker (`src/components/VolatilityDispersionModal.tsx`).
+- [x] **TC-DISP-04**: Header navigation suite binding ("🧠 Quant Lab" dropdown), Command Palette (`Ctrl+K`) integration, terminal spot feed wiring in `src/app/page.tsx`, and Landing Page Feature Card 19 showcase in `src/components/LandingPage.tsx`.
+- [x] **TC-DISP-05**: Automated unit test suite in `test/dispersionEngine.test.mjs` verifying implied correlation bounds $[-1, 1]$, basket variance calculations, delta-neutral rebalancing, gamma scalping trigger bands, and pre-trade statutory tax integration. 163/163 tests passing.
+
+#### Sprint 21 User Stories & Acceptance Criteria
+
+##### User Story 1: Volatility Dispersion & Implied Correlation Analytics (`TC-DISP-01`, `TC-DISP-02`)
+- **Story:** *As a Quantitative Derivatives Trader*, I want to measure the spread between Index Implied Volatility (NIFTY 50) and the weighted Implied Volatility of its top constituents, calculating the implied pairwise correlation ($\rho_{\text{implied}}$), so that I can trade the Correlation Risk Premium via volatility dispersion arbitrage.
+- **Acceptance Criteria:**
+  - Implied correlation $\bar{\rho}_{\text{impl}}$ is strictly clamped to valid mathematical range $[-1.0, +1.0]$.
+  - Supports Top 10 Nifty constituents with normalized index weights $\sum w_i = 1$.
+  - Generates clear trading signals: Long Dispersion ($S_{\text{disp}} > \tau$) and Short Dispersion ($S_{\text{disp}} < -\tau$).
+
+##### User Story 2: Multi-Expiry Term Structure Skew & Smile Calibrator (`TC-DISP-02`)
+- **Story:** *As an Options Market Maker*, I want to model multi-expiry volatility smiles across near-week, next-week, and monthly expiry cycles, extracting at-the-money skew slopes and term structure regimes.
+- **Acceptance Criteria:**
+  - Identifies 25-Delta Risk Reversal ($\text{RR}_{25\Delta}$) and Butterfly ($\text{Fly}_{25\Delta}$) curvature.
+  - Classifies term structure regimes (Contango, Flat, Backwardation).
+
+##### User Story 3: Delta-Neutral & Vega-Weighted Rebalancer (`TC-DISP-02`)
+- **Story:** *As a Quantitative Risk Manager*, I want automated calculation of delta-neutral hedge ratios and vega-weighted basket allocations between the Index and individual single-stock options.
+- **Acceptance Criteria:**
+  - Computes required underlying futures/cash rebalance units to drive $\Delta_{\text{port}} \approx 0$.
+  - Respects Indian lot size quantization.
+
+##### User Story 4: Gamma Scalping Trigger Simulator (`TC-DISP-02`, `TC-DISP-03`)
+- **Story:** *As a Systematic Options Scalper*, I want dynamic gamma scalping band triggers ($\pm \Delta_{\text{thresh}}$), showing real-time rebalancing actions and net P&L attribution.
+- **Acceptance Criteria:**
+  - Real-time P&L decomposition: Net P&L = Scalp Profit - Theta decay - Statutory taxes.
+  - Displays scalp log with timestamps, trigger prices, and realized gains.
+
+##### User Story 5: Interactive Volatility Dispersion Modal & Terminal Binding (`TC-DISP-03`, `TC-DISP-04`)
+- **Story:** *As an Active Platform Trader*, I want an intuitive, institutional-grade Volatility Dispersion & Multi-Expiry Skew Studio accessible directly from the Header ("🧠 Quant Lab" suite) and Quick Finder (`Ctrl+K`).
+- **Acceptance Criteria:**
+  - 4 specialized views: Dispersion Radar, Term Structure & Skew, Gamma Scalper, Basket Dispatcher.
+  - Seamless integration with Header and Landing Page Card 19.
+
+##### User Story 6: Automated Verification & Unit Test Suite (`TC-DISP-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite validating all mathematical invariants, correlation bounds, multi-expiry skew slopes, delta-neutral rebalancing, and statutory fees.
+- **Acceptance Criteria:**
+  - 19 new test assertions in `test/dispersionEngine.test.mjs`.
+  - 100% passing tests with 0 regressions across the entire suite (163/163 passed).
 
 ### Sprint 20: Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine)
 - [x] **TC-FIX-01**: Author comprehensive BRD-020 specifying FIX 4.4 protocol dictionary, tag value serialization (Tag 35=D, Tag 35=8), drop-copy session architecture, heartbeat interval timing, and institutional audit logging (`docs/brds/BRD-020-fix-protocol-gateway-order-flow-simulator.md`).
