@@ -5,27 +5,61 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprints 1–19 Fully Delivered, Integrated & DoD-Verified; Sprint 20 Backlog Grooming Active
-- **Status:** ALL QUALITY GATES PASSED (140/140 Tests Passing, Strict TypeScript Clean)
-- **Current Milestone:** Sprint 19 (Cross-Exchange Arbitrage & Latency-Aware Smart Order Router) Delivered; UI Declutter & Institutional Command Palette (`Ctrl+K`) Integrated
-- **Candidate Sprint 20:** Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine)
-- **Updated:** 2026-11-04 11:35 IST
+- **Active Cycle:** Sprints 1–20 Fully Delivered, Integrated & DoD-Verified; Sprint 21 Backlog Grooming Active
+- **Status:** ALL QUALITY GATES PASSED (144/144 Tests Passing, Strict TypeScript Clean)
+- **Current Milestone:** Sprint 20 (Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator) Delivered & Verified
+- **Candidate Sprint 21:** Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine (Surface Arbitrage & Gamma Scalping Desk)
+- **Updated:** 2026-11-05 10:30 IST
 
 ---
 
-## Active / Upcoming Sprint 20 Candidate Board (FIX Protocol Gateway & Order Flow Simulator)
+## Active / Upcoming Sprint 21 Candidate Board (Options Volatility Dispersion & Skew Hedging Engine)
 
 | Task ID | Domain | Description | Assigned Agent | Status | Dependencies |
 | :--- | :--- | :--- | :--- | :---: | :--- |
-| `TC-FIX-01` | Research & Architecture | Author comprehensive BRD-020 specifying FIX 4.4 protocol dictionary, tag value serialization (Tag 35=D, Tag 35=8), drop-copy session architecture, heartbeat interval timing, and institutional audit logging. | Researcher Lead | `PLANNED` | None |
-| `TC-FIX-02` | Backend & Engine | FIX Protocol Engine: Tag-value parser and serializer, session state machine (Logon, Heartbeat, ResendRequest, ExecutionReport), deterministic synthetic exchange simulator, and drop-copy journal logger. | Backend Lead | `PLANNED` | `TC-FIX-01` |
-| `TC-FIX-03` | Frontend / UI | Interactive FIX Protocol Console Modal: Raw tag-value message stream viewer, session state indicator, manual FIX order injection terminal, and latency benchmark telemetry graph. | Frontend Lead | `PLANNED` | `TC-FIX-02` |
-| `TC-FIX-04` | Fullstack & State | Header navigation suite binding ("Execution & Algorithms" suite), terminal order router bridge, and Landing Page showcase card. | Fullstack Lead | `PLANNED` | `TC-FIX-03` |
-| `TC-FIX-05` | QA & Testing | Automated test suite verifying FIX tag serialization, checksum verification, sequence number resend recovery, and message rejection handling. | QA Lead | `PLANNED` | `TC-FIX-02` |
+| `TC-DISP-01` | Research & Architecture | Author comprehensive BRD-021 specifying Index vs Components Implied Volatility Dispersion arbitrage, multi-expiry term-structure skew modeling, and automated gamma scalping band triggers. | Researcher Lead | `PLANNED` | None |
+| `TC-DISP-02` | Backend & Engine | Volatility Dispersion Engine: Correlation-weighted basket volatility solver ($\sigma_{\text{index}}^2 \le \sum w_i^2 \sigma_i^2 + 2\sum w_i w_j \rho_{ij} \sigma_i \sigma_j$), dirty dispersion spread identifier, and automated delta-neutral rebalancing solver. | Backend Lead | `PLANNED` | `TC-DISP-01` |
+| `TC-DISP-03` | Frontend / UI | Interactive Volatility Dispersion & Skew Studio Modal: 3D multi-expiry term structure ribbon chart, dispersion correlation matrix, and 1-click basket execution trigger. | Frontend Lead | `PLANNED` | `TC-DISP-02` |
+| `TC-DISP-04` | Fullstack & State | Header navigation suite binding ("Quant Lab" suite), market data bridge, and Landing Page feature showcase card. | Fullstack Lead | `PLANNED` | `TC-DISP-03` |
+| `TC-DISP-05` | QA & Testing | Automated test suite verifying correlation bound enforcement, basket volatility calculation, and dispersion profit attribution. | QA Lead | `PLANNED` | `TC-DISP-02` |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 20: Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine)
+- [x] **TC-FIX-01**: Author comprehensive BRD-020 specifying FIX 4.4 protocol dictionary, tag value serialization (Tag 35=D, Tag 35=8), drop-copy session architecture, heartbeat interval timing, and institutional audit logging (`docs/brds/BRD-020-fix-protocol-gateway-order-flow-simulator.md`).
+- [x] **TC-FIX-02**: FIX Protocol Engine: Tag-value parser and serializer, Modulo 256 checksum validator, session state machine (Logon, Heartbeat, TestRequest, ExecutionReport), deterministic synthetic exchange simulator, and drop-copy journal logger (`src/lib/fixEngine.ts`, `src/types/fix.ts`).
+- [x] **TC-FIX-03**: Interactive FIX Protocol Console Modal: Raw tag-value message stream viewer, session state indicator, manual FIX order injection terminal, tag inspector, and drop-copy compliance journal (`src/components/FixProtocolModal.tsx`).
+- [x] **TC-FIX-04**: Header navigation suite binding ("⚡ Execution" suite & Command Palette `Ctrl+K`), terminal order router bridge, and Landing Page showcase Card 18 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-FIX-05**: Automated test suite verifying FIX tag serialization, checksum verification, sequence number resend recovery, and message rejection handling (`test/fixEngine.test.mjs`). 144/144 tests passing.
+
+#### Sprint 20 User Stories & Acceptance Criteria
+
+##### User Story 1: Raw Tag-Value Serialization & Checksum Engine (`TC-FIX-01`, `TC-FIX-02`)
+- **Story:** *As a Quantitative Systems Engineer*, I want bi-directional serialization and parsing of standard FIX 4.4 messages with exact Tag 9 body length and Tag 10 Modulo 256 checksum calculation, so that wire packets are fully conformant with institutional exchange standards.
+- **Acceptance Criteria:**
+  - Checksum algorithm: $(\sum \text{ASCII}) \pmod{256}$, padded to 3 digits (`sprintf("%03d")`).
+  - Supports standard SOH (`\x01`) and visual pipe (`|`) delimiters.
+  - Zero performance lag on large packet volumes.
+
+##### User Story 2: Synthetic Exchange Execution Engine (`TC-FIX-02`)
+- **Story:** *As an Algorithmic Trader*, I want realistic asynchronous execution responses (`ExecutionReport 35=8`) for injected orders (`NewOrderSingle 35=D`), progressing through Acknowledged (`OrdStatus=0`) to Filled (`OrdStatus=2`), with sub-millisecond wire latency simulation.
+- **Acceptance Criteria:**
+  - Generates realistic `OrderID`, `ExecID`, `AvgPx`, `CumQty`, and `LeavesQty`.
+  - Simulates 1–6ms network cross-connect latency.
+
+##### User Story 3: Drop-Copy Compliance Journal (`TC-FIX-02`, `TC-FIX-03`)
+- **Story:** *As a Compliance Officer / Risk Manager*, I want a dedicated read-only Drop-Copy audit stream recording all executions, partial fills, and order events with CSV export capabilities.
+- **Acceptance Criteria:**
+  - Real-time mirrored drop-copy ledger.
+  - 1-click CSV download for regulatory audit trails.
+
+##### User Story 4: Interactive FIX Console Modal & Header Binding (`TC-FIX-03`, `TC-FIX-04`)
+- **Story:** *As a Platform User*, I want a high-tech FIX Protocol modal with Live Stream, Order Injector, Drop-Copy Audit, and Tag Dictionary, accessible via Header Execution suite and Command Palette (`Ctrl+K`).
+- **Acceptance Criteria:**
+  - Integrated into Header ("⚡ Execution" suite) and Command Palette.
+  - Feature Card 18 displayed on Landing Page.
 
 ### Sprint 19: Cross-Exchange Arbitrage & Latency-Aware Smart Order Router (SOR) for NSE vs BSE
 - [x] **TC-SOR-01**: Author comprehensive BRD-019 specifying Indian NBBO (INBBO) aggregation across NSE and BSE, inter-market fee netting, sub-millisecond execution latency modeling with exponential fill decay, and atomic split-liquidity sweep order routing (`docs/brds/BRD-019-cross-exchange-arbitrage-smart-order-router.md`).

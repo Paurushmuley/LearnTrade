@@ -30,6 +30,7 @@ import { StatArbModal } from '../components/StatArbModal';
 import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
 import { MacroEventModal } from '../components/MacroEventModal';
 import { CrossExchangeSORModal } from '../components/CrossExchangeSORModal';
+import { FixProtocolModal } from '../components/FixProtocolModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -78,6 +79,7 @@ export default function TradingTerminalPage() {
   const [isExecutionOpen, setIsExecutionOpen] = useState(false);
   const [isMacroEventOpen, setIsMacroEventOpen] = useState(false);
   const [isSOROpen, setIsSOROpen] = useState(false);
+  const [isFixOpen, setIsFixOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -479,6 +481,7 @@ export default function TradingTerminalPage() {
             onOpenExecution={() => setIsExecutionOpen(true)}
             onOpenMacroEvent={() => setIsMacroEventOpen(true)}
             onOpenSOR={() => setIsSOROpen(true)}
+            onOpenFix={() => setIsFixOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -790,6 +793,14 @@ export default function TradingTerminalPage() {
         onClose={() => setIsSOROpen(false)}
         defaultSymbol={selectedTicker.symbol}
         defaultPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Real-Time FIX 4.4 Protocol Gateway & Drop-Copy Simulator */}
+      <FixProtocolModal
+        isOpen={isFixOpen}
+        onClose={() => setIsFixOpen(false)}
+        currentSymbol={selectedTicker.symbol}
+        currentPrice={selectedTicker.currentPrice}
       />
 
       {/* User Account & Authentication Modals */}

@@ -25,6 +25,7 @@ import {
   Share2,
   ShieldAlert,
   Sparkles,
+  Terminal,
   TrendingUp,
   Trophy,
   X,
@@ -53,6 +54,7 @@ interface HeaderProps {
   onOpenExecution?: () => void;
   onOpenMacroEvent?: () => void;
   onOpenSOR?: () => void;
+  onOpenFix?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -96,6 +98,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenExecution,
   onOpenMacroEvent,
   onOpenSOR,
+  onOpenFix,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -211,6 +214,16 @@ export const Header: React.FC<HeaderProps> = ({
       action: onOpenWebhookBot,
       category: 'Execution',
       accent: 'indigo',
+    },
+    {
+      id: 'fix-protocol',
+      name: 'FIX Protocol Gateway',
+      badge: 'FIX 4.4 Wire',
+      description: 'Institutional tag-value socket stream & drop-copy compliance journal',
+      icon: <Terminal className="h-4 w-4 text-cyan-400" />,
+      action: onOpenFix,
+      category: 'Execution',
+      accent: 'cyan',
     },
 
     // 3. Quant Lab Suite
@@ -550,7 +563,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1">
                       <ArrowRightLeft className="h-3 w-3" /> Execution & Routing
                     </span>
-                    <span className="text-[9px] text-slate-500">5 Tools</span>
+                    <span className="text-[9px] text-slate-500">{executionTools.length} Tools</span>
                   </div>
                   <div className="space-y-0.5">
                     {executionTools.map((tool) => (
@@ -867,7 +880,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>•</span>
                 <span>ESC Close</span>
               </span>
-              <span>19 Institutional Trading Tools</span>
+              <span>20 Institutional Trading Tools</span>
             </div>
           </div>
         </div>

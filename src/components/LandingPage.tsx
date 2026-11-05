@@ -30,6 +30,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   Sparkles,
+  Terminal,
   TrendingDown,
   TrendingUp,
   Trophy,
@@ -492,6 +493,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Cross-Exchange Arbitrage & SOR</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Indian NBBO (INBBO) multi-market aggregation across NSE and BSE, inter-market fee netting, sub-millisecond execution latency modeling with exponential fill decay, and atomic split-liquidity sweep order routing.
+            </p>
+          </div>
+
+          {/* Card 18: FIX 4.4 Protocol Gateway & Drop-Copy Simulator */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Terminal className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">FIX 4.4 Protocol & Drop-Copy</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Institutional tag-value socket wire stream (35=D, 35=8), Modulo 256 checksum engine, synthetic matching engine execution reports, and dedicated compliance Drop-Copy audit journal.
             </p>
           </div>
         </div>
