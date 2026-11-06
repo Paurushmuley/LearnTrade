@@ -50,6 +50,7 @@ interface HeaderProps {
   onOpenGreeksHedger: () => void;
   onOpenVolOptimizer?: () => void;
   onOpenVolDispersion?: () => void;
+  onOpenRiskCockpit?: () => void;
   onOpenMicrostructure?: () => void;
   onOpenStatArb?: () => void;
   onOpenExecution?: () => void;
@@ -95,6 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGreeksHedger,
   onOpenVolOptimizer,
   onOpenVolDispersion,
+  onOpenRiskCockpit,
   onOpenMicrostructure,
   onOpenStatArb,
   onOpenExecution,
@@ -122,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
     return 'text-rose-400 bg-rose-950/40 border-rose-800/60';
   };
 
-  // Registry of all 19 institutional tools
+  // Registry of all 20 institutional tools
   const allTools: SuiteToolItem[] = [
     // 1. Markets Suite
     {
@@ -229,6 +231,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'risk-cockpit',
+      name: 'Pre-Trade Risk & Stress Desk',
+      badge: 'Sprint 22',
+      description: 'SPAN 16-scenario array, peak margin gatekeeper, fat-tail CVaR 99% & 1-click unwind',
+      icon: <ShieldAlert className="h-4 w-4 text-rose-400" />,
+      action: onOpenRiskCockpit,
+      category: 'Quant Lab',
+      accent: 'rose',
+    },
     {
       id: 'vol-dispersion',
       name: 'Options Vol Dispersion & Skew',

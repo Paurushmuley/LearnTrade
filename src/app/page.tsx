@@ -26,6 +26,7 @@ import { TradeCopierModal } from '../components/TradeCopierModal';
 import { GreeksHedgerModal } from '../components/GreeksHedgerModal';
 import { VolatilityOptimizerModal } from '../components/VolatilityOptimizerModal';
 import { VolatilityDispersionModal } from '../components/VolatilityDispersionModal';
+import { RiskCockpitModal } from '../components/RiskCockpitModal';
 import { MicrostructureModal } from '../components/MicrostructureModal';
 import { StatArbModal } from '../components/StatArbModal';
 import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
@@ -76,6 +77,7 @@ export default function TradingTerminalPage() {
   const [isGreeksHedgerOpen, setIsGreeksHedgerOpen] = useState(false);
   const [isVolOptimizerOpen, setIsVolOptimizerOpen] = useState(false);
   const [isVolDispersionOpen, setIsVolDispersionOpen] = useState(false);
+  const [isRiskCockpitOpen, setIsRiskCockpitOpen] = useState(false);
   const [isMicrostructureOpen, setIsMicrostructureOpen] = useState(false);
   const [isStatArbOpen, setIsStatArbOpen] = useState(false);
   const [isExecutionOpen, setIsExecutionOpen] = useState(false);
@@ -479,6 +481,7 @@ export default function TradingTerminalPage() {
             onOpenGreeksHedger={() => setIsGreeksHedgerOpen(true)}
             onOpenVolOptimizer={() => setIsVolOptimizerOpen(true)}
             onOpenVolDispersion={() => setIsVolDispersionOpen(true)}
+            onOpenRiskCockpit={() => setIsRiskCockpitOpen(true)}
             onOpenMicrostructure={() => setIsMicrostructureOpen(true)}
             onOpenStatArb={() => setIsStatArbOpen(true)}
             onOpenExecution={() => setIsExecutionOpen(true)}
@@ -726,6 +729,16 @@ export default function TradingTerminalPage() {
       <VolatilityDispersionModal
         isOpen={isVolDispersionOpen}
         onClose={() => setIsVolDispersionOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
+        symbol={selectedTicker.symbol}
+      />
+
+      {/* Sprint 22: High-Frequency Pre-Trade Risk Engine & SPAN Stress Testing Desk */}
+      <RiskCockpitModal
+        isOpen={isRiskCockpitOpen}
+        onClose={() => setIsRiskCockpitOpen(false)}
+        positions={tradingState.positions}
+        portfolio={portfolioSummary}
         spotPrice={selectedTicker.currentPrice}
         symbol={selectedTicker.symbol}
       />

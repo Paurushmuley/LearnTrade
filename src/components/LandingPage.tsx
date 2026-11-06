@@ -517,6 +517,28 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Index vs constituent implied volatility dispersion, correlation risk premium (CRP), multi-expiry term-structure smile ribbon, and automated delta-neutral gamma scalping triggers.
             </p>
           </div>
+
+          {/* Card 20: High-Frequency Pre-Trade Risk Engine & Stress Testing Desk */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-rose-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition">
+              <ShieldAlert className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Pre-Trade Risk & Stress Desk</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Standard 16-scenario SPAN margin risk matrix, Peaks-Over-Threshold EVT Expected Shortfall (CVaR 99%), SEBI circuit breaker monitoring, and real-time margin deficit gatekeeper.
+            </p>
+          </div>
+
+          {/* Card 20: Pre-Trade Risk Engine & Portfolio Stress Testing Desk */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-rose-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition">
+              <ShieldAlert className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Pre-Trade Risk Engine & Stress Desk</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Official SPAN 16-scenario risk array heatmap (-3σ to +3σ vs IV shifts), real-time Peak Margin gatekeeper with leverage throttling, Extreme Value Theory (EVT) CVaR 99% fat-tail expected shortfall, and 1-click portfolio de-risking unwind simulator.
+            </p>
+          </div>
         </div>
       </section>
 
