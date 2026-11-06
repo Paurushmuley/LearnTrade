@@ -23,6 +23,9 @@ export interface SpanRiskArraySummary {
   basePnL: number;
   interMonthSpreadCharge: number;
   deliveryCharge: number;
+  hasCreditSpread?: boolean;
+  hasCalendarSpread?: boolean;
+  spreadMarginOffset?: number;
   totalSpanRequirement: number;
   exposureMarginRequirement: number;
   totalInitialMargin: number;

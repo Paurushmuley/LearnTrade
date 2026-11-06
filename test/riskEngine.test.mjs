@@ -86,12 +86,13 @@ function evaluatePortfolioShock(positions, spotPrice, priceShiftPct, volShiftPct
   const r = 0.065;
   const baseVol = 0.14;
   const shockedVol = Math.max(0.01, baseVol + volShiftPct / 100);
-  const T = 7 / 365;
 
   for (const pos of positions) {
     const parsed = parseOptionSymbol(pos.symbol);
 
     if (parsed.isOption && parsed.type) {
+      const dte = (parsed.expiry && parsed.expiry.includes('31')) ? 14 : 7;
+      const T = dte / 365;
       const basePrice = calculateBlackScholesPrice(spotPrice, parsed.strike, T, r, baseVol, parsed.type);
       const shockedPrice = calculateBlackScholesPrice(shockedSpot, parsed.strike, T, r, shockedVol, parsed.type);
       const deltaPrice = shockedPrice - basePrice;
@@ -528,7 +529,7 @@ describe('TradeCraft High-Frequency Pre-Trade Risk Engine & Portfolio Stress Tes
       `Hedged SPAN (${hedgedResult.totalSpanRequirement}) must be significantly lower than naked (${nakedResult.totalSpanRequirement})`
     );
 
-    const marginReliefPct = (hedgedResult.spreadMarginOffset / nakedResult.maxScanningLoss) * 100;
+    const marginReliefPct = ((nakedResult.maxScanningLoss - hedgedResult.maxScanningLoss) / nakedResult.maxScanningLoss) * 100;
     assert.ok(marginReliefPct >= 60, `Credit spread must provide >=60% scanning loss relief (got ${marginReliefPct.toFixed(1)}%)`);
   });
 

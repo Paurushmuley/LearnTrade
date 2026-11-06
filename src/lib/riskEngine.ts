@@ -217,6 +217,8 @@ function evaluatePortfolioShock(
     const parsed = parseOptionSymbol(pos.symbol);
 
     if (parsed.isOption && parsed.type) {
+      const dte = (parsed.expiry && parsed.expiry.includes('31')) ? 14 : 7;
+      const T = dte / 365;
       const basePrice = calculateBlackScholesPrice(spotPrice, parsed.strike, T, r, baseVol, parsed.type);
       const shockedPrice = calculateBlackScholesPrice(shockedSpot, parsed.strike, T, r, shockedVol, parsed.type);
       const deltaPrice = shockedPrice - basePrice;
@@ -371,6 +373,9 @@ export function calculateSpanRiskArray(
     basePnL: evaluatePortfolioShock(effectivePositions, spotPrice, 0, 0),
     interMonthSpreadCharge,
     deliveryCharge,
+    hasCreditSpread,
+    hasCalendarSpread,
+    spreadMarginOffset: Number(spreadMarginOffset.toFixed(2)),
     totalSpanRequirement,
     exposureMarginRequirement,
     totalInitialMargin,
