@@ -6,11 +6,11 @@
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
 - **Active Cycle:** Sprints 1–22 Fully Delivered, Integrated & DoD-Verified
-- **Sprint Status:** SPRINT 22 COMPLETED & VERIFIED (177/177 Unit Tests Passing, Strict TypeScript Clean)
-- **Baseline Quality Gate:** ALL 177/177 Unit Tests Passing, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
+- **Sprint Status:** SPRINT 22 COMPLETED & VERIFIED (178/178 Unit Tests Passing, Strict TypeScript Clean)
+- **Baseline Quality Gate:** ALL 178/178 Unit Tests Passing, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
 - **Historical Velocity:** Average 25.4 Story Points / Sprint (Sprints 1–22 Delivered & Archived; Sprint 22: 26 SP Delivered)
 - **Delivered Sprint 22:** High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk (SPAN Margin, EVT Expected Shortfall & SEBI Volatility Circuit Breakers)
-- **Updated:** 2026-11-06 10:30 IST
+- **Updated:** 2026-11-06 11:35 IST
 
 ---
 
@@ -22,7 +22,7 @@
 | `TC-RISK-02` | Backend & Risk Engine | SPAN Margin & Stress Testing Engine (`src/lib/riskEngine.ts`, `src/types/risk.ts`, `src/types/riskEngine.ts`): Multi-asset scenario matrix (price movement $\pm 3\sigma$, IV shift $\pm 4\%$, calendar spread charge), tail-risk EVT Expected Shortfall solver, and real-time pre-trade order veto filter. | Backend Lead | 8 SP | `COMPLETED` | `TC-RISK-01` | Pure functional TS, 0 compilation errors, deterministic outputs |
 | `TC-RISK-03` | Frontend / UI Components | Interactive Pre-Trade Risk & Stress Desk Modal (`src/components/RiskCockpitModal.tsx`, `src/components/PreTradeRiskModal.tsx`): 16-scenario SPAN risk surface heatmap, EVT loss distribution tail chart, portfolio Greek sensitivity stress dials ($\pm 10\%$ NIFTY shock), and dynamic circuit breaker monitor. | Frontend Lead | 5 SP | `COMPLETED` | `TC-RISK-02` | High-tech dark theme, zero layout shifts, accessible controls |
 | `TC-RISK-04` | Fullstack & Integration | Header navigation suite binding ("⚡ Execution" suite), Command Palette (`Ctrl+K`) integration, pre-trade order interceptor wiring in order submission flow, and Landing Page showcase Feature Card 20. | Fullstack Lead | 3 SP | `COMPLETED` | `TC-RISK-03` | Seamless modal trigger, responsive across viewport breakpoints |
-| `TC-RISK-05` | QA & Verification | Rigorous unit test suite in `test/riskEngine.test.mjs` verifying SPAN risk array bounds, EVT Pareto tail shape parameters, stress matrix monotonicity, and pre-trade veto rejection. | QA Lead | 5 SP | `COMPLETED` | `TC-RISK-02` | 100% test pass rate, 14 new unit test assertions (177/177 total) |
+| `TC-RISK-05` | QA & Verification | Rigorous unit test suite in `test/riskEngine.test.mjs` verifying SPAN risk array bounds, EVT Pareto tail shape parameters, stress matrix monotonicity, and pre-trade veto rejection. | QA Lead | 5 SP | `COMPLETED` | `TC-RISK-02` | 100% test pass rate, 15 new unit test assertions (178/178 total) |
 
 ---
 
@@ -31,7 +31,7 @@ All stories in Sprint 22 must strictly satisfy the following quality gates prior
 - [x] **Mathematical Rigor:** 16-scenario SPAN risk array accurately models simultaneous underlying price shifts ($\pm 3\sigma$) and volatility shifts ($\pm 10\%$). EVT Expected Shortfall parameter estimation converges stably.
 - [x] **Pre-Trade Enforcement:** Pre-trade margin veto prevents order dispatch within $<1$ms latency overhead if post-trade margin requirement exceeds available collateral.
 - [x] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [x] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; 177/177 passing).
+- [x] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; 178/178 passing).
 - [x] **Production Next.js Build:** Production compilation (`npm run build`) builds cleanly with zero SSR/hydration mismatches.
 - [x] **UI/UX Consistency:** Visual design conforms to TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `rose-400`).
 - [x] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-022-*.md`, and `docs/daily-reports/2026-11-06.md`.
