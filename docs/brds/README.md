@@ -42,7 +42,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-019`](./BRD-019-cross-exchange-arbitrage-smart-order-router.md) | Cross-Exchange Arbitrage & Latency-Aware Smart Order Router (SOR) for NSE vs BSE Inter-Market Arbitrage | Sprint 19 | `COMPLETED` |
 | [`BRD-020`](./BRD-020-fix-protocol-gateway-order-flow-simulator.md) | Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine) | Sprint 20 | `COMPLETED` |
 | [`BRD-021`](./BRD-021-options-volatility-dispersion-skew-hedging-engine.md) | Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine | Sprint 21 | `COMPLETED` |
-| [`BRD-022`](./BRD-022-pre-trade-risk-engine-span-stress-testing.md) | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk (SPAN Margin, EVT Expected Shortfall & SEBI Volatility Circuit Breakers) | Sprint 22 | `APPROVED FOR IMPLEMENTATION` |
+| [`BRD-022`](./BRD-022-pre-trade-risk-engine-span-stress-testing.md) | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk (SPAN Margin, EVT Expected Shortfall & SEBI Volatility Circuit Breakers) | Sprint 22 | `COMPLETED` |
 
 
 

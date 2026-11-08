@@ -5,75 +5,72 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprints 1–22 Fully Delivered, Integrated & DoD-Verified
-- **Sprint Status:** SPRINT 22 COMPLETED & VERIFIED (178/178 Unit Tests Passing, Strict TypeScript Clean)
+- **Active Cycle:** Sprint 23 (Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine)
+- **Sprint Status:** SPRINT 23 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–22 Completed & Verified)
 - **Baseline Quality Gate:** ALL 178/178 Unit Tests Passing, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
-- **Historical Velocity:** Average 25.4 Story Points / Sprint (Sprints 1–22 Delivered & Archived; Sprint 22: 26 SP Delivered)
-- **Delivered Sprint 22:** High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk (SPAN Margin, EVT Expected Shortfall & SEBI Volatility Circuit Breakers)
-- **Updated:** 2026-11-06 11:35 IST
+- **Historical Velocity:** Average 25.4 Story Points / Sprint (Sprints 1–22 Delivered & Archived; 559 Cumulative SP Delivered)
+- **Planned Sprint 23:** Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine (Index Options, Stock Futures, MCX Commodity Offsets & Collateral Haircuts)
+- **Updated:** 2026-11-08 11:30 IST
 
 ---
 
-## Active Sprint 22 Task Board (High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk)
+## Active Sprint 23 Task Board (Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-RISK-01` | Research & Architecture | Author comprehensive BRD-022: Formulate standard SPAN margin methodology (16 scenario risk array grid), Extreme Value Theory (EVT) Generalized Pareto Distribution for Expected Shortfall ($\text{ES}_{99.9\%}$), portfolio Greek stress shock matrices, and SEBI dynamic volatility circuit breaker rules. | Researcher Lead | 5 SP | `COMPLETED` | None | BRD-022 approved in `docs/brds/` & registered in `README.md` |
-| `TC-RISK-02` | Backend & Risk Engine | SPAN Margin & Stress Testing Engine (`src/lib/riskEngine.ts`, `src/types/risk.ts`, `src/types/riskEngine.ts`): Multi-asset scenario matrix (price movement $\pm 3\sigma$, IV shift $\pm 4\%$, calendar spread charge), tail-risk EVT Expected Shortfall solver, and real-time pre-trade order veto filter. | Backend Lead | 8 SP | `COMPLETED` | `TC-RISK-01` | Pure functional TS, 0 compilation errors, deterministic outputs |
-| `TC-RISK-03` | Frontend / UI Components | Interactive Pre-Trade Risk & Stress Desk Modal (`src/components/RiskCockpitModal.tsx`, `src/components/PreTradeRiskModal.tsx`): 16-scenario SPAN risk surface heatmap, EVT loss distribution tail chart, portfolio Greek sensitivity stress dials ($\pm 10\%$ NIFTY shock), and dynamic circuit breaker monitor. | Frontend Lead | 5 SP | `COMPLETED` | `TC-RISK-02` | High-tech dark theme, zero layout shifts, accessible controls |
-| `TC-RISK-04` | Fullstack & Integration | Header navigation suite binding ("⚡ Execution" suite), Command Palette (`Ctrl+K`) integration, pre-trade order interceptor wiring in order submission flow, and Landing Page showcase Feature Card 20. | Fullstack Lead | 3 SP | `COMPLETED` | `TC-RISK-03` | Seamless modal trigger, responsive across viewport breakpoints |
-| `TC-RISK-05` | QA & Verification | Rigorous unit test suite in `test/riskEngine.test.mjs` verifying SPAN risk array bounds, EVT Pareto tail shape parameters, stress matrix monotonicity, and pre-trade veto rejection. | QA Lead | 5 SP | `COMPLETED` | `TC-RISK-02` | 100% test pass rate, 15 new unit test assertions (178/178 total) |
+| `TC-XMG-01` | Research & Architecture | Author comprehensive BRD-023: Formulate SEBI & Clearing Corporation multi-asset cross-margining framework, inter-commodity spread concessions (NSE Index vs Stock Futures vs MCX hedges), Historical VaR (HVaR) correlation offsets, and statutory collateral haircut schedules. | Researcher Lead | 5 SP | `IN_PROGRESS` | None | BRD-023 approved in `docs/brds/` & registered in `README.md` |
+| `TC-XMG-02` | Backend & Cross-Margin Engine | Cross-Margining & Portfolio VaR Engine (`src/lib/crossMarginEngine.ts`, `src/types/crossMargin.ts`): Multi-asset cross-margining correlation offset matrix, margin benefit solver, collateral pledge calculator with statutory haircuts, and portfolio HVaR / CVaR optimization algorithm. | Backend Lead | 8 SP | `PENDING` | `TC-XMG-01` | Pure functional TS, deterministic calculation, 0 compilation errors |
+| `TC-XMG-03` | Frontend / UI Components | Interactive Cross-Margining & Collateral Cockpit Modal (`src/components/CrossMarginCockpitModal.tsx`): Asset allocation breakdown, margin relief visualizer (Isolated vs Cross-Margin comparison), collateral haircut manager with pledge/unpledge simulator, and real-time capital efficiency gauge. | Frontend Lead | 5 SP | `PENDING` | `TC-XMG-02` | High-tech dark theme, zero layout shifts, interactive visualizer |
+| `TC-XMG-04` | Fullstack & Integration | Header navigation suite binding ("⚡ Execution" or "🧠 Quant Lab" dropdown), Command Palette (`Ctrl+K`) integration, terminal margin state synchronization, and Landing Page showcase Feature Card 21. | Fullstack Lead | 3 SP | `PENDING` | `TC-XMG-03` | Seamless modal trigger, responsive across breakpoints |
+| `TC-XMG-05` | QA & Verification | Rigorous unit test suite in `test/crossMarginEngine.test.mjs` verifying cross-margin offset bounds, collateral haircut percentages, HVaR calculations, and portfolio capital relief accuracy. | QA Lead | 5 SP | `PENDING` | `TC-XMG-02` | 100% test pass rate, 15+ new unit test assertions (target: 193/193) |
 
 ---
 
-### Sprint 22 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 22 must strictly satisfy the following quality gates prior to sprint closeout:
-- [x] **Mathematical Rigor:** 16-scenario SPAN risk array accurately models simultaneous underlying price shifts ($\pm 3\sigma$) and volatility shifts ($\pm 10\%$). EVT Expected Shortfall parameter estimation converges stably.
-- [x] **Pre-Trade Enforcement:** Pre-trade margin veto prevents order dispatch within $<1$ms latency overhead if post-trade margin requirement exceeds available collateral.
-- [x] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [x] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; 178/178 passing).
-- [x] **Production Next.js Build:** Production compilation (`npm run build`) builds cleanly with zero SSR/hydration mismatches.
-- [x] **UI/UX Consistency:** Visual design conforms to TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `rose-400`).
-- [x] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-022-*.md`, and `docs/daily-reports/2026-11-06.md`.
+### Sprint 23 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 23 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** Correlation-based cross-margining relief strictly satisfies non-negative margin requirements and triangular inequality bounds. Collateral haircut formulas precisely match SEBI/CCIL schedules.
+- [ ] **Portfolio VaR Accuracy:** Historical VaR (HVaR) and CVaR calculations demonstrate monotone loss reductions when correlated hedges are introduced.
+- [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; target $\ge 193$ passing).
+- [ ] **Production Next.js Build:** Production compilation (`npm run build`) builds cleanly with zero SSR/hydration mismatches.
+- [ ] **UI/UX Consistency:** Visual design conforms to TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `rose-400`).
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-023-*.md`, and `docs/daily-reports/`.
 
 ---
 
-### Sprint 22 User Stories & Acceptance Criteria
+### Sprint 23 User Stories & Acceptance Criteria
 
-#### User Story 1: SPAN Margin Multi-Scenario Risk Array Grid (`TC-RISK-01`, `TC-RISK-02`)
-- **Story:** *As an Institutional Risk Manager*, I want standard SPAN (Standard Portfolio Analysis of Risk) margin evaluation computing loss arrays across 16 price and volatility stress points, so that dynamic portfolio leverage and worst-case margin requirements reflect clearinghouse exchange standards.
+#### User Story 1: Multi-Asset Cross-Margining Correlation Offset Matrix (`TC-XMG-01`, `TC-XMG-02`)
+- **Story:** *As an Institutional Multi-Asset Portfolio Manager*, I want cross-margining margin offsets between Index Derivatives (NIFTY/BANKNIFTY), Single Stock Futures, and Commodity hedges (MCX Gold/Crude), so that correlated delta hedges reduce my gross margin requirement compliant with SEBI and Clearing Corporation rules.
 - **Acceptance Criteria:**
-  - Evaluates 16 standard scenario states spanning underlying moves ($-3\sigma, -2\sigma, -\sigma, 0, +\sigma, +2\sigma, +3\sigma$) and volatility shocks ($-10\%, 0\%, +10\%$).
-  - Incorporates inter-month calendar spread charges and short option minimum margin buffers.
-  - Returns active SPAN requirement, margin utilization percentage, and liquid capital buffer.
+  - Computes correlated cross-margin benefit using correlation matrix $C_{ij}$ and volatility weights.
+  - Generates Isolated Margin vs Cross-Margin comparison and net capital savings percentage.
+  - Ensures net cross-margin requirement is bounded below by regulatory minimum initial margin.
 
-#### User Story 2: Extreme Value Theory (EVT) Expected Shortfall Desk (`TC-RISK-02`)
-- **Story:** *As a Quantitative Risk Officer*, I want tail risk estimation using Extreme Value Theory (Pickands-Balkema-de Haan Generalized Pareto Distribution) for VaR and Expected Shortfall ($99.9\%$), so that fat-tailed black swan losses are accurately quantified beyond Gaussian normal assumptions.
+#### User Story 2: SEBI-Compliant Collateral Pledge & Haircut Calculator (`TC-XMG-02`)
+- **Story:** *As a Proprietary Trader*, I want automated calculation of pledged collateral value applying statutory SEBI haircuts across asset categories (Cash equivalents: 0%, G-Secs/T-Bills: 2%, Liquid Mutual Funds: 10%, Sovereign Gold Bonds: 15%, Group-I Equities: 20%), so that my available trading margin accurately reflects exchange-approved collateral rules.
 - **Acceptance Criteria:**
-  - Fits Generalized Pareto Distribution parameters ($\xi$ shape parameter, $\beta$ scale parameter) to historical tail losses exceeding high quantile threshold $u$.
-  - Generates $\text{VaR}_{99.9\%}$ and Expected Shortfall $\text{ES}_{99.9\%} = \frac{\text{VaR}}{1 - \xi} + \frac{\beta - \xi u}{1 - \xi}$.
-  - Flags tail fatness warning if shape parameter $\xi > 0.2$ (Fréchet heavy-tail domain).
+  - Evaluates multi-asset pledged collateral items and applies statutory haircut schedule.
+  - Calculates 50:50 Cash-to-Collateral ratio requirement for derivatives trading and flags cash deficit charges.
 
-#### User Story 3: Pre-Trade Order Interceptor & Circuit Breaker Engine (`TC-RISK-02`, `TC-RISK-04`)
-- **Story:** *As a Platform User*, I want real-time pre-trade risk interception that blocks orders violating max position limits, fat-finger size limits, or SEBI volatility circuit breakers before execution.
+#### User Story 3: Historical Value-at-Risk (HVaR) & Expected Shortfall Portfolio Optimizer (`TC-XMG-02`)
+- **Story:** *As a Quantitative Risk Officer*, I want portfolio HVaR and CVaR optimization for multi-asset books, showing marginal risk contribution (MRC) per leg and optimal hedge ratios.
 - **Acceptance Criteria:**
-  - Evaluates prospective order margin and enforces max capital risk veto.
-  - Enforces SEBI dynamic price bands and halts trading if index circuit breaker triggers ($10\%, 15\%, 20\%$).
-  - Pre-trade veto latency is bounded under 2 milliseconds.
+  - Computes 99% 1-day HVaR across historical returns matrix.
+  - Calculates Component VaR and highlights top risk-contributing positions.
 
-#### User Story 4: Interactive Pre-Trade Risk & Stress Desk Modal (`TC-RISK-03`, `TC-RISK-04`)
-- **Story:** *As a Quantitative Portfolio Manager*, I want an interactive Pre-Trade Risk & Stress Desk modal accessible via Header Execution suite and Command Palette (`Ctrl+K`), showcasing the 16-scenario SPAN risk heatmap, EVT tail loss distribution, and Greek sensitivity dials.
+#### User Story 4: Interactive Cross-Margining & Collateral Cockpit Modal (`TC-XMG-03`, `TC-XMG-04`)
+- **Story:** *As an Active Trader*, I want an intuitive Cross-Margining Cockpit accessible from the Header and Command Palette (`Ctrl+K`), featuring margin relief charts, collateral pledge simulator, and 50:50 cash ratio monitor.
 - **Acceptance Criteria:**
-  - High-tech 16-scenario SVG risk matrix with interactive tooltip loss readouts.
-  - EVT tail chart displaying empirical loss histogram vs Pareto fitted curve.
-  - 1-click risk override or portfolio de-risking rebalance trigger.
+  - High-tech interactive modal with 3 workspace views: Cross-Margin Matrix, Collateral & Haircuts, and Portfolio VaR Optimizer.
+  - 1-click pledge simulator with real-time margin update.
 
-#### User Story 5: Automated Verification & Unit Test Suite (`TC-RISK-05`)
-- **Story:** *As a QA Lead*, I want an automated test suite validating SPAN margin array monotonicity, EVT Pareto tail parameter convergence, pre-trade order veto filters, and statutory compliance.
+#### User Story 5: Automated Verification & QA Suite (`TC-XMG-05`)
+- **Story:** *As a QA Lead*, I want an automated unit test suite verifying cross-margin offset calculations, haircut schedules, cash ratio checks, and HVaR convergence.
 - **Acceptance Criteria:**
-  - Unit test suite: `test/riskEngine.test.mjs`.
-  - Minimum of 15 test assertions covering boundary stress scenarios and veto rejections.
-  - 100% passing tests with 0 regressions across the entire suite.
+  - Test suite `test/crossMarginEngine.test.mjs`.
+  - Minimum 15 unit assertions covering edge cases, negative correlations, and haircut limits.
+  - 100% test pass rate with 0 regressions.
 
 ---
 
@@ -81,13 +78,12 @@ All stories in Sprint 22 must strictly satisfy the following quality gates prior
 
 | Sprint | Planned SP | Completed SP | Unit Tests Baseline | Status | Key Milestone Delivered |
 | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Sprint 16** | 24 | 24 | 118 | `DELIVERED` | Cointegration Pairs Trading Engine (Johansen / Engle-Granger) |
-| **Sprint 17** | 26 | 26 | 128 | `DELIVERED` | High-Frequency VWAP/TWAP & Almgren-Chriss Slippage Minimizer |
 | **Sprint 18** | 26 | 26 | 134 | `DELIVERED` | Macroeconomic Sentiment Analysis & Event Risk Engine |
 | **Sprint 19** | 26 | 26 | 140 | `DELIVERED` | Cross-Exchange Arbitrage & Latency-Aware SOR (NSE vs BSE) |
 | **Sprint 20** | 26 | 26 | 144 | `DELIVERED` | FIX 4.4 Protocol Gateway & Drop-Copy Simulator |
 | **Sprint 21** | 26 | 26 | 163 | `DELIVERED` | Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine |
-| **Sprint 22** | **26** | **26** | **177** | `DELIVERED` | **High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk** |
+| **Sprint 22** | **26** | **26** | **178** | `DELIVERED` | **High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk** |
+| **Sprint 23** | **26** | **0 (Active)** | **178 (Target: 193)** | `IN_PROGRESS` | **Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine** |
 
 ---
 
@@ -98,7 +94,7 @@ All stories in Sprint 22 must strictly satisfy the following quality gates prior
 - [x] **TC-RISK-02**: SPAN Margin & Stress Testing Engine: Multi-asset scenario matrix (price movement $\pm 3\sigma$, IV shift $\pm 4\%$, calendar spread charge), tail-risk EVT Expected Shortfall solver, and real-time pre-trade order veto filter (`src/lib/riskEngine.ts`, `src/types/risk.ts`, `src/types/riskEngine.ts`).
 - [x] **TC-RISK-03**: Interactive Pre-Trade Risk & Stress Desk Modal: 16-scenario SPAN risk surface heatmap, EVT loss distribution tail chart, portfolio Greek sensitivity stress dials ($\pm 10\%$ NIFTY shock), and dynamic circuit breaker monitor (`src/components/RiskCockpitModal.tsx`, `src/components/PreTradeRiskModal.tsx`).
 - [x] **TC-RISK-04**: Header navigation suite binding ("⚡ Execution" suite), Command Palette (`Ctrl+K`) integration, pre-trade order interceptor wiring in order submission flow, and Landing Page showcase Feature Card 20 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
-- [x] **TC-RISK-05**: Rigorous automated unit test suite in `test/riskEngine.test.mjs` verifying SPAN risk array bounds, EVT Pareto tail shape parameters, stress matrix monotonicity, and pre-trade veto rejection. 177/177 total tests passing.
+- [x] **TC-RISK-05**: Rigorous automated unit test suite in `test/riskEngine.test.mjs` verifying SPAN risk array bounds, EVT Pareto tail shape parameters, stress matrix monotonicity, and pre-trade veto rejection. 178/178 total tests passing.
 
 ### Sprint 21: Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine
 - [x] **TC-DISP-01**: Author comprehensive BRD-021: Mathematical formulation of Index vs Constituent Implied Volatility Dispersion, Implied Correlation ($\rho_{\text{impl}}$) extraction, Multi-Expiry Skew Slopes ($d\sigma/dK$), and Gamma Scalping Bands (`docs/brds/BRD-021-options-volatility-dispersion-skew-hedging-engine.md`).
