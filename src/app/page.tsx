@@ -33,6 +33,7 @@ import { ExecutionAlgoModal } from '../components/ExecutionAlgoModal';
 import { MacroEventModal } from '../components/MacroEventModal';
 import { CrossExchangeSORModal } from '../components/CrossExchangeSORModal';
 import { FixProtocolModal } from '../components/FixProtocolModal';
+import { CrossMarginCockpitModal } from '../components/CrossMarginCockpitModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -84,6 +85,7 @@ export default function TradingTerminalPage() {
   const [isMacroEventOpen, setIsMacroEventOpen] = useState(false);
   const [isSOROpen, setIsSOROpen] = useState(false);
   const [isFixOpen, setIsFixOpen] = useState(false);
+  const [isCrossMarginOpen, setIsCrossMarginOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -488,6 +490,7 @@ export default function TradingTerminalPage() {
             onOpenMacroEvent={() => setIsMacroEventOpen(true)}
             onOpenSOR={() => setIsSOROpen(true)}
             onOpenFix={() => setIsFixOpen(true)}
+            onOpenCrossMargin={() => setIsCrossMarginOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -825,6 +828,13 @@ export default function TradingTerminalPage() {
         onClose={() => setIsFixOpen(false)}
         currentSymbol={selectedTicker.symbol}
         currentPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine Modal */}
+      <CrossMarginCockpitModal
+        isOpen={isCrossMarginOpen}
+        onClose={() => setIsCrossMarginOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
       />
 
       {/* User Account & Authentication Modals */}

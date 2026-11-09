@@ -518,17 +518,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
 
-          {/* Card 20: High-Frequency Pre-Trade Risk Engine & Stress Testing Desk */}
-          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-rose-500/50 transition group">
-            <div className="h-10 w-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition">
-              <ShieldAlert className="h-5 w-5" />
-            </div>
-            <h3 className="text-base font-bold text-slate-100">Pre-Trade Risk & Stress Desk</h3>
-            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-              Standard 16-scenario SPAN margin risk matrix, Peaks-Over-Threshold EVT Expected Shortfall (CVaR 99%), SEBI circuit breaker monitoring, and real-time margin deficit gatekeeper.
-            </p>
-          </div>
-
           {/* Card 20: Pre-Trade Risk Engine & Portfolio Stress Testing Desk */}
           <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-rose-500/50 transition group">
             <div className="h-10 w-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition">
@@ -537,6 +526,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Pre-Trade Risk Engine & Stress Desk</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Official SPAN 16-scenario risk array heatmap (-3σ to +3σ vs IV shifts), real-time Peak Margin gatekeeper with leverage throttling, Extreme Value Theory (EVT) CVaR 99% fat-tail expected shortfall, and 1-click portfolio de-risking unwind simulator.
+            </p>
+          </div>
+
+          {/* Card 21: Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-purple-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition">
+              <Scale className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Cross-Margining & Portfolio VaR Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Multi-asset correlation offset matrix across Index, Equity, Commodity (MCX), and FX legs. SEBI statutory haircut schedule (Cash 0%, G-Sec 2%, Liquid MFs 10%, SGBs 15%, Equities 20%), 50:50 cash-to-collateral ratio compliance simulator, and 1-click optimal tail risk hedge.
             </p>
           </div>
         </div>

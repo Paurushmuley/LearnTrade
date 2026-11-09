@@ -57,6 +57,7 @@ interface HeaderProps {
   onOpenMacroEvent?: () => void;
   onOpenSOR?: () => void;
   onOpenFix?: () => void;
+  onOpenCrossMargin?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -103,6 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMacroEvent,
   onOpenSOR,
   onOpenFix,
+  onOpenCrossMargin,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -231,6 +233,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'cross-margin-cockpit',
+      name: 'Cross-Margining & VaR Engine',
+      badge: 'Sprint 23',
+      description: 'Multi-asset correlation offsets, 50:50 cash-collateral ratio & 99% CVaR tail risk',
+      icon: <Scale className="h-4 w-4 text-purple-400" />,
+      action: onOpenCrossMargin,
+      category: 'Quant Lab',
+      accent: 'purple',
+    },
     {
       id: 'risk-cockpit',
       name: 'Pre-Trade Risk & Stress Desk',
