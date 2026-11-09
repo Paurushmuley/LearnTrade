@@ -19,7 +19,7 @@
 
 | Date | Sprints Covered | Test Suite Status | Report Link |
 | :---: | :--- | :---: | :--- |
-| **2026-11-09** | Sprint 23 Delivery: Multi-Asset Cross-Margining & Portfolio VaR Engine | **195/195 Passed** | [`2026-11-09.md`](./2026-11-09.md) |
+| **2026-11-09** | Sprint 23 Closeout & Sprint 24 Activation: 0-DTE Pinning Risk & Gamma Squeeze Desk | **195/195 Passed** | [`2026-11-09.md`](./2026-11-09.md) |
 | **2026-11-08** | Sprint 22 Closeout & Sprint 23 Activation: Cross-Margining & Collateral Haircuts | **178/178 Passed** | [`2026-11-08.md`](./2026-11-08.md) |
 | **2026-11-06** | Sprint 22: High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk | **178/178 Passed** | [`2026-11-06.md`](./2026-11-06.md) |
 | **2026-11-05** | Sprint 20 & 21: FIX 4.4 Gateway, Drop-Copy & Options Volatility Dispersion | **163/163 Passed** | [`2026-11-05.md`](./2026-11-05.md) |

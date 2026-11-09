@@ -5,71 +5,71 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprint 23 (Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine)
-- **Sprint Status:** SPRINT 23 DELIVERED & VERIFIED (26 SP Delivered across 5 work packages; Sprints 1–23 Completed & Verified)
+- **Active Cycle:** Sprint 24 (Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine)
+- **Sprint Status:** SPRINT 24 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–23 Completed & Verified)
 - **Baseline Quality Gate:** ALL 195/195 Unit Tests Passing, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
 - **Historical Velocity:** Average 25.4 Story Points / Sprint (Sprints 1–23 Delivered & Archived; 585 Cumulative SP Delivered)
-- **Planned Sprint 23:** Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine (Index Options, Stock Futures, MCX Commodity Offsets & Collateral Haircuts)
-- **Updated:** 2026-11-09 10:25 IST
+- **Planned Sprint 24:** Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine (Dealer Positioning GEX, Gamma Flip Boundaries, Dynamic Max Pain Migration & Fokker-Planck Strike Pinning Probability)
+- **Updated:** 2026-11-09 11:35 IST
 
 ---
 
-## Active Sprint 23 Task Board (Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine)
+## Active Sprint 24 Task Board (Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-XMG-01` | Research & Architecture | Author comprehensive BRD-023: Formulate SEBI & Clearing Corporation multi-asset cross-margining framework, inter-commodity spread concessions (NSE Index vs Stock Futures vs MCX hedges), Historical VaR (HVaR) correlation offsets, and statutory collateral haircut schedules. | Researcher Lead | 5 SP | `COMPLETED` | None | BRD-023 approved in `docs/brds/` & registered in `README.md` |
-| `TC-XMG-02` | Backend & Cross-Margin Engine | Cross-Margining & Portfolio VaR Engine (`src/lib/crossMarginEngine.ts`, `src/types/crossMargin.ts`): Multi-asset cross-margining correlation offset matrix, margin benefit solver, collateral pledge calculator with statutory haircuts, and portfolio HVaR / CVaR optimization algorithm. | Backend Lead | 8 SP | `COMPLETED` | `TC-XMG-01` | Pure functional TS, deterministic calculation, 0 compilation errors |
-| `TC-XMG-03` | Frontend / UI Components | Interactive Cross-Margining & Collateral Cockpit Modal (`src/components/CrossMarginCockpitModal.tsx`): Asset allocation breakdown, margin relief visualizer (Isolated vs Cross-Margin comparison), collateral haircut manager with pledge/unpledge simulator, and real-time capital efficiency gauge. | Frontend Lead | 5 SP | `COMPLETED` | `TC-XMG-02` | High-tech dark theme, zero layout shifts, interactive visualizer |
-| `TC-XMG-04` | Fullstack & Integration | Header navigation suite binding ("⚡ Execution" or "🧠 Quant Lab" dropdown), Command Palette (`Ctrl+K`) integration, terminal margin state synchronization, and Landing Page showcase Feature Card 21. | Fullstack Lead | 3 SP | `COMPLETED` | `TC-XMG-03` | Seamless modal trigger, responsive across breakpoints |
-| `TC-XMG-05` | QA & Verification | Rigorous unit test suite in `test/crossMarginEngine.test.mjs` verifying cross-margin offset bounds, collateral haircut percentages, HVaR calculations, and portfolio capital relief accuracy. | QA Lead | 5 SP | `COMPLETED` | `TC-XMG-02` | 100% test pass rate, 15+ new unit test assertions (target: 193/193) |
+| `TC-PIN-01` | Research & Architecture | Author comprehensive BRD-024: Formulate 0-DTE intraday gamma acceleration dynamics, Dealer Gamma Exposure ($\text{GEX} = \sum \Gamma_i \times S \times \text{OI}_i \times 100$), Gamma Flip boundary equations, dynamic Max Pain cash-settlement migration, and Fokker-Planck drift diffusion for terminal strike pinning. | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-024 approved in `docs/brds/` & registered in `README.md` |
+| `TC-PIN-02` | Backend & Quant Engine | Gamma Squeeze & 0-DTE Pinning Engine (`src/lib/pinningEngine.ts`, `src/types/pinning.ts`): Aggregate open interest GEX profile across strikes, compute Gamma Flip inflection level, solve dynamic Max Pain with cash-settlement penalty, and simulate 0-DTE intraday theta burn and IV crush. | Backend Lead | 8 SP | `PENDING` | `TC-PIN-01` | Pure functional TS, deterministic calculation, 0 compilation errors |
+| `TC-PIN-03` | Frontend / UI Components | Interactive 0-DTE Pinning & Gamma Cockpit Modal (`src/components/PinningCockpitModal.tsx`): Real-time strike pressure heatmap, dealer GEX bar distribution, Gamma Flip level gauge, dynamic Max Pain drift tracker, and 1-click Pin Risk Hedger. | Frontend Lead | 5 SP | `PENDING` | `TC-PIN-02` | High-tech dark theme, zero layout shifts, accessible visualizer |
+| `TC-PIN-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution" or "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal index contract synchronization (NIFTY / BANKNIFTY weekly expiries), and Landing Page Feature Card 22. | Fullstack Lead | 3 SP | `PENDING` | `TC-PIN-03` | Seamless modal trigger, responsive across breakpoints |
+| `TC-PIN-05` | QA & Verification | Rigorous automated unit test suite in `test/pinningEngine.test.mjs` verifying GEX monotonicity, Gamma Flip zero-crossing bounds, Max Pain minimization convergence, and 0-DTE theta scaling behavior. | QA Lead | 5 SP | `PENDING` | `TC-PIN-02` | 100% test pass rate, 15+ new unit test assertions (target: 210/210) |
 
 ---
 
-### Sprint 23 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 23 must strictly satisfy the following quality gates prior to sprint closeout:
-- [x] **Mathematical Rigor:** Correlation-based cross-margining relief strictly satisfies non-negative margin requirements and triangular inequality bounds. Collateral haircut formulas precisely match SEBI/CCIL schedules.
-- [x] **Portfolio VaR Accuracy:** Historical VaR (HVaR) and CVaR calculations demonstrate monotone loss reductions when correlated hedges are introduced.
-- [x] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [x] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; 195/195 passing).
-- [x] **Production Next.js Build:** Production compilation (`npm run build`) builds cleanly with zero SSR/hydration mismatches.
-- [x] **UI/UX Consistency:** Visual design conforms to TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `rose-400`).
-- [x] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-023-*.md`, and `docs/daily-reports/`.
+### Sprint 24 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 24 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** GEX profiles rigorously observe sign conventions (Long Dealer Gamma vs Short Dealer Gamma). Gamma Flip level accurately isolates zero net gamma inflection point.
+- [ ] **Dynamic Pinning Convergence:** Max Pain minimization algorithm converges deterministically without numerical oscillation on dense Indian strike chains.
+- [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 210/210$).
+- [ ] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
+- [ ] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-024-*.md`, and `docs/daily-reports/`.
 
 ---
 
-### Sprint 23 User Stories & Acceptance Criteria
+### Sprint 24 User Stories & Acceptance Criteria
 
-#### User Story 1: Multi-Asset Cross-Margining Correlation Offset Matrix (`TC-XMG-01`, `TC-XMG-02`)
-- **Story:** *As an Institutional Multi-Asset Portfolio Manager*, I want cross-margining margin offsets between Index Derivatives (NIFTY/BANKNIFTY), Single Stock Futures, and Commodity hedges (MCX Gold/Crude), so that correlated delta hedges reduce my gross margin requirement compliant with SEBI and Clearing Corporation rules.
+#### User Story 1: Dealer Gamma Exposure (GEX) & Gamma Flip Detection (`TC-PIN-01`, `TC-PIN-02`)
+- **Story:** *As an Index Derivatives Trader*, I want real-time calculation of Aggregate Dealer Gamma Exposure (GEX) across NIFTY and BANKNIFTY strikes, so that I can anticipate whether market makers must buy dips (Long Gamma regime) or chase sell-offs (Short Gamma regime) and identify the critical Gamma Flip boundary.
 - **Acceptance Criteria:**
-  - Computes correlated cross-margin benefit using correlation matrix $C_{ij}$ and volatility weights.
-  - Generates Isolated Margin vs Cross-Margin comparison and net capital savings percentage.
-  - Ensures net cross-margin requirement is bounded below by regulatory minimum initial margin.
+  - Evaluates strike-by-strike Call and Put GEX in ₹ Crores per 1% underlying move.
+  - Detects Net Gamma Flip price level where market regime switches from stabilizing to momentum-accelerating.
+  - Identifies call resistance wall and put support floor based on open interest concentration.
 
-#### User Story 2: SEBI-Compliant Collateral Pledge & Haircut Calculator (`TC-XMG-02`)
-- **Story:** *As a Proprietary Trader*, I want automated calculation of pledged collateral value applying statutory SEBI haircuts across asset categories (Cash equivalents: 0%, G-Secs/T-Bills: 2%, Liquid Mutual Funds: 10%, Sovereign Gold Bonds: 15%, Group-I Equities: 20%), so that my available trading margin accurately reflects exchange-approved collateral rules.
+#### User Story 2: Dynamic Max Pain Migration & 0-DTE Terminal Pinning Model (`TC-PIN-02`)
+- **Story:** *As an Expiry Day Option Seller*, I want dynamic calculation of the Max Pain strike level updated with intraday volume and OI shifts, so that I can estimate the magnetic pull of strike pinning as expiration approaches 15:30 IST.
 - **Acceptance Criteria:**
-  - Evaluates multi-asset pledged collateral items and applies statutory haircut schedule.
-  - Calculates 50:50 Cash-to-Collateral ratio requirement for derivatives trading and flags cash deficit charges.
+  - Computes cumulative intrinsic payout across all strikes to find option buyer loss minimization point.
+  - Calculates terminal drift probability distribution showing likelihood of underlying pinning to nearest heavy OI strike.
 
-#### User Story 3: Historical Value-at-Risk (HVaR) & Expected Shortfall Portfolio Optimizer (`TC-XMG-02`)
-- **Story:** *As a Quantitative Risk Officer*, I want portfolio HVaR and CVaR optimization for multi-asset books, showing marginal risk contribution (MRC) per leg and optimal hedge ratios.
+#### User Story 3: 0-DTE Intraday Theta Burn & Volatility Crush Engine (`TC-PIN-02`)
+- **Story:** *As a Quantitative Desk Analyst*, I want intraday non-linear theta decay and post-13:30 IST volatility crush modeling for 0-DTE contracts, so that I can avoid gamma traps and optimize exit timing.
 - **Acceptance Criteria:**
-  - Computes 99% 1-day HVaR across historical returns matrix.
-  - Calculates Component VaR and highlights top risk-contributing positions.
+  - Models accelerating $\Theta \propto \frac{1}{\sqrt{T}}$ as $T \to 0$ during the final trading hours.
+  - Provides risk advisory for tail risk blowout in deep OTM options.
 
-#### User Story 4: Interactive Cross-Margining & Collateral Cockpit Modal (`TC-XMG-03`, `TC-XMG-04`)
-- **Story:** *As an Active Trader*, I want an intuitive Cross-Margining Cockpit accessible from the Header and Command Palette (`Ctrl+K`), featuring margin relief charts, collateral pledge simulator, and 50:50 cash ratio monitor.
+#### User Story 4: Interactive 0-DTE Pinning & Gamma Cockpit Modal (`TC-PIN-03`, `TC-PIN-04`)
+- **Story:** *As an Active Trader*, I want a dedicated 0-DTE Pinning & Gamma Cockpit accessible from the Header and Command Palette (`Ctrl+K`), displaying the strike GEX distribution bar chart, Gamma Flip gauge, and Pinning Probability curve.
 - **Acceptance Criteria:**
-  - High-tech interactive modal with 3 workspace views: Cross-Margin Matrix, Collateral & Haircuts, and Portfolio VaR Optimizer.
-  - 1-click pledge simulator with real-time margin update.
+  - High-tech interactive modal with 3 workspace views: GEX Profile & Regime, Max Pain Migration Tracker, and 0-DTE Expiry Simulator.
+  - Real-time ticker switching between NIFTY, BANKNIFTY, and FINNIFTY.
 
-#### User Story 5: Automated Verification & QA Suite (`TC-XMG-05`)
-- **Story:** *As a QA Lead*, I want an automated unit test suite verifying cross-margin offset calculations, haircut schedules, cash ratio checks, and HVaR convergence.
+#### User Story 5: Automated Verification & Unit Test Harness (`TC-PIN-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite verifying GEX formulas, Gamma Flip interpolation, Max Pain monotonicity, and 0-DTE theta scaling.
 - **Acceptance Criteria:**
-  - Test suite `test/crossMarginEngine.test.mjs`.
-  - Minimum 15 unit assertions covering edge cases, negative correlations, and haircut limits.
+  - Test suite `test/pinningEngine.test.mjs`.
+  - Minimum 15 unit assertions covering edge cases, deep OTM skew, and zero-OI contracts.
   - 100% test pass rate with 0 regressions.
 
 ---
@@ -84,6 +84,7 @@ All stories in Sprint 23 must strictly satisfy the following quality gates prior
 | **Sprint 21** | 26 | 26 | 163 | `DELIVERED` | Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine |
 | **Sprint 22** | 26 | 26 | 178 | `DELIVERED` | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk |
 | **Sprint 23** | **26** | **26** | **195** | `DELIVERED` | **Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine** |
+| **Sprint 24** | **26** | **0 (Active)** | **195 (Target: 210)** | `IN_PROGRESS` | **Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine** |
 
 ---
 

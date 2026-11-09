@@ -43,7 +43,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-020`](./BRD-020-fix-protocol-gateway-order-flow-simulator.md) | Real-Time FIX Protocol Gateway & Institutional Drop-Copy Order Flow Simulator (FIX 4.4 Engine) | Sprint 20 | `COMPLETED` |
 | [`BRD-021`](./BRD-021-options-volatility-dispersion-skew-hedging-engine.md) | Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine | Sprint 21 | `COMPLETED` |
 | [`BRD-022`](./BRD-022-pre-trade-risk-engine-span-stress-testing.md) | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk (SPAN Margin, EVT Expected Shortfall & SEBI Volatility Circuit Breakers) | Sprint 22 | `COMPLETED` |
-| [`BRD-023`](./BRD-023-institutional-cross-margining-portfolio-var.md) | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine (Index Options, Stock Futures, MCX Commodity Offsets & Collateral Haircuts) | Sprint 23 | `APPROVED FOR IMPLEMENTATION` |
+| [`BRD-023`](./BRD-023-institutional-cross-margining-portfolio-var.md) | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine (Index Options, Stock Futures, MCX Commodity Offsets & Collateral Haircuts) | Sprint 23 | `COMPLETED` |
 
 
 
