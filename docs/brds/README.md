@@ -44,6 +44,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-021`](./BRD-021-options-volatility-dispersion-skew-hedging-engine.md) | Real-Time Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine | Sprint 21 | `COMPLETED` |
 | [`BRD-022`](./BRD-022-pre-trade-risk-engine-span-stress-testing.md) | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk (SPAN Margin, EVT Expected Shortfall & SEBI Volatility Circuit Breakers) | Sprint 22 | `COMPLETED` |
 | [`BRD-023`](./BRD-023-institutional-cross-margining-portfolio-var.md) | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine (Index Options, Stock Futures, MCX Commodity Offsets & Collateral Haircuts) | Sprint 23 | `COMPLETED` |
+| [`BRD-024`](./BRD-024-options-gamma-squeeze-0dte-pinning-risk-engine.md) | Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine (Dealer Positioning GEX, Gamma Flip Boundaries, Dynamic Max Pain Migration & Fokker-Planck Strike Pinning Probability) | Sprint 24 | `COMPLETED` |
 
 
 

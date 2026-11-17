@@ -34,6 +34,7 @@ import { MacroEventModal } from '../components/MacroEventModal';
 import { CrossExchangeSORModal } from '../components/CrossExchangeSORModal';
 import { FixProtocolModal } from '../components/FixProtocolModal';
 import { CrossMarginCockpitModal } from '../components/CrossMarginCockpitModal';
+import { PinningCockpitModal } from '../components/PinningCockpitModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -86,6 +87,7 @@ export default function TradingTerminalPage() {
   const [isSOROpen, setIsSOROpen] = useState(false);
   const [isFixOpen, setIsFixOpen] = useState(false);
   const [isCrossMarginOpen, setIsCrossMarginOpen] = useState(false);
+  const [isPinningOpen, setIsPinningOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -491,6 +493,7 @@ export default function TradingTerminalPage() {
             onOpenSOR={() => setIsSOROpen(true)}
             onOpenFix={() => setIsFixOpen(true)}
             onOpenCrossMargin={() => setIsCrossMarginOpen(true)}
+            onOpenPinning={() => setIsPinningOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -834,6 +837,13 @@ export default function TradingTerminalPage() {
       <CrossMarginCockpitModal
         isOpen={isCrossMarginOpen}
         onClose={() => setIsCrossMarginOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine Modal */}
+      <PinningCockpitModal
+        isOpen={isPinningOpen}
+        onClose={() => setIsPinningOpen(false)}
         spotPrice={selectedTicker.currentPrice}
       />
 

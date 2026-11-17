@@ -18,6 +18,7 @@ import {
   Home,
   Key,
   Layers,
+  Magnet,
   RefreshCw,
   RotateCcw,
   Scale,
@@ -58,6 +59,7 @@ interface HeaderProps {
   onOpenSOR?: () => void;
   onOpenFix?: () => void;
   onOpenCrossMargin?: () => void;
+  onOpenPinning?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -105,6 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSOR,
   onOpenFix,
   onOpenCrossMargin,
+  onOpenPinning,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -233,6 +236,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'gamma-pinning-cockpit',
+      name: 'Gamma Squeeze & 0-DTE Pinning',
+      badge: 'Sprint 24',
+      description: 'Dealer GEX profile, Gamma Flip boundary, dynamic Max Pain & 0-DTE theta simulator',
+      icon: <Magnet className="h-4 w-4 text-amber-400" />,
+      action: onOpenPinning,
+      category: 'Quant Lab',
+      accent: 'amber',
+    },
     {
       id: 'cross-margin-cockpit',
       name: 'Cross-Margining & VaR Engine',

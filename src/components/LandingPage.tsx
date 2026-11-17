@@ -22,6 +22,7 @@ import {
   Layers,
   LineChart,
   Lock,
+  Magnet,
   Play,
   RotateCcw,
   Scale,
@@ -537,6 +538,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Cross-Margining & Portfolio VaR Engine</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Multi-asset correlation offset matrix across Index, Equity, Commodity (MCX), and FX legs. SEBI statutory haircut schedule (Cash 0%, G-Sec 2%, Liquid MFs 10%, SGBs 15%, Equities 20%), 50:50 cash-to-collateral ratio compliance simulator, and 1-click optimal tail risk hedge.
+            </p>
+          </div>
+
+          {/* Card 22: Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-amber-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition">
+              <Magnet className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Gamma Squeeze & 0-DTE Pinning Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Institutional dealer Net Gamma Exposure (GEX) mapping in ₹ Cr/1%, Gamma Flip zero-crossing boundary, dynamic Max Pain migration drift tracker, Black-Scholes 0-DTE terminal strike pinning probability bell curve, and 1-click delta/gamma neutral pin risk hedger.
             </p>
           </div>
         </div>
