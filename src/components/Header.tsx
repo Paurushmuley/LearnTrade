@@ -60,6 +60,7 @@ interface HeaderProps {
   onOpenFix?: () => void;
   onOpenCrossMargin?: () => void;
   onOpenPinning?: () => void;
+  onOpenVPIN?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -108,6 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenFix,
   onOpenCrossMargin,
   onOpenPinning,
+  onOpenVPIN,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -236,6 +238,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'vpin-toxicity-cockpit',
+      name: 'VPIN Flow Toxicity & Microstructure',
+      badge: 'Sprint 25',
+      description: 'Volume-synchronized probability of toxicity, Kyle’s lambda price impact & Glosten-Milgrom spread radar',
+      icon: <Activity className="h-4 w-4 text-cyan-400" />,
+      action: onOpenVPIN,
+      category: 'Quant Lab',
+      accent: 'cyan',
+    },
     {
       id: 'gamma-pinning-cockpit',
       name: 'Gamma Squeeze & 0-DTE Pinning',

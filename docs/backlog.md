@@ -5,71 +5,73 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprint 24 (Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine)
-- **Sprint Status:** SPRINT 24 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–23 Completed & Verified)
+- **Active Cycle:** Sprint 25 (Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine)
+- **Sprint Status:** SPRINT 25 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–24 Completed & Verified)
 - **Baseline Quality Gate:** ALL 210/210 Unit Tests Passing across 17 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
-- **Historical Velocity:** Average 25.4 Story Points / Sprint (Sprints 1–23 Delivered & Archived; 585 Cumulative SP Delivered)
-- **Planned Sprint 24:** Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine (Dealer Positioning GEX, Gamma Flip Boundaries, Dynamic Max Pain Migration & Fokker-Planck Strike Pinning Probability)
-- **Updated:** 2026-11-17 11:34 IST
+- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–24 Delivered & Archived; 611 Cumulative SP Delivered)
+- **Planned Sprint 25:** Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine (Volume Bucketing, CDF Normalization, Kyle's Lambda & Adverse Selection Warning System)
+- **Updated:** 2026-11-18 12:30 IST
 
 ---
 
-## Active Sprint 24 Task Board (Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine)
+## Active Sprint 25 Task Board (Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-PIN-01` | Research & Architecture | Author comprehensive BRD-024: Formulate 0-DTE intraday gamma acceleration dynamics, Dealer Gamma Exposure ($\text{GEX} = \sum \Gamma_i \times S \times \text{OI}_i \times 100$), Gamma Flip boundary equations, dynamic Max Pain cash-settlement migration, and Fokker-Planck drift diffusion for terminal strike pinning. | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-024 approved in `docs/brds/` & registered in `README.md` |
-| `TC-PIN-02` | Backend & Quant Engine | Gamma Squeeze & 0-DTE Pinning Engine (`src/lib/pinningEngine.ts`, `src/types/pinning.ts`): Aggregate open interest GEX profile across strikes, compute Gamma Flip inflection level, solve dynamic Max Pain with cash-settlement penalty, and simulate 0-DTE intraday theta burn and IV crush. | Backend Lead | 8 SP | `PENDING` | `TC-PIN-01` | Pure functional TS, deterministic calculation, 0 compilation errors |
-| `TC-PIN-03` | Frontend / UI Components | Interactive 0-DTE Pinning & Gamma Cockpit Modal (`src/components/PinningCockpitModal.tsx`): Real-time strike pressure heatmap, dealer GEX bar distribution, Gamma Flip level gauge, dynamic Max Pain drift tracker, and 1-click Pin Risk Hedger. | Frontend Lead | 5 SP | `PENDING` | `TC-PIN-02` | High-tech dark theme, zero layout shifts, accessible visualizer |
-| `TC-PIN-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution" or "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal index contract synchronization (NIFTY / BANKNIFTY weekly expiries), and Landing Page Feature Card 22. | Fullstack Lead | 3 SP | `PENDING` | `TC-PIN-03` | Seamless modal trigger, responsive across breakpoints |
-| `TC-PIN-05` | QA & Verification | Rigorous automated unit test suite in `test/pinningEngine.test.mjs` verifying GEX monotonicity, Gamma Flip zero-crossing bounds, Max Pain minimization convergence, and 0-DTE theta scaling behavior. | QA Lead | 5 SP | `PENDING` | `TC-PIN-02` | 100% test pass rate, 15+ new unit test assertions (target: 210/210) |
+| `TC-VPIN-01` | Research & Architecture | Author comprehensive BRD-025: Formulate Volume-Synchronized Probability of Toxicity (VPIN), volume clock discretization, Bulk Volume Classification (BVC) with normal CDF weighting, Kyle's Lambda price impact parameter ($\lambda$), adverse selection risk for liquidity providers, and toxicity flash crash early warning thresholds (`docs/brds/BRD-025-vpin-informed-trading-microstructure-toxicity-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-025 approved in `docs/brds/` & registered in `README.md` |
+| `TC-VPIN-02` | Backend & Quant Engine | VPIN & Order Flow Toxicity Engine (`src/lib/vpinEngine.ts`, `src/types/vpin.ts`): Continuous trade stream volume bucketing (fixed volume bucket size $V$), Bulk Volume Classification using normal distribution CDF ($V_\tau^B = V \cdot \Phi(\Delta P / \sigma_{\Delta P})$), rolling $N$-bucket toxicity accumulator $\text{VPIN} = \frac{\sum_{\tau=1}^N \|V_\tau^B - V_\tau^S\|}{N \times V}$, empirical Kyle's $\lambda$ regression solver, toxicity CDF percentile ranking, and dynamic adverse selection spread adjustment. | Backend Lead | 8 SP | `PENDING` | `TC-VPIN-01` | Pure functional TS, deterministic calculation, $<1\text{ ms}$ bucket processing, 0 compilation errors |
+| `TC-VPIN-03` | Frontend / UI Components | Interactive VPIN & Toxicity Cockpit Modal (`src/components/VpinCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time VPIN dial gauge & historical percentile thermometer, rolling volume bucket imbalance waterfall, Kyle's Lambda depth impact curve, toxic flow warning banners (Normal, Elevated, Extreme / Flash Crash Danger), and 1-click Adverse Selection Spread Expander / Liquidity Pull. | Frontend Lead | 5 SP | `PENDING` | `TC-VPIN-02` | High-tech dark theme, zero layout shifts, accessible visualizer |
+| `TC-VPIN-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution" or "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time trade tape & L2 DOM order flow binding for Indian equities/derivatives (NIFTY, BANKNIFTY, RELIANCE), and Landing Page Feature Card 23 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-VPIN-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
+| `TC-VPIN-05` | QA & Verification | Rigorous automated unit test suite in `test/vpinEngine.test.mjs` verifying volume bucket boundary preservation, BVC normal CDF trade classification symmetry ($V^B + V^S = V$), VPIN metric normalization ($0 \le \text{VPIN} \le 1$), Kyle's $\lambda$ monotonicity under aggressive order flow, adverse selection spread widening, and flash crash trigger thresholds. | QA Lead | 5 SP | `PENDING` | `TC-VPIN-02` | 100% test pass rate, 15+ new unit test assertions (target: $\ge 225/225$) |
 
 ---
 
-### Sprint 24 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 24 must strictly satisfy the following quality gates prior to sprint closeout:
-- [ ] **Mathematical Rigor:** GEX profiles rigorously observe sign conventions (Long Dealer Gamma vs Short Dealer Gamma). Gamma Flip level accurately isolates zero net gamma inflection point.
-- [ ] **Dynamic Pinning Convergence:** Max Pain minimization algorithm converges deterministically without numerical oscillation on dense Indian strike chains.
+### Sprint 25 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 25 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** Volume-Synchronized Probability of Toxicity strictly satisfies $0 \le \text{VPIN} \le 1$. Bulk Volume Classification (BVC) strictly conserves total bucket volume ($V_\tau^B + V_\tau^S = V$). Kyle's Lambda price impact coefficient remains non-negative ($\lambda \ge 0$).
+- [ ] **Microstructure Clock Integrity:** Volume bucket aggregation preserves exact volume boundary invariants without volume leakage across discrete trade transactions.
 - [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 210/210$).
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 225/225$).
 - [ ] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
 - [ ] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
-- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-024-*.md`, and `docs/daily-reports/`.
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-025-*.md`, and `docs/daily-reports/`.
 
 ---
 
-### Sprint 24 User Stories & Acceptance Criteria
+### Sprint 25 User Stories & Acceptance Criteria
 
-#### User Story 1: Dealer Gamma Exposure (GEX) & Gamma Flip Detection (`TC-PIN-01`, `TC-PIN-02`)
-- **Story:** *As an Index Derivatives Trader*, I want real-time calculation of Aggregate Dealer Gamma Exposure (GEX) across NIFTY and BANKNIFTY strikes, so that I can anticipate whether market makers must buy dips (Long Gamma regime) or chase sell-offs (Short Gamma regime) and identify the critical Gamma Flip boundary.
+#### User Story 1: Volume Bucketing & Bulk Volume Classification (BVC) (`TC-VPIN-01`, `TC-VPIN-02`)
+- **Story:** *As a Quantitative Microstructure Trader*, I want real-time volume-based clock transformation and Bulk Volume Classification using standard normal CDF, so that I can classify order flow into buy and sell volumes without relying on delayed bid-ask quotes.
 - **Acceptance Criteria:**
-  - Evaluates strike-by-strike Call and Put GEX in ₹ Crores per 1% underlying move.
-  - Detects Net Gamma Flip price level where market regime switches from stabilizing to momentum-accelerating.
-  - Identifies call resistance wall and put support floor based on open interest concentration.
+  - Slices continuous trade flow into discrete volume buckets of size $V$ (e.g. 50,000 shares/contracts).
+  - Applies Bulk Volume Classification (BVC) formula: $V_\tau^B = V \cdot \Phi\left(\frac{\Delta P_\tau}{\sigma_{\Delta P}}\right)$, $V_\tau^S = V - V_\tau^B$.
+  - Ensures total volume conservation per bucket ($V_\tau^B + V_\tau^S = V$).
 
-#### User Story 2: Dynamic Max Pain Migration & 0-DTE Terminal Pinning Model (`TC-PIN-02`)
-- **Story:** *As an Expiry Day Option Seller*, I want dynamic calculation of the Max Pain strike level updated with intraday volume and OI shifts, so that I can estimate the magnetic pull of strike pinning as expiration approaches 15:30 IST.
+#### User Story 2: Volume-Synchronized Probability of Toxicity (VPIN) Calculation (`TC-VPIN-02`)
+- **Story:** *As a High-Frequency Market Maker*, I want continuous computation of VPIN over a rolling window of $N$ volume buckets, so that I can quantify the presence of informed traders and avoid adverse selection.
 - **Acceptance Criteria:**
-  - Computes cumulative intrinsic payout across all strikes to find option buyer loss minimization point.
-  - Calculates terminal drift probability distribution showing likelihood of underlying pinning to nearest heavy OI strike.
+  - Calculates $\text{VPIN} = \frac{\sum_{\tau=1}^N |V_\tau^B - V_\tau^S|}{N \times V}$.
+  - Maps current VPIN to empirical CDF historical percentile (0% to 100%).
+  - Classifies toxicity regime into LOW (< 0.20), NORMAL (0.20–0.40), ELEVATED (0.40–0.65), and TOXIC / FLASH CRASH HAZARD (> 0.65).
 
-#### User Story 3: 0-DTE Intraday Theta Burn & Volatility Crush Engine (`TC-PIN-02`)
-- **Story:** *As a Quantitative Desk Analyst*, I want intraday non-linear theta decay and post-13:30 IST volatility crush modeling for 0-DTE contracts, so that I can avoid gamma traps and optimize exit timing.
+#### User Story 3: Kyle's Lambda ($\lambda$) & Adverse Selection Spread Protection (`TC-VPIN-02`)
+- **Story:** *As an Automated Liquidity Provider*, I want dynamic estimation of Kyle's Lambda price impact parameter and an automatic adverse selection spread multiplier, so that my quotes widen automatically during toxic order flow shocks.
 - **Acceptance Criteria:**
-  - Models accelerating $\Theta \propto \frac{1}{\sqrt{T}}$ as $T \to 0$ during the final trading hours.
-  - Provides risk advisory for tail risk blowout in deep OTM options.
+  - Computes empirical Kyle's Lambda: $\lambda = \frac{\text{Cov}(\Delta P, \text{OrderImbalance})}{\text{Var}(\text{OrderImbalance})}$.
+  - Generates dynamic quote widening recommendation: $\text{Spread}^* = \text{BaseSpread} \times (1 + \kappa \cdot \text{VPIN})$.
+  - Provides 1-click Liquidity Pull / Defensive Quote Widening trigger.
 
-#### User Story 4: Interactive 0-DTE Pinning & Gamma Cockpit Modal (`TC-PIN-03`, `TC-PIN-04`)
-- **Story:** *As an Active Trader*, I want a dedicated 0-DTE Pinning & Gamma Cockpit accessible from the Header and Command Palette (`Ctrl+K`), displaying the strike GEX distribution bar chart, Gamma Flip gauge, and Pinning Probability curve.
+#### User Story 4: Interactive VPIN & Toxicity Cockpit Modal (`TC-VPIN-03`, `TC-VPIN-04`)
+- **Story:** *As an Active Scalper and Quant Trader*, I want an institutional VPIN Cockpit modal accessible from the Header and Command Palette (`Ctrl+K`), displaying the live toxicity dial gauge, volume bucket imbalance waterfall, and Kyle's lambda curve.
 - **Acceptance Criteria:**
-  - High-tech interactive modal with 3 workspace views: GEX Profile & Regime, Max Pain Migration Tracker, and 0-DTE Expiry Simulator.
-  - Real-time ticker switching between NIFTY, BANKNIFTY, and FINNIFTY.
+  - High-tech interactive modal with 3 workspace views: VPIN Toxicity Dial & Thermometer, Volume Bucket Imbalance Waterfall, and Adverse Selection Protection Suite.
+  - Real-time ticker switching between NIFTY, BANKNIFTY, and RELIANCE.
 
-#### User Story 5: Automated Verification & Unit Test Harness (`TC-PIN-05`)
-- **Story:** *As a QA Lead*, I want an automated test suite verifying GEX formulas, Gamma Flip interpolation, Max Pain monotonicity, and 0-DTE theta scaling.
+#### User Story 5: Automated Verification & Unit Test Harness (`TC-VPIN-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite verifying volume bucket segmentation, BVC classification symmetry, VPIN metric normalization, and toxicity alert thresholds.
 - **Acceptance Criteria:**
-  - Test suite `test/pinningEngine.test.mjs`.
-  - Minimum 15 unit assertions covering edge cases, deep OTM skew, and zero-OI contracts.
+  - Test suite `test/vpinEngine.test.mjs`.
+  - Minimum 15 unit assertions covering edge cases (zero price delta, extreme price jumps, volume overflow).
   - 100% test pass rate with 0 regressions.
 
 ---
@@ -78,17 +80,24 @@ All stories in Sprint 24 must strictly satisfy the following quality gates prior
 
 | Sprint | Planned SP | Completed SP | Unit Tests Baseline | Status | Key Milestone Delivered |
 | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Sprint 18** | 26 | 26 | 134 | `DELIVERED` | Macroeconomic Sentiment Analysis & Event Risk Engine |
 | **Sprint 19** | 26 | 26 | 140 | `DELIVERED` | Cross-Exchange Arbitrage & Latency-Aware SOR (NSE vs BSE) |
 | **Sprint 20** | 26 | 26 | 144 | `DELIVERED` | FIX 4.4 Protocol Gateway & Drop-Copy Simulator |
 | **Sprint 21** | 26 | 26 | 163 | `DELIVERED` | Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine |
 | **Sprint 22** | 26 | 26 | 178 | `DELIVERED` | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk |
-| **Sprint 23** | **26** | **26** | **195** | `DELIVERED` | **Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine** |
-| **Sprint 24** | **26** | **0 (Active)** | **210 (Target: 210 Achieved)** | `IN_PROGRESS` | **Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine** |
+| **Sprint 23** | 26 | 26 | 195 | `DELIVERED` | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine |
+| **Sprint 24** | **26** | **26** | **210** | `DELIVERED` | **Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine** |
+| **Sprint 25** | **26** | **0 (Active)** | **210 (Target: 225+)** | `IN_PROGRESS` | **Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine** |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 24: Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine
+- [x] **TC-PIN-01**: Author comprehensive BRD-024: Formulate 0-DTE intraday gamma acceleration dynamics, Dealer Gamma Exposure ($\text{GEX} = \sum \Gamma_i \times S \times \text{OI}_i \times 100$), Gamma Flip boundary equations, dynamic Max Pain cash-settlement migration, and Fokker-Planck drift diffusion for terminal strike pinning (`docs/brds/BRD-024-options-gamma-squeeze-0dte-pinning-risk-engine.md`).
+- [x] **TC-PIN-02**: Gamma Squeeze & 0-DTE Pinning Engine: Aggregate open interest GEX profile across strikes, compute Gamma Flip inflection level, solve dynamic Max Pain with cash-settlement penalty, and simulate 0-DTE intraday theta burn and IV crush (`src/lib/pinningEngine.ts`, `src/types/pinning.ts`).
+- [x] **TC-PIN-03**: Interactive 0-DTE Pinning & Gamma Cockpit Modal: Real-time strike pressure heatmap, dealer GEX bar distribution, Gamma Flip level gauge, dynamic Max Pain drift tracker, and 1-click Pin Risk Hedger (`src/components/PinningCockpitModal.tsx`).
+- [x] **TC-PIN-04**: Header navigation suite under "⚡ Execution", Command Palette (`Ctrl+K`) integration, terminal index contract synchronization (NIFTY / BANKNIFTY weekly expiries), and Landing Page Feature Card 22 (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-PIN-05**: Rigorous automated unit test suite in `test/pinningEngine.test.mjs` verifying GEX monotonicity, Gamma Flip zero-crossing bounds, Max Pain minimization convergence, and 0-DTE theta scaling behavior. 210/210 total tests passing.
 
 ### Sprint 23: Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine
 - [x] **TC-XMG-01**: Author comprehensive BRD-023: Formulate SEBI & Clearing Corporation multi-asset cross-margining framework, inter-commodity spread concessions (NSE Index vs Stock Futures vs MCX hedges), Historical VaR (HVaR) correlation offsets, and statutory collateral haircut schedules (`docs/brds/BRD-023-institutional-cross-margining-portfolio-var.md`).

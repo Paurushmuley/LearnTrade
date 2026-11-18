@@ -551,6 +551,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Institutional dealer Net Gamma Exposure (GEX) mapping in ₹ Cr/1%, Gamma Flip zero-crossing boundary, dynamic Max Pain migration drift tracker, Black-Scholes 0-DTE terminal strike pinning probability bell curve, and 1-click delta/gamma neutral pin risk hedger.
             </p>
           </div>
+
+          {/* Card 23: Real-Time Order Flow Toxicity & VPIN Microstructure Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Activity className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Order Flow Toxicity & VPIN Microstructure Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Volume-Synchronized Probability of Toxicity (VPIN) based on Easley et al., Kyle&apos;s Lambda (λ) permanent vs temporary price impact decomposition, Glosten-Milgrom adverse selection spread breakdown, and real-time Flash Crash early warning radar.
+            </p>
+          </div>
         </div>
       </section>
 
