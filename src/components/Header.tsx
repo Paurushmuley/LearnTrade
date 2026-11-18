@@ -61,6 +61,7 @@ interface HeaderProps {
   onOpenCrossMargin?: () => void;
   onOpenPinning?: () => void;
   onOpenVPIN?: () => void;
+  onOpenASMM?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -110,6 +111,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCrossMargin,
   onOpenPinning,
   onOpenVPIN,
+  onOpenASMM,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -238,6 +240,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'avellaneda-stoikov-cockpit',
+      name: 'Avellaneda-Stoikov HFT Market Making',
+      badge: 'Sprint 26',
+      description: 'Optimal inventory control, reservation price desk & asymmetric quote ladder',
+      icon: <Zap className="h-4 w-4 text-cyan-400" />,
+      action: onOpenASMM,
+      category: 'Quant Lab',
+      accent: 'cyan',
+    },
     {
       id: 'vpin-toxicity-cockpit',
       name: 'VPIN Flow Toxicity & Microstructure',

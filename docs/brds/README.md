@@ -46,6 +46,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-023`](./BRD-023-institutional-cross-margining-portfolio-var.md) | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine (Index Options, Stock Futures, MCX Commodity Offsets & Collateral Haircuts) | Sprint 23 | `COMPLETED` |
 | [`BRD-024`](./BRD-024-options-gamma-squeeze-0dte-pinning-risk-engine.md) | Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine (Dealer Positioning GEX, Gamma Flip Boundaries, Dynamic Max Pain Migration & Fokker-Planck Strike Pinning Probability) | Sprint 24 | `COMPLETED` |
 | [`BRD-025`](./BRD-025-vpin-informed-trading-microstructure-toxicity-engine.md) | Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine (Easley-López de Prado-O'Hara VPIN, Kyle's Lambda, Glosten-Milgrom Spread Decomposition & Flash Crash Early-Warning Radar) | Sprint 25 | `COMPLETED` |
+| [`BRD-026`](./BRD-026-avellaneda-stoikov-optimal-market-making-engine.md) | High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine (Dynamic Reservation Price, Bid-Ask Spread Skewing, Inventory Penalties & HFT Execution Simulator) | Sprint 26 | `COMPLETED` |
 
 
 

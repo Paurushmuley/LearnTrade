@@ -562,6 +562,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Volume-Synchronized Probability of Toxicity (VPIN) based on Easley et al., Kyle&apos;s Lambda (λ) permanent vs temporary price impact decomposition, Glosten-Milgrom adverse selection spread breakdown, and real-time Flash Crash early warning radar.
             </p>
           </div>
+
+          {/* Card 24: Avellaneda-Stoikov HFT Market Making Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Zap className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Avellaneda-Stoikov HFT Market Making Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Continuous optimal inventory control with reservation price desk r(s,q) = s - q·γ·σ²·τ, Poisson arrival fill intensity λ(δ) = A·exp(-κ·δ), active asymmetric quote skew ladder, and decomposed P&L attribution (Spread Capture vs Inventory Depreciation).
+            </p>
+          </div>
         </div>
       </section>
 

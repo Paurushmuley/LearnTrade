@@ -19,7 +19,7 @@
 
 | Date | Sprints Covered | Test Suite Status | Report Link |
 | :---: | :--- | :---: | :--- |
-| **2026-11-18** | Sprint 24 Closeout (210/210 Passed) & Sprint 25 Kickoff: Order Flow Toxicity & VPIN | **210/210 Passed** | [`2026-11-18.md`](./2026-11-18.md) |
+| **2026-11-18** | Sprint 25 Closeout (226/226 Passed) & Sprint 26 Kickoff: Avellaneda-Stoikov Market Making | **226/226 Passed** | [`2026-11-18.md`](./2026-11-18.md) |
 | **2026-11-17** | Sprint 24 Standup & Dev Kickoff: Real-Time Options Gamma Squeeze & 0-DTE Pinning Risk | **195/195 Passed** | [`2026-11-17.md`](./2026-11-17.md) |
 | **2026-11-13** | Sprint 24 Coordination & Engineering Standup: Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine | **210/210 Passed** | [`2026-11-13.md`](./2026-11-13.md) |
 | **2026-11-12** | Sprint 24 Activation & Standup: Real-Time Options Gamma Squeeze & 0-DTE Pinning Risk | **195/195 Passed** | [`2026-11-12.md`](./2026-11-12.md) |

@@ -36,6 +36,7 @@ import { FixProtocolModal } from '../components/FixProtocolModal';
 import { CrossMarginCockpitModal } from '../components/CrossMarginCockpitModal';
 import { PinningCockpitModal } from '../components/PinningCockpitModal';
 import { VPINCockpitModal } from '../components/VPINCockpitModal';
+import { AvellanedaStoikovCockpitModal } from '../components/AvellanedaStoikovCockpitModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -90,6 +91,7 @@ export default function TradingTerminalPage() {
   const [isCrossMarginOpen, setIsCrossMarginOpen] = useState(false);
   const [isPinningOpen, setIsPinningOpen] = useState(false);
   const [isVPINOpen, setIsVPINOpen] = useState(false);
+  const [isASMMOpen, setIsASMMOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -497,6 +499,7 @@ export default function TradingTerminalPage() {
             onOpenCrossMargin={() => setIsCrossMarginOpen(true)}
             onOpenPinning={() => setIsPinningOpen(true)}
             onOpenVPIN={() => setIsVPINOpen(true)}
+            onOpenASMM={() => setIsASMMOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -854,6 +857,13 @@ export default function TradingTerminalPage() {
       <VPINCockpitModal
         isOpen={isVPINOpen}
         onClose={() => setIsVPINOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Sprint 26: High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine Modal */}
+      <AvellanedaStoikovCockpitModal
+        isOpen={isASMMOpen}
+        onClose={() => setIsASMMOpen(false)}
         spotPrice={selectedTicker.currentPrice}
       />
 

@@ -5,74 +5,76 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprint 25 (Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine)
-- **Sprint Status:** SPRINT 25 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–24 Completed & Verified)
-- **Baseline Quality Gate:** ALL 210/210 Unit Tests Passing across 17 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
-- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–24 Delivered & Archived; 611 Cumulative SP Delivered)
-- **Planned Sprint 25:** Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine (Volume Bucketing, CDF Normalization, Kyle's Lambda & Adverse Selection Warning System)
-- **Updated:** 2026-11-18 12:30 IST
+- **Active Cycle:** Sprint 26 (High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine)
+- **Sprint Status:** SPRINT 26 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–25 Completed & Verified)
+- **Baseline Quality Gate:** ALL 226/226 Unit Tests Passing across 18 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
+- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–25 Delivered & Archived; 637 Cumulative SP Delivered)
+- **Planned Sprint 26:** High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine (Reservation Price, Asymmetric Bid/Ask Ladder, Inventory Risk Aversion, Arrival Intensity, and P&L Attribution)
+- **Updated:** 2026-11-18 15:34 IST
 
 ---
 
-## Active Sprint 25 Task Board (Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine)
+## Active Sprint 26 Task Board (High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-VPIN-01` | Research & Architecture | Author comprehensive BRD-025: Formulate Volume-Synchronized Probability of Toxicity (VPIN), volume clock discretization, Bulk Volume Classification (BVC) with normal CDF weighting, Kyle's Lambda price impact parameter ($\lambda$), adverse selection risk for liquidity providers, and toxicity flash crash early warning thresholds (`docs/brds/BRD-025-vpin-informed-trading-microstructure-toxicity-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-025 approved in `docs/brds/` & registered in `README.md` |
-| `TC-VPIN-02` | Backend & Quant Engine | VPIN & Order Flow Toxicity Engine (`src/lib/vpinEngine.ts`, `src/types/vpin.ts`): Continuous trade stream volume bucketing (fixed volume bucket size $V$), Bulk Volume Classification using normal distribution CDF ($V_\tau^B = V \cdot \Phi(\Delta P / \sigma_{\Delta P})$), rolling $N$-bucket toxicity accumulator $\text{VPIN} = \frac{\sum_{\tau=1}^N \|V_\tau^B - V_\tau^S\|}{N \times V}$, empirical Kyle's $\lambda$ regression solver, toxicity CDF percentile ranking, and dynamic adverse selection spread adjustment. | Backend Lead | 8 SP | `PENDING` | `TC-VPIN-01` | Pure functional TS, deterministic calculation, $<1\text{ ms}$ bucket processing, 0 compilation errors |
-| `TC-VPIN-03` | Frontend / UI Components | Interactive VPIN & Toxicity Cockpit Modal (`src/components/VpinCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time VPIN dial gauge & historical percentile thermometer, rolling volume bucket imbalance waterfall, Kyle's Lambda depth impact curve, toxic flow warning banners (Normal, Elevated, Extreme / Flash Crash Danger), and 1-click Adverse Selection Spread Expander / Liquidity Pull. | Frontend Lead | 5 SP | `PENDING` | `TC-VPIN-02` | High-tech dark theme, zero layout shifts, accessible visualizer |
-| `TC-VPIN-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution" or "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time trade tape & L2 DOM order flow binding for Indian equities/derivatives (NIFTY, BANKNIFTY, RELIANCE), and Landing Page Feature Card 23 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-VPIN-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
-| `TC-VPIN-05` | QA & Verification | Rigorous automated unit test suite in `test/vpinEngine.test.mjs` verifying volume bucket boundary preservation, BVC normal CDF trade classification symmetry ($V^B + V^S = V$), VPIN metric normalization ($0 \le \text{VPIN} \le 1$), Kyle's $\lambda$ monotonicity under aggressive order flow, adverse selection spread widening, and flash crash trigger thresholds. | QA Lead | 5 SP | `PENDING` | `TC-VPIN-02` | 100% test pass rate, 15+ new unit test assertions (target: $\ge 225/225$) |
+| `TC-ASMM-01` | Research & Architecture | Author comprehensive BRD-026: Mathematical formulation of the Avellaneda-Stoikov (2008) High-Frequency Market Making framework with finite horizon $T$, reservation (indifference) price $r(s, q, t) = s - q \gamma \sigma^2 (T - t)$, optimal bid/ask spread $\delta^a(q) + \delta^b(q) = \gamma \sigma^2 (T - t) + \frac{2}{\gamma} \ln\left(1 + \frac{\gamma}{\kappa}\right)$, Poisson order arrival intensity $\lambda(\delta) = A e^{-\kappa \delta}$, inventory risk aversion $\gamma$, tick size discretization, and inventory hard limits $Q_{\max}$ (`docs/brds/BRD-026-avellaneda-stoikov-optimal-market-making-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-026 approved in `docs/brds/` & registered in `README.md` |
+| `TC-ASMM-02` | Backend & Quant Engine | Avellaneda-Stoikov Market Making & Inventory Control Engine (`src/lib/asmmEngine.ts`, `src/types/asmm.ts`): Reservation price derivation, symmetric/asymmetric bid-ask spread quotes, fill probability & arrival rate simulation, inventory skew adjustment ($q > 0 \implies$ lower reservation price to shed inventory; $q < 0 \implies$ raise reservation price to accumulate), risk aversion sensitivity ($\gamma$), terminal penalty convergence as $t \to T$, and P&L attribution (spread capture vs inventory drift vs execution fees). | Backend Lead | 8 SP | `PENDING` | `TC-ASMM-01` | Pure functional TS, deterministic calculation, $<1\text{ ms}$ quote calculation, 0 compilation errors |
+| `TC-ASMM-03` | Frontend / UI Components | Interactive Avellaneda-Stoikov Market Making Cockpit Modal (`src/components/AsmmCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time Midpoint vs Reservation Price visualizer, optimal asymmetric Bid/Ask quote ladder, inventory position thermometer ($q / Q_{\max}$ with inventory risk zone gauges), intensity curve $\lambda(\delta)$ visualizer, and 1-click Inventory Flatten / Emergency Hedger. | Frontend Lead | 5 SP | `PENDING` | `TC-ASMM-02` | High-tech dark theme, zero layout shifts, accessible visualizer |
+| `TC-ASMM-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution" or "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time L2 order book depth sync (NIFTY, BANKNIFTY, RELIANCE, FINNIFTY), and Landing Page Feature Card 24 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-ASMM-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
+| `TC-ASMM-05` | QA & Verification | Rigorous automated unit test suite in `test/asmmEngine.test.mjs` verifying reservation price symmetry ($q=0 \implies r=s$), inventory skew monotonicity ($\partial r / \partial q < 0$), spread expansion with volatility $\sigma$ and risk aversion $\gamma$, arrival intensity bounds, tick discretization compliance, and inventory boundary constraint enforcement. | QA Lead | 5 SP | `PENDING` | `TC-ASMM-02` | 100% test pass rate, 15+ new unit test assertions (target: $\ge 241/241$) |
 
 ---
 
-### Sprint 25 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 25 must strictly satisfy the following quality gates prior to sprint closeout:
-- [ ] **Mathematical Rigor:** Volume-Synchronized Probability of Toxicity strictly satisfies $0 \le \text{VPIN} \le 1$. Bulk Volume Classification (BVC) strictly conserves total bucket volume ($V_\tau^B + V_\tau^S = V$). Kyle's Lambda price impact coefficient remains non-negative ($\lambda \ge 0$).
-- [ ] **Microstructure Clock Integrity:** Volume bucket aggregation preserves exact volume boundary invariants without volume leakage across discrete trade transactions.
+### Sprint 26 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 26 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** Reservation price $r(s, q, t)$ strictly adheres to Avellaneda-Stoikov formulation; spreads $\delta^a(q)$ and $\delta^b(q)$ strictly positive and monotonic with respect to inventory $q$.
+- [ ] **Inventory Boundary Protection:** Hard position constraint $|q| \le Q_{\max}$ halts quoting in the breach direction and triggers inventory skew rebalancing.
 - [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 225/225$).
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 241/241$).
 - [ ] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
 - [ ] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
-- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-025-*.md`, and `docs/daily-reports/`.
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-026-*.md`, and `docs/daily-reports/`.
 
 ---
 
-### Sprint 25 User Stories & Acceptance Criteria
+### Sprint 26 User Stories & Acceptance Criteria
 
-#### User Story 1: Volume Bucketing & Bulk Volume Classification (BVC) (`TC-VPIN-01`, `TC-VPIN-02`)
-- **Story:** *As a Quantitative Microstructure Trader*, I want real-time volume-based clock transformation and Bulk Volume Classification using standard normal CDF, so that I can classify order flow into buy and sell volumes without relying on delayed bid-ask quotes.
+#### User Story 1: Reservation (Indifference) Price Engine (`TC-ASMM-01`, `TC-ASMM-02`)
+- **Story:** *As a Quantitative Market Maker*, I want dynamic calculation of the Avellaneda-Stoikov reservation price $r(s, q, t) = s - q \gamma \sigma^2 (T - t)$, so that my quoting price shifts away from the midpoint to penalize accumulated inventory.
 - **Acceptance Criteria:**
-  - Slices continuous trade flow into discrete volume buckets of size $V$ (e.g. 50,000 shares/contracts).
-  - Applies Bulk Volume Classification (BVC) formula: $V_\tau^B = V \cdot \Phi\left(\frac{\Delta P_\tau}{\sigma_{\Delta P}}\right)$, $V_\tau^S = V - V_\tau^B$.
-  - Ensures total volume conservation per bucket ($V_\tau^B + V_\tau^S = V$).
+  - Evaluates reservation price based on midpoint $s$, current inventory $q$, risk aversion parameter $\gamma$, asset volatility $\sigma$, and remaining time horizon $T - t$.
+  - When inventory $q > 0$ (long position), reservation price shifts below mid ($r < s$), skewing quotes to encourage selling and discourage buying.
+  - When inventory $q < 0$ (short position), reservation price shifts above mid ($r > s$), skewing quotes to encourage buying and discourage selling.
+  - When $q = 0$, reservation price equals midpoint ($r = s$).
 
-#### User Story 2: Volume-Synchronized Probability of Toxicity (VPIN) Calculation (`TC-VPIN-02`)
-- **Story:** *As a High-Frequency Market Maker*, I want continuous computation of VPIN over a rolling window of $N$ volume buckets, so that I can quantify the presence of informed traders and avoid adverse selection.
+#### User Story 2: Optimal Bid/Ask Spread & Quote Placement (`TC-ASMM-02`)
+- **Story:** *As an Automated High-Frequency Liquidity Provider*, I want optimal asymmetric bid and ask distance quotes $(\delta^a, \delta^b)$ solved via Hamilton-Jacobi-Bellman (HJB) equations, so that I maximize expected utility while controlling inventory risk.
 - **Acceptance Criteria:**
-  - Calculates $\text{VPIN} = \frac{\sum_{\tau=1}^N |V_\tau^B - V_\tau^S|}{N \times V}$.
-  - Maps current VPIN to empirical CDF historical percentile (0% to 100%).
-  - Classifies toxicity regime into LOW (< 0.20), NORMAL (0.20–0.40), ELEVATED (0.40–0.65), and TOXIC / FLASH CRASH HAZARD (> 0.65).
+  - Solves total spread: $s(q) = \delta^a(q) + \delta^b(q) = \gamma \sigma^2 (T - t) + \frac{2}{\gamma} \ln\left(1 + \frac{\gamma}{\kappa}\right)$.
+  - Places ask quote $r^a = r + \frac{1}{2} s(q)$ and bid quote $r^b = r - \frac{1}{2} s(q)$ (or asymmetric distances $\delta^a(q) = \frac{r - s}{2} + \frac{1}{\gamma} \ln(1 + \gamma/\kappa)$).
+  - Enforces minimum exchange tick size rounding (e.g. 0.05 INR for NSE).
 
-#### User Story 3: Kyle's Lambda ($\lambda$) & Adverse Selection Spread Protection (`TC-VPIN-02`)
-- **Story:** *As an Automated Liquidity Provider*, I want dynamic estimation of Kyle's Lambda price impact parameter and an automatic adverse selection spread multiplier, so that my quotes widen automatically during toxic order flow shocks.
+#### User Story 3: Order Flow Arrival Intensity & Execution Fill Simulator (`TC-ASMM-02`)
+- **Story:** *As a Quantitative Researcher*, I want exponential order arrival intensity modeling $\lambda(\delta) = A e^{-\kappa \delta}$, so that execution fill probability accurately reflects quote depth into the order book.
 - **Acceptance Criteria:**
-  - Computes empirical Kyle's Lambda: $\lambda = \frac{\text{Cov}(\Delta P, \text{OrderImbalance})}{\text{Var}(\text{OrderImbalance})}$.
-  - Generates dynamic quote widening recommendation: $\text{Spread}^* = \text{BaseSpread} \times (1 + \kappa \cdot \text{VPIN})$.
-  - Provides 1-click Liquidity Pull / Defensive Quote Widening trigger.
+  - Models Poisson order arrival rates based on book liquidity parameters $A$ and $\kappa$.
+  - Generates fill probability per unit time step: $P(\text{fill} \mid \delta) = 1 - e^{-\lambda(\delta) \Delta t}$.
+  - Computes continuous P&L attribution decomposing spread capture, inventory holding drift, and exchange transaction fees.
 
-#### User Story 4: Interactive VPIN & Toxicity Cockpit Modal (`TC-VPIN-03`, `TC-VPIN-04`)
-- **Story:** *As an Active Scalper and Quant Trader*, I want an institutional VPIN Cockpit modal accessible from the Header and Command Palette (`Ctrl+K`), displaying the live toxicity dial gauge, volume bucket imbalance waterfall, and Kyle's lambda curve.
+#### User Story 4: Interactive Avellaneda-Stoikov Market Making Cockpit Modal (`TC-ASMM-03`, `TC-ASMM-04`)
+- **Story:** *As an Active Scalper and Quant Trader*, I want an institutional Avellaneda-Stoikov Cockpit modal accessible from the Header and Command Palette (`Ctrl+K`), displaying live Midpoint vs Reservation Price, optimal quote ladders, and inventory risk gauges.
 - **Acceptance Criteria:**
-  - High-tech interactive modal with 3 workspace views: VPIN Toxicity Dial & Thermometer, Volume Bucket Imbalance Waterfall, and Adverse Selection Protection Suite.
-  - Real-time ticker switching between NIFTY, BANKNIFTY, and RELIANCE.
+  - High-tech interactive modal with 3 workspace views: Reservation Price & Spread Ladder, Inventory Risk Thermometer & Intensity Curves, and P&L Attribution & Emergency Hedger.
+  - Real-time ticker switching between NIFTY, BANKNIFTY, RELIANCE, and FINNIFTY.
+  - 1-click Inventory Flatten / Emergency Market Neutralizer.
 
-#### User Story 5: Automated Verification & Unit Test Harness (`TC-VPIN-05`)
-- **Story:** *As a QA Lead*, I want an automated test suite verifying volume bucket segmentation, BVC classification symmetry, VPIN metric normalization, and toxicity alert thresholds.
+#### User Story 5: Automated Verification & Unit Test Suite (`TC-ASMM-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite verifying reservation price symmetry, inventory skew monotonicity, spread expansion with volatility/risk-aversion, and boundary constraint enforcement.
 - **Acceptance Criteria:**
-  - Test suite `test/vpinEngine.test.mjs`.
-  - Minimum 15 unit assertions covering edge cases (zero price delta, extreme price jumps, volume overflow).
-  - 100% test pass rate with 0 regressions.
+  - Test suite `test/asmmEngine.test.mjs`.
+  - Minimum 15 unit assertions covering edge cases ($q=0$, extreme inventory $\pm Q_{\max}$, horizon expiration $t \to T$, high volatility).
+  - 100% test pass rate with 0 regressions (target: $\ge 241/241$).
 
 ---
 
@@ -85,12 +87,20 @@ All stories in Sprint 25 must strictly satisfy the following quality gates prior
 | **Sprint 21** | 26 | 26 | 163 | `DELIVERED` | Options Volatility Dispersion & Multi-Expiry Skew Hedging Engine |
 | **Sprint 22** | 26 | 26 | 178 | `DELIVERED` | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk |
 | **Sprint 23** | 26 | 26 | 195 | `DELIVERED` | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine |
-| **Sprint 24** | **26** | **26** | **210** | `DELIVERED` | **Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine** |
-| **Sprint 25** | **26** | **0 (Active)** | **210 (Target: 225+)** | `IN_PROGRESS` | **Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine** |
+| **Sprint 24** | 26 | 26 | 210 | `DELIVERED` | Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine |
+| **Sprint 25** | **26** | **26** | **226** | `DELIVERED` | **Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine** |
+| **Sprint 26** | **26** | **0 (Active)** | **226 (Target: 241+)** | `IN_PROGRESS` | **High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine** |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 25: Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine
+- [x] **TC-VPIN-01**: Author comprehensive BRD-025: Formulate Volume-Synchronized Probability of Toxicity (VPIN), volume clock discretization, Bulk Volume Classification (BVC) with normal CDF weighting, Kyle's Lambda price impact parameter ($\lambda$), adverse selection risk for liquidity providers, and toxicity flash crash early warning thresholds (`docs/brds/BRD-025-vpin-informed-trading-microstructure-toxicity-engine.md`).
+- [x] **TC-VPIN-02**: VPIN & Order Flow Toxicity Engine: Continuous trade stream volume bucketing (fixed volume bucket size $V$), Bulk Volume Classification using normal distribution CDF ($V_\tau^B = V \cdot \Phi(\Delta P / \sigma_{\Delta P})$), rolling $N$-bucket toxicity accumulator $\text{VPIN} = \frac{\sum_{\tau=1}^N \|V_\tau^B - V_\tau^S\|}{N \times V}$, empirical Kyle's $\lambda$ regression solver, toxicity CDF percentile ranking, and dynamic adverse selection spread adjustment (`src/lib/vpinEngine.ts`, `src/types/vpin.ts`).
+- [x] **TC-VPIN-03**: Interactive VPIN & Toxicity Cockpit Modal: High-tech cyber-dark dashboard featuring real-time VPIN dial gauge & historical percentile thermometer, rolling volume bucket imbalance waterfall, Kyle's Lambda depth impact curve, toxic flow warning banners, and 1-click Defensive Hedger / Liquidity Pull (`src/components/VpinCockpitModal.tsx`).
+- [x] **TC-VPIN-04**: Header navigation suite under "⚡ Execution", Command Palette (`Ctrl+K`) integration, terminal real-time trade tape & L2 DOM order flow binding for Indian equities/derivatives (NIFTY, BANKNIFTY, RELIANCE), and Landing Page Feature Card 23 showcase (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-VPIN-05**: Rigorous automated unit test suite in `test/vpinEngine.test.mjs` verifying volume bucket boundary preservation, BVC normal CDF trade classification symmetry ($V^B + V^S = V$), VPIN metric normalization ($0 \le \text{VPIN} \le 1$), Kyle's $\lambda$ monotonicity under aggressive order flow, adverse selection spread widening, and flash crash trigger thresholds. 226/226 total tests passing.
 
 ### Sprint 24: Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine
 - [x] **TC-PIN-01**: Author comprehensive BRD-024: Formulate 0-DTE intraday gamma acceleration dynamics, Dealer Gamma Exposure ($\text{GEX} = \sum \Gamma_i \times S \times \text{OI}_i \times 100$), Gamma Flip boundary equations, dynamic Max Pain cash-settlement migration, and Fokker-Planck drift diffusion for terminal strike pinning (`docs/brds/BRD-024-options-gamma-squeeze-0dte-pinning-risk-engine.md`).
