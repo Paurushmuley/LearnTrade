@@ -5,76 +5,76 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprint 26 (High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine)
-- **Sprint Status:** SPRINT 26 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–25 Completed & Verified)
-- **Baseline Quality Gate:** ALL 226/226 Unit Tests Passing across 18 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
-- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–25 Delivered & Archived; 637 Cumulative SP Delivered)
-- **Planned Sprint 26:** High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine (Reservation Price, Asymmetric Bid/Ask Ladder, Inventory Risk Aversion, Arrival Intensity, and P&L Attribution)
-- **Updated:** 2026-11-18 15:34 IST
+- **Active Cycle:** Sprint 27 (Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine)
+- **Sprint Status:** SPRINT 27 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–26 Completed & Verified)
+- **Baseline Quality Gate:** ALL 244/244 Unit Tests Passing across 19 Suites (+8 UI Navigation Tests = 252 Total Passing), Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
+- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–26 Delivered & Archived; 663 Cumulative SP Delivered)
+- **Planned Sprint 27:** Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine (Closed-form Hyperbolic Trajectory, Efficient Frontier, Temporary & Permanent Market Impact, Dynamic Child Slicing, and Implementation Shortfall Attribution)
+- **Updated:** 2026-11-19 10:55 IST
 
 ---
 
-## Active Sprint 26 Task Board (High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine)
+## Active Sprint 27 Task Board (Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-ASMM-01` | Research & Architecture | Author comprehensive BRD-026: Mathematical formulation of the Avellaneda-Stoikov (2008) High-Frequency Market Making framework with finite horizon $T$, reservation (indifference) price $r(s, q, t) = s - q \gamma \sigma^2 (T - t)$, optimal bid/ask spread $\delta^a(q) + \delta^b(q) = \gamma \sigma^2 (T - t) + \frac{2}{\gamma} \ln\left(1 + \frac{\gamma}{\kappa}\right)$, Poisson order arrival intensity $\lambda(\delta) = A e^{-\kappa \delta}$, inventory risk aversion $\gamma$, tick size discretization, and inventory hard limits $Q_{\max}$ (`docs/brds/BRD-026-avellaneda-stoikov-optimal-market-making-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-026 approved in `docs/brds/` & registered in `README.md` |
-| `TC-ASMM-02` | Backend & Quant Engine | Avellaneda-Stoikov Market Making & Inventory Control Engine (`src/lib/asmmEngine.ts`, `src/types/asmm.ts`): Reservation price derivation, symmetric/asymmetric bid-ask spread quotes, fill probability & arrival rate simulation, inventory skew adjustment ($q > 0 \implies$ lower reservation price to shed inventory; $q < 0 \implies$ raise reservation price to accumulate), risk aversion sensitivity ($\gamma$), terminal penalty convergence as $t \to T$, and P&L attribution (spread capture vs inventory drift vs execution fees). | Backend Lead | 8 SP | `PENDING` | `TC-ASMM-01` | Pure functional TS, deterministic calculation, $<1\text{ ms}$ quote calculation, 0 compilation errors |
-| `TC-ASMM-03` | Frontend / UI Components | Interactive Avellaneda-Stoikov Market Making Cockpit Modal (`src/components/AsmmCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time Midpoint vs Reservation Price visualizer, optimal asymmetric Bid/Ask quote ladder, inventory position thermometer ($q / Q_{\max}$ with inventory risk zone gauges), intensity curve $\lambda(\delta)$ visualizer, and 1-click Inventory Flatten / Emergency Hedger. | Frontend Lead | 5 SP | `PENDING` | `TC-ASMM-02` | High-tech dark theme, zero layout shifts, accessible visualizer |
-| `TC-ASMM-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution" or "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time L2 order book depth sync (NIFTY, BANKNIFTY, RELIANCE, FINNIFTY), and Landing Page Feature Card 24 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-ASMM-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
-| `TC-ASMM-05` | QA & Verification | Rigorous automated unit test suite in `test/asmmEngine.test.mjs` verifying reservation price symmetry ($q=0 \implies r=s$), inventory skew monotonicity ($\partial r / \partial q < 0$), spread expansion with volatility $\sigma$ and risk aversion $\gamma$, arrival intensity bounds, tick discretization compliance, and inventory boundary constraint enforcement. | QA Lead | 5 SP | `PENDING` | `TC-ASMM-02` | 100% test pass rate, 15+ new unit test assertions (target: $\ge 241/241$) |
+| `TC-ACEX-01` | Research & Architecture | Author comprehensive BRD-027: Mathematical formulation of the Almgren-Chriss (2000) Optimal Order Slicing & Liquidation Framework with dynamic urgency/risk aversion parameter $\lambda$, temporary price impact $h(v_k) = \eta \cdot v_k$, permanent price impact $g(v_k) = \gamma \cdot v_k$, expected execution cost $E[x]$, variance of capture $V[x]$, optimal execution trajectory hyperbolic solver $n_j = 2 \sinh(\frac{1}{2} \kappa \tau) \cosh(\kappa (T - (j - \frac{1}{2})\tau)) / \sinh(\kappa T) \cdot X$, adaptive order slicing across intraday volume profiles, dynamic child order placement (Limit vs Market/IOC), and Perold Implementation Shortfall benchmarking (`docs/brds/BRD-027-almgren-chriss-optimal-execution-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-027 approved in `docs/brds/` & registered in `README.md` |
+| `TC-ACEX-02` | Backend & Quant Engine | Almgren-Chriss Execution & Optimal Slicing Engine (`src/lib/acexEngine.ts`, `src/types/acex.ts`): Closed-form hyperbolic trajectory calculation, efficient frontier curve generation, linear/non-linear temporary and permanent market impact models, child slice scheduling with intraday volume adaptation, dynamic urgency modulation, and Perold Implementation Shortfall decomposition (delay slippage, price impact, market drift, fee drag). | Backend Lead | 8 SP | `PENDING` | `TC-ACEX-01` | Pure functional TS, deterministic calculation, $<1\text{ ms}$ trajectory generation, 0 compilation errors |
+| `TC-ACEX-03` | Frontend / UI Components | Interactive Almgren-Chriss Execution & Slicing Studio Modal (`src/components/AcexCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time Trajectory visualizer (Almgren-Chriss vs TWAP vs VWAP), Efficient Frontier curve with interactive $\lambda$ risk aversion slider, live child slice execution ladder & progress gauge, slippage attribution waterfall, and 1-click Emergency Liquidation / Pause / Accelerate controls. | Frontend Lead | 5 SP | `PENDING` | `TC-ACEX-02` | High-tech dark theme, zero layout shifts, interactive visualizer |
+| `TC-ACEX-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution", Command Palette (`Ctrl+K`) integration, terminal real-time L2 order book depth sync (NIFTY, BANKNIFTY, RELIANCE, FINNIFTY), order routing dispatch bridge, and Landing Page Feature Card 25 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-ACEX-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
+| `TC-ACEX-05` | QA & Verification | Rigorous automated unit test suite in `test/acexEngine.test.mjs` verifying initial inventory conservation ($\sum n_j = X$), terminal zero-inventory convergence ($x_N = 0$), risk-aversion monotonicity ($\lambda \to \infty$ vs $\lambda \to 0$), efficient frontier convexity, market impact scaling, and Implementation Shortfall conservation. | QA Lead | 5 SP | `PENDING` | `TC-ACEX-02` | 100% test pass rate, 21+ new unit test assertions (target: $\ge 265/265$) |
 
 ---
 
-### Sprint 26 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 26 must strictly satisfy the following quality gates prior to sprint closeout:
-- [ ] **Mathematical Rigor:** Reservation price $r(s, q, t)$ strictly adheres to Avellaneda-Stoikov formulation; spreads $\delta^a(q)$ and $\delta^b(q)$ strictly positive and monotonic with respect to inventory $q$.
-- [ ] **Inventory Boundary Protection:** Hard position constraint $|q| \le Q_{\max}$ halts quoting in the breach direction and triggers inventory skew rebalancing.
+### Sprint 27 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 27 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** Hyperbolic trajectory satisfies Almgren-Chriss equations; inventory monotonically decreases to 0 at $t=T$; total quantity strictly conserved $\sum n_j = X$.
+- [ ] **Efficient Frontier Feasibility:** Risk-neutral trajectory minimizes expected cost; risk-averse trajectory minimizes variance; frontier is strictly convex with $\partial E[x] / \partial V[x] < 0$.
+- [ ] **Market Impact Calibration:** Temporary impact $\eta$ and permanent impact $\gamma$ strictly non-negative; child order slicing respects exchange lot sizing and minimum tick size.
 - [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 241/241$).
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 265/265$).
 - [ ] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
 - [ ] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
-- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-026-*.md`, and `docs/daily-reports/`.
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-027-*.md`, and `docs/daily-reports/2026-11-19.md`.
 
 ---
 
-### Sprint 26 User Stories & Acceptance Criteria
+### Sprint 27 User Stories & Acceptance Criteria
 
-#### User Story 1: Reservation (Indifference) Price Engine (`TC-ASMM-01`, `TC-ASMM-02`)
-- **Story:** *As a Quantitative Market Maker*, I want dynamic calculation of the Avellaneda-Stoikov reservation price $r(s, q, t) = s - q \gamma \sigma^2 (T - t)$, so that my quoting price shifts away from the midpoint to penalize accumulated inventory.
+#### User Story 1: Almgren-Chriss Closed-Form Trajectory Engine (`TC-ACEX-01`, `TC-ACEX-02`)
+- **Story:** *As an Institutional Execution Algorist*, I want dynamic calculation of the Almgren-Chriss optimal liquidation trajectory $x_j$ and discrete slice quantities $n_j$, balancing market impact versus market volatility risk over the horizon $[0, T]$.
 - **Acceptance Criteria:**
-  - Evaluates reservation price based on midpoint $s$, current inventory $q$, risk aversion parameter $\gamma$, asset volatility $\sigma$, and remaining time horizon $T - t$.
-  - When inventory $q > 0$ (long position), reservation price shifts below mid ($r < s$), skewing quotes to encourage selling and discourage buying.
-  - When inventory $q < 0$ (short position), reservation price shifts above mid ($r > s$), skewing quotes to encourage buying and discourage selling.
-  - When $q = 0$, reservation price equals midpoint ($r = s$).
+  - Solves the discrete half-life parameter $\kappa \tau$ from urgency parameter $\lambda$, temporary impact $\eta$, permanent impact $\gamma$, and asset volatility $\sigma$.
+  - Generates discrete position holdings $x_j = \frac{\sinh(\kappa(T - t_j))}{\sinh(\kappa T)} X$ and slice sizes $n_j = x_{j-1} - x_j$.
+  - Strictly conserves total quantity $\sum_{j=1}^N n_j = X$ and reaches zero terminal inventory $x_N = 0$.
 
-#### User Story 2: Optimal Bid/Ask Spread & Quote Placement (`TC-ASMM-02`)
-- **Story:** *As an Automated High-Frequency Liquidity Provider*, I want optimal asymmetric bid and ask distance quotes $(\delta^a, \delta^b)$ solved via Hamilton-Jacobi-Bellman (HJB) equations, so that I maximize expected utility while controlling inventory risk.
+#### User Story 2: Efficient Frontier & Risk Aversion Calibration (`TC-ACEX-02`)
+- **Story:** *As a Quantitative Portfolio Manager*, I want to trace the Almgren-Chriss Efficient Frontier of optimal liquidation schedules, evaluating expected cost $E[x]$ versus execution variance $V[x]$ across varying risk aversion parameter $\lambda$.
 - **Acceptance Criteria:**
-  - Solves total spread: $s(q) = \delta^a(q) + \delta^b(q) = \gamma \sigma^2 (T - t) + \frac{2}{\gamma} \ln\left(1 + \frac{\gamma}{\kappa}\right)$.
-  - Places ask quote $r^a = r + \frac{1}{2} s(q)$ and bid quote $r^b = r - \frac{1}{2} s(q)$ (or asymmetric distances $\delta^a(q) = \frac{r - s}{2} + \frac{1}{\gamma} \ln(1 + \gamma/\kappa)$).
-  - Enforces minimum exchange tick size rounding (e.g. 0.05 INR for NSE).
+  - Evaluates expected cost $E[x] = \frac{1}{2} \gamma X^2 + \epsilon \sum n_j + \eta \sum \frac{n_j^2}{\tau}$.
+  - Evaluates variance of capture $V[x] = \sigma^2 \tau \sum_{j=1}^N x_j^2$.
+  - Generates efficient frontier curve proving strict convexity and smooth trade-off between risk and cost.
 
-#### User Story 3: Order Flow Arrival Intensity & Execution Fill Simulator (`TC-ASMM-02`)
-- **Story:** *As a Quantitative Researcher*, I want exponential order arrival intensity modeling $\lambda(\delta) = A e^{-\kappa \delta}$, so that execution fill probability accurately reflects quote depth into the order book.
+#### User Story 3: Dynamic Child Order Slicing & Implementation Shortfall (`TC-ACEX-02`)
+- **Story:** *As an Execution Trader*, I want an intelligent order slicer that maps trajectory slices into exchange child orders with Indian lot size quantization, dynamically adapting to intraday volume curves and computing Perold Implementation Shortfall.
 - **Acceptance Criteria:**
-  - Models Poisson order arrival rates based on book liquidity parameters $A$ and $\kappa$.
-  - Generates fill probability per unit time step: $P(\text{fill} \mid \delta) = 1 - e^{-\lambda(\delta) \Delta t}$.
-  - Computes continuous P&L attribution decomposing spread capture, inventory holding drift, and exchange transaction fees.
+  - Adapts slice pacing to empirical intraday volume profiles (morning rush, midday lull, market close).
+  - Decomposes Perold Implementation Shortfall into Arrival Cost, Temporary Impact, Permanent Drift, and Statutory Fees.
+  - Dynamically routes child orders using limit or aggressive IOC logic depending on current spread width.
 
-#### User Story 4: Interactive Avellaneda-Stoikov Market Making Cockpit Modal (`TC-ASMM-03`, `TC-ASMM-04`)
-- **Story:** *As an Active Scalper and Quant Trader*, I want an institutional Avellaneda-Stoikov Cockpit modal accessible from the Header and Command Palette (`Ctrl+K`), displaying live Midpoint vs Reservation Price, optimal quote ladders, and inventory risk gauges.
+#### User Story 4: Interactive Almgren-Chriss Cockpit Modal (`TC-ACEX-03`, `TC-ACEX-04`)
+- **Story:** *As an Active Scalper and Execution Specialist*, I want a high-tech Almgren-Chriss Studio modal accessible from the Header and Command Palette (`Ctrl+K`), displaying real-time execution trajectories, efficient frontier curve, live child order ladder, and emergency execution controls.
 - **Acceptance Criteria:**
-  - High-tech interactive modal with 3 workspace views: Reservation Price & Spread Ladder, Inventory Risk Thermometer & Intensity Curves, and P&L Attribution & Emergency Hedger.
+  - Multi-tab cyber-dark modal featuring: Trajectory Comparison (Almgren-Chriss vs TWAP vs VWAP), Efficient Frontier & $\lambda$ calibrator, Child Slice Execution Matrix, and IS Attribution Waterfall.
   - Real-time ticker switching between NIFTY, BANKNIFTY, RELIANCE, and FINNIFTY.
-  - 1-click Inventory Flatten / Emergency Market Neutralizer.
+  - 1-click Emergency controls: "Immediate Flatten", "Pause Slicing", "Accelerate Execution".
 
-#### User Story 5: Automated Verification & Unit Test Suite (`TC-ASMM-05`)
-- **Story:** *As a QA Lead*, I want an automated test suite verifying reservation price symmetry, inventory skew monotonicity, spread expansion with volatility/risk-aversion, and boundary constraint enforcement.
+#### User Story 5: Automated Verification & Unit Test Suite (`TC-ACEX-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite verifying trajectory boundary conditions, risk-aversion monotonicity, efficient frontier convexity, slice quantity conservation, and Implementation Shortfall decomposition.
 - **Acceptance Criteria:**
-  - Test suite `test/asmmEngine.test.mjs`.
-  - Minimum 15 unit assertions covering edge cases ($q=0$, extreme inventory $\pm Q_{\max}$, horizon expiration $t \to T$, high volatility).
-  - 100% test pass rate with 0 regressions (target: $\ge 241/241$).
+  - Test suite `test/acexEngine.test.mjs`.
+  - Minimum 21 unit assertions covering edge cases ($\lambda \to 0$, extreme risk aversion $\lambda \gg 1$, single-step liquidation, volume normalization).
+  - 100% test pass rate with 0 regressions (target: $\ge 265/265$).
 
 ---
 
@@ -88,12 +88,20 @@ All stories in Sprint 26 must strictly satisfy the following quality gates prior
 | **Sprint 22** | 26 | 26 | 178 | `DELIVERED` | High-Frequency Pre-Trade Risk Engine & Portfolio Stress Testing Desk |
 | **Sprint 23** | 26 | 26 | 195 | `DELIVERED` | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine |
 | **Sprint 24** | 26 | 26 | 210 | `DELIVERED` | Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine |
-| **Sprint 25** | **26** | **26** | **226** | `DELIVERED` | **Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine** |
-| **Sprint 26** | **26** | **0 (Active)** | **226 (Target: 241+)** | `IN_PROGRESS` | **High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine** |
+| **Sprint 25** | 26 | 26 | 226 | `DELIVERED` | Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine |
+| **Sprint 26** | **26** | **26** | **244** | `DELIVERED` | **High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine** |
+| **Sprint 27** | **26** | **0 (Active)** | **244 (Target: 265+)** | `IN_PROGRESS` | **Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine** |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 26: High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine
+- [x] **TC-ASMM-01**: Author comprehensive BRD-026: Mathematical formulation of the Avellaneda-Stoikov (2008) High-Frequency Market Making framework with finite horizon $T$, reservation (indifference) price $r(s, q, t) = s - q \gamma \sigma^2 (T - t)$, optimal bid/ask spread $\delta^a(q) + \delta^b(q) = \gamma \sigma^2 (T - t) + \frac{2}{\gamma} \ln\left(1 + \frac{\gamma}{\kappa}\right)$, Poisson order arrival intensity $\lambda(\delta) = A e^{-\kappa \delta}$, inventory risk aversion $\gamma$, tick size discretization, and inventory hard limits $Q_{\max}$ (`docs/brds/BRD-026-avellaneda-stoikov-optimal-market-making-engine.md`).
+- [x] **TC-ASMM-02**: Avellaneda-Stoikov Market Making & Inventory Control Engine: Reservation price derivation, symmetric/asymmetric bid-ask spread quotes, fill probability & arrival rate simulation, inventory skew adjustment ($q > 0 \implies$ lower reservation price to shed inventory; $q < 0 \implies$ raise reservation price to accumulate), risk aversion sensitivity ($\gamma$), terminal penalty convergence as $t \to T$, and P&L attribution (spread capture vs inventory drift vs execution fees) (`src/lib/asmmEngine.ts`, `src/types/asmm.ts`).
+- [x] **TC-ASMM-03**: Interactive Avellaneda-Stoikov Market Making Cockpit Modal: High-tech cyber-dark dashboard featuring real-time Midpoint vs Reservation Price visualizer, optimal asymmetric Bid/Ask quote ladder, inventory position thermometer ($q / Q_{\max}$ with inventory risk zone gauges), intensity curve $\lambda(\delta)$ visualizer, and 1-click Inventory Flatten / Emergency Hedger (`src/components/AsmmCockpitModal.tsx`).
+- [x] **TC-ASMM-04**: Fullstack & Integration: Platform wiring into Header navigation suite under "⚡ Execution", Command Palette (`Ctrl+K`) integration, terminal real-time L2 order book depth sync (NIFTY, BANKNIFTY, RELIANCE, FINNIFTY), and Landing Page Feature Card 24 showcase (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-ASMM-05**: Rigorous automated unit test suite in `test/avellanedaStoikovEngine.test.mjs` verifying reservation price symmetry ($q=0 \implies r=s$), inventory skew monotonicity ($\partial r / \partial q < 0$), spread expansion with volatility $\sigma$ and risk aversion $\gamma$, arrival intensity bounds, tick discretization compliance, and inventory boundary constraint enforcement. 18/18 tests passing (244/244 total baseline tests passing).
 
 ### Sprint 25: Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine
 - [x] **TC-VPIN-01**: Author comprehensive BRD-025: Formulate Volume-Synchronized Probability of Toxicity (VPIN), volume clock discretization, Bulk Volume Classification (BVC) with normal CDF weighting, Kyle's Lambda price impact parameter ($\lambda$), adverse selection risk for liquidity providers, and toxicity flash crash early warning thresholds (`docs/brds/BRD-025-vpin-informed-trading-microstructure-toxicity-engine.md`).

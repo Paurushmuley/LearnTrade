@@ -573,6 +573,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Continuous optimal inventory control with reservation price desk r(s,q) = s - q·γ·σ²·τ, Poisson arrival fill intensity λ(δ) = A·exp(-κ·δ), active asymmetric quote skew ladder, and decomposed P&L attribution (Spread Capture vs Inventory Depreciation).
             </p>
           </div>
+
+          {/* Card 25: Almgren-Chriss Optimal Execution Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition">
+              <Activity className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Almgren-Chriss Optimal Execution Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Optimal liquidation trajectory minimization x(t) = X·sinh(κ(T-t))/sinh(κT) trading off market impact against timing risk, multi-model horizon comparisons (Almgren-Chriss vs TWAP vs VWAP), parabolic cost-variance efficient frontier E[x] vs V[x], and live sliced order execution monitor.
+            </p>
+          </div>
         </div>
       </section>
 

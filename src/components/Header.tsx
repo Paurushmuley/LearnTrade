@@ -62,6 +62,7 @@ interface HeaderProps {
   onOpenPinning?: () => void;
   onOpenVPIN?: () => void;
   onOpenASMM?: () => void;
+  onOpenAlmgrenChriss?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -112,6 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenPinning,
   onOpenVPIN,
   onOpenASMM,
+  onOpenAlmgrenChriss,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -185,6 +187,16 @@ export const Header: React.FC<HeaderProps> = ({
       description: 'NSE vs BSE latency arbitrage, split sweep & fee optimizer',
       icon: <ArrowRightLeft className="h-4 w-4 text-cyan-400" />,
       action: onOpenSOR,
+      category: 'Execution',
+      accent: 'cyan',
+    },
+    {
+      id: 'almgren-chriss-cockpit',
+      name: 'Almgren-Chriss Optimal Execution',
+      badge: 'Sprint 27',
+      description: 'Optimal order slicing, efficient frontier (E[x] vs V[x]) & live trajectory execution monitor',
+      icon: <Activity className="h-4 w-4 text-cyan-400" />,
+      action: onOpenAlmgrenChriss,
       category: 'Execution',
       accent: 'cyan',
     },
@@ -577,12 +589,12 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeMenu === 'markets' && (
-                <div className="absolute left-0 sm:right-auto mt-2 w-72 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-80 sm:w-88 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 max-h-[80vh] overflow-y-auto max-w-[calc(100vw-1.5rem)]">
                   <div className="px-2.5 py-1.5 border-b border-slate-800/80 mb-1 flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1">
                       <Layers className="h-3 w-3" /> Markets Suite
                     </span>
-                    <span className="text-[9px] text-slate-500">4 Tools</span>
+                    <span className="text-[9px] text-slate-500">{marketsTools.length} Tools</span>
                   </div>
                   <div className="space-y-0.5">
                     {marketsTools.map((tool) => (
@@ -591,7 +603,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onClick={() => handleLaunchTool(tool)}
                         className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-emerald-950/40 hover:border-emerald-800/40 border border-transparent transition flex items-start gap-2.5 group"
                       >
-                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-emerald-500/40">
+                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-emerald-500/40 shrink-0">
                           {tool.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -600,7 +612,7 @@ export const Header: React.FC<HeaderProps> = ({
                               {tool.name}
                             </span>
                             {tool.badge && (
-                              <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono shrink-0">
                                 {tool.badge}
                               </span>
                             )}
@@ -631,7 +643,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeMenu === 'execution' && (
-                <div className="absolute left-0 sm:right-auto mt-2 w-76 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-84 sm:w-96 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 max-h-[80vh] overflow-y-auto max-w-[calc(100vw-1.5rem)]">
                   <div className="px-2.5 py-1.5 border-b border-slate-800/80 mb-1 flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1">
                       <ArrowRightLeft className="h-3 w-3" /> Execution & Routing
@@ -645,7 +657,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onClick={() => handleLaunchTool(tool)}
                         className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-blue-950/40 hover:border-blue-800/40 border border-transparent transition flex items-start gap-2.5 group"
                       >
-                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-blue-500/40">
+                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-blue-500/40 shrink-0">
                           {tool.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -654,7 +666,7 @@ export const Header: React.FC<HeaderProps> = ({
                               {tool.name}
                             </span>
                             {tool.badge && (
-                              <span className="text-[9px] px-1 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono shrink-0">
                                 {tool.badge}
                               </span>
                             )}
@@ -685,21 +697,23 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeMenu === 'quant' && (
-                <div className="absolute right-0 sm:left-auto mt-2 w-76 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100">
-                  <div className="px-2.5 py-1.5 border-b border-slate-800/80 mb-1 flex items-center justify-between">
+                <div className="absolute left-0 mt-2 w-84 sm:w-[620px] rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-2 animate-in fade-in zoom-in-95 duration-100 max-h-[82vh] overflow-y-auto max-w-[calc(100vw-1.5rem)]">
+                  <div className="px-2.5 py-1.5 border-b border-slate-800/80 mb-2 flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
-                      <Sparkles className="h-3 w-3" /> Quant Lab & AI Desk
+                      <Sparkles className="h-3 w-3" /> Quant Lab & AI Models
                     </span>
-                    <span className="text-[9px] text-slate-500">{quantTools.length} Models</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 font-mono">
+                      {quantTools.length} Models
+                    </span>
                   </div>
-                  <div className="space-y-0.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                     {quantTools.map((tool) => (
                       <button
                         key={tool.id}
                         onClick={() => handleLaunchTool(tool)}
                         className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-amber-950/40 hover:border-amber-800/40 border border-transparent transition flex items-start gap-2.5 group"
                       >
-                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-amber-500/40">
+                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-amber-500/40 shrink-0">
                           {tool.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -708,12 +722,12 @@ export const Header: React.FC<HeaderProps> = ({
                               {tool.name}
                             </span>
                             {tool.badge && (
-                              <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono shrink-0">
                                 {tool.badge}
                               </span>
                             )}
                           </div>
-                          <p className="text-[10px] text-slate-400 truncate">{tool.description}</p>
+                          <p className="text-[10px] text-slate-400 line-clamp-1">{tool.description}</p>
                         </div>
                       </button>
                     ))}
@@ -739,7 +753,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeMenu === 'hub' && (
-                <div className="absolute right-0 mt-2 w-72 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute right-0 mt-2 w-80 sm:w-88 rounded-xl bg-[#0F1422] border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in-95 duration-100 max-h-[80vh] overflow-y-auto max-w-[calc(100vw-1.5rem)]">
                   <div className="px-2.5 py-1.5 border-b border-slate-800/80 mb-1 flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1">
                       <Trophy className="h-3 w-3" /> Desks & Historical Hub
@@ -753,7 +767,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onClick={() => handleLaunchTool(tool)}
                         className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-purple-950/40 hover:border-purple-800/40 border border-transparent transition flex items-start gap-2.5 group"
                       >
-                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-purple-500/40">
+                        <div className="mt-0.5 p-1 rounded-md bg-slate-800/80 border border-slate-700/60 group-hover:border-purple-500/40 shrink-0">
                           {tool.icon}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -762,7 +776,7 @@ export const Header: React.FC<HeaderProps> = ({
                               {tool.name}
                             </span>
                             {tool.badge && (
-                              <span className="text-[9px] px-1 py-0.2 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono">
+                              <span className="text-[9px] px-1 py-0.2 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-mono shrink-0">
                                 {tool.badge}
                               </span>
                             )}

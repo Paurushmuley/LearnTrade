@@ -37,6 +37,7 @@ import { CrossMarginCockpitModal } from '../components/CrossMarginCockpitModal';
 import { PinningCockpitModal } from '../components/PinningCockpitModal';
 import { VPINCockpitModal } from '../components/VPINCockpitModal';
 import { AvellanedaStoikovCockpitModal } from '../components/AvellanedaStoikovCockpitModal';
+import { AlmgrenChrissCockpitModal } from '../components/AlmgrenChrissCockpitModal';
 import { RoutingAlgorithm } from '../types/quantDesk';
 import { ProofOfAlphaCertificate } from '../lib/proofEngine';
 import { ReplayControlBar } from '../components/ReplayControlBar';
@@ -92,6 +93,7 @@ export default function TradingTerminalPage() {
   const [isPinningOpen, setIsPinningOpen] = useState(false);
   const [isVPINOpen, setIsVPINOpen] = useState(false);
   const [isASMMOpen, setIsASMMOpen] = useState(false);
+  const [isAlmgrenChrissOpen, setIsAlmgrenChrissOpen] = useState(false);
   const [isProofOpen, setIsProofOpen] = useState(false);
   const [selectedProofCertificate, setSelectedProofCertificate] = useState<ProofOfAlphaCertificate | null>(null);
 
@@ -500,6 +502,7 @@ export default function TradingTerminalPage() {
             onOpenPinning={() => setIsPinningOpen(true)}
             onOpenVPIN={() => setIsVPINOpen(true)}
             onOpenASMM={() => setIsASMMOpen(true)}
+            onOpenAlmgrenChriss={() => setIsAlmgrenChrissOpen(true)}
             onOpenBYOK={() => setIsBYOKOpen(true)}
             onOpenStrategy={() => setIsStrategyOpen(true)}
             onOpenCrisis={() => setIsCrisisOpen(true)}
@@ -864,6 +867,13 @@ export default function TradingTerminalPage() {
       <AvellanedaStoikovCockpitModal
         isOpen={isASMMOpen}
         onClose={() => setIsASMMOpen(false)}
+        spotPrice={selectedTicker.currentPrice}
+      />
+
+      {/* Sprint 27: Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine Modal */}
+      <AlmgrenChrissCockpitModal
+        isOpen={isAlmgrenChrissOpen}
+        onClose={() => setIsAlmgrenChrissOpen(false)}
         spotPrice={selectedTicker.currentPrice}
       />
 
