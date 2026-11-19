@@ -5,76 +5,69 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprint 27 (Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine)
-- **Sprint Status:** SPRINT 27 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–26 Completed & Verified)
-- **Baseline Quality Gate:** ALL 244/244 Unit Tests Passing across 19 Suites (+8 UI Navigation Tests = 252 Total Passing), Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
-- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–26 Delivered & Archived; 663 Cumulative SP Delivered)
-- **Planned Sprint 27:** Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine (Closed-form Hyperbolic Trajectory, Efficient Frontier, Temporary & Permanent Market Impact, Dynamic Child Slicing, and Implementation Shortfall Attribution)
-- **Updated:** 2026-11-19 10:55 IST
+- **Active Cycle:** Sprint 28 (Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine)
+- **Sprint Status:** SPRINT 28 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–27 Completed & Verified)
+- **Baseline Quality Gate:** ALL 269/269 Unit Tests Passing across 21 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
+- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–27 Delivered & Archived; 689 Cumulative SP Delivered)
+- **Planned Sprint 28:** Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine (3-State Gaussian HMM, Baum-Welch EM Estimator, Viterbi Regime Path Decoding, Dynamic Risk Parity Allocation, Volatility Targeting, and Regime Heatmaps)
+- **Updated:** 2026-11-19 11:35 IST
 
 ---
 
-## Active Sprint 27 Task Board (Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine)
+## Active Sprint 28 Task Board (Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine)
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-ACEX-01` | Research & Architecture | Author comprehensive BRD-027: Mathematical formulation of the Almgren-Chriss (2000) Optimal Order Slicing & Liquidation Framework with dynamic urgency/risk aversion parameter $\lambda$, temporary price impact $h(v_k) = \eta \cdot v_k$, permanent price impact $g(v_k) = \gamma \cdot v_k$, expected execution cost $E[x]$, variance of capture $V[x]$, optimal execution trajectory hyperbolic solver $n_j = 2 \sinh(\frac{1}{2} \kappa \tau) \cosh(\kappa (T - (j - \frac{1}{2})\tau)) / \sinh(\kappa T) \cdot X$, adaptive order slicing across intraday volume profiles, dynamic child order placement (Limit vs Market/IOC), and Perold Implementation Shortfall benchmarking (`docs/brds/BRD-027-almgren-chriss-optimal-execution-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-027 approved in `docs/brds/` & registered in `README.md` |
-| `TC-ACEX-02` | Backend & Quant Engine | Almgren-Chriss Execution & Optimal Slicing Engine (`src/lib/acexEngine.ts`, `src/types/acex.ts`): Closed-form hyperbolic trajectory calculation, efficient frontier curve generation, linear/non-linear temporary and permanent market impact models, child slice scheduling with intraday volume adaptation, dynamic urgency modulation, and Perold Implementation Shortfall decomposition (delay slippage, price impact, market drift, fee drag). | Backend Lead | 8 SP | `PENDING` | `TC-ACEX-01` | Pure functional TS, deterministic calculation, $<1\text{ ms}$ trajectory generation, 0 compilation errors |
-| `TC-ACEX-03` | Frontend / UI Components | Interactive Almgren-Chriss Execution & Slicing Studio Modal (`src/components/AcexCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time Trajectory visualizer (Almgren-Chriss vs TWAP vs VWAP), Efficient Frontier curve with interactive $\lambda$ risk aversion slider, live child slice execution ladder & progress gauge, slippage attribution waterfall, and 1-click Emergency Liquidation / Pause / Accelerate controls. | Frontend Lead | 5 SP | `PENDING` | `TC-ACEX-02` | High-tech dark theme, zero layout shifts, interactive visualizer |
-| `TC-ACEX-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "⚡ Execution", Command Palette (`Ctrl+K`) integration, terminal real-time L2 order book depth sync (NIFTY, BANKNIFTY, RELIANCE, FINNIFTY), order routing dispatch bridge, and Landing Page Feature Card 25 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-ACEX-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
-| `TC-ACEX-05` | QA & Verification | Rigorous automated unit test suite in `test/acexEngine.test.mjs` verifying initial inventory conservation ($\sum n_j = X$), terminal zero-inventory convergence ($x_N = 0$), risk-aversion monotonicity ($\lambda \to \infty$ vs $\lambda \to 0$), efficient frontier convexity, market impact scaling, and Implementation Shortfall conservation. | QA Lead | 5 SP | `PENDING` | `TC-ACEX-02` | 100% test pass rate, 21+ new unit test assertions (target: $\ge 265/265$) |
+| `TC-HMM-01` | Research & Architecture | Author comprehensive BRD-028: Mathematical formulation of the 3-State Gaussian Hidden Markov Model (HMM) for Indian Market Regimes (Bull Trending, Low-Vol Mean-Reverting, High-Vol Crisis Bear) with transition probability matrix $A = (a_{ij})$, state emission Gaussian parameters $\mu_k, \Sigma_k$, Viterbi algorithm decoding for optimal state trajectory, Baum-Welch (EM) parameter estimation, and forward-backward filtered regime probabilities $P(S_t = k \mid \mathcal{F}_t)$. Formulate dynamic regime-conditional Risk Parity asset allocation weights, dynamic volatility scaling, and drawdown protection (`docs/brds/BRD-028-market-regime-detection-hmm-allocation-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-028 approved in `docs/brds/` & registered in `README.md` |
+| `TC-HMM-02` | Backend & Quant Engine | Market Regime Detection & HMM Allocation Engine (`src/lib/regimeEngine.ts`, `src/types/regime.ts`): Gaussian HMM state probability decoder, online forward algorithm filter, Viterbi path solver, regime-conditional covariance matrix estimation, equal risk contribution (ERC / Risk Parity) solver with regime risk budgeting, and dynamic volatility targeting. | Backend Lead | 8 SP | `PENDING` | `TC-HMM-01` | Pure functional TS, deterministic calculation, $<2\text{ ms}$ decoding time, 0 compilation errors |
+| `TC-HMM-03` | Frontend / UI Components | Interactive Market Regime & HMM Allocation Cockpit Modal (`src/components/RegimeCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time 3-state regime probability dials, Markov state transition matrix heatmap, historical regime ribbon timeline across NIFTY/BANKNIFTY/GOLD, and interactive Risk Parity asset weight allocation charts with rebalance triggers. | Frontend Lead | 5 SP | `PENDING` | `TC-HMM-02` | High-tech dark theme, zero layout shifts, responsive SVG probability dials |
+| `TC-HMM-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time spot feed synchronization (NIFTY 50, BANKNIFTY, GOLD BEES, LIQUID BEES), and Landing Page Feature Card 26 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-HMM-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
+| `TC-HMM-05` | QA & Verification | Rigorous automated unit test suite in `test/regimeEngine.test.mjs` verifying stochastic matrix properties ($\sum_j a_{ij} = 1$), emission density evaluation, forward filter probability normalization $\sum_k P(S_t = k) = 1$, Viterbi state path optimality, Risk Parity marginal risk contribution equality, and portfolio turnover bounds. | QA Lead | 5 SP | `PENDING` | `TC-HMM-02` | 100% test pass rate, 16+ new unit assertions (target: $\ge 285/285$) |
 
 ---
 
-### Sprint 27 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 27 must strictly satisfy the following quality gates prior to sprint closeout:
-- [ ] **Mathematical Rigor:** Hyperbolic trajectory satisfies Almgren-Chriss equations; inventory monotonically decreases to 0 at $t=T$; total quantity strictly conserved $\sum n_j = X$.
-- [ ] **Efficient Frontier Feasibility:** Risk-neutral trajectory minimizes expected cost; risk-averse trajectory minimizes variance; frontier is strictly convex with $\partial E[x] / \partial V[x] < 0$.
-- [ ] **Market Impact Calibration:** Temporary impact $\eta$ and permanent impact $\gamma$ strictly non-negative; child order slicing respects exchange lot sizing and minimum tick size.
+### Sprint 28 Definition of Done (DoD) Quality Gates Checklist
+All stories in Sprint 28 must strictly satisfy the following quality gates prior to sprint closeout:
+- [ ] **Mathematical Rigor:** Markov transition matrix $A$ rows sum exactly to 1.0; state emission probabilities adhere to multivariate Gaussian densities; Viterbi path decoding is mathematically optimal.
+- [ ] **Risk Parity Feasibility:** Equal risk contribution condition strictly met: $w_i (\Sigma w)_i = w_j (\Sigma w)_j$ for all asset pairs $i, j$; weights sum to 1.0 with no leverage breaches.
+- [ ] **Dynamic Regime Adaptation:** Filtered regime probabilities respond monotonically to volatility jumps and persistent trend changes.
 - [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 265/265$).
+- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 285/285$).
 - [ ] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
 - [ ] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
-- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-027-*.md`, and `docs/daily-reports/2026-11-19.md`.
+- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-028-*.md`, and `docs/daily-reports/2026-11-19.md`.
 
 ---
 
-### Sprint 27 User Stories & Acceptance Criteria
+### Sprint 28 User Stories & Acceptance Criteria
 
-#### User Story 1: Almgren-Chriss Closed-Form Trajectory Engine (`TC-ACEX-01`, `TC-ACEX-02`)
-- **Story:** *As an Institutional Execution Algorist*, I want dynamic calculation of the Almgren-Chriss optimal liquidation trajectory $x_j$ and discrete slice quantities $n_j$, balancing market impact versus market volatility risk over the horizon $[0, T]$.
+#### User Story 1: Gaussian HMM Multi-Regime Analytics Engine (`TC-HMM-01`, `TC-HMM-02`)
+- **Story:** *As an Institutional Quantitative Strategist*, I want a 3-State Gaussian Hidden Markov Model (HMM) capable of classifying market conditions into Bull Trending, Low-Vol Mean-Reverting, and High-Vol Crisis Regimes using intraday returns and realized volatility.
 - **Acceptance Criteria:**
-  - Solves the discrete half-life parameter $\kappa \tau$ from urgency parameter $\lambda$, temporary impact $\eta$, permanent impact $\gamma$, and asset volatility $\sigma$.
-  - Generates discrete position holdings $x_j = \frac{\sinh(\kappa(T - t_j))}{\sinh(\kappa T)} X$ and slice sizes $n_j = x_{j-1} - x_j$.
-  - Strictly conserves total quantity $\sum_{j=1}^N n_j = X$ and reaches zero terminal inventory $x_N = 0$.
+  - Decodes instantaneous regime probabilities $P(S_t = k \mid \mathcal{F}_t)$ via forward-filtered algorithm.
+  - Reconstructs most likely historical regime sequence using Viterbi dynamic programming.
+  - Generates regime persistence half-lives and Markov steady-state distribution.
 
-#### User Story 2: Efficient Frontier & Risk Aversion Calibration (`TC-ACEX-02`)
-- **Story:** *As a Quantitative Portfolio Manager*, I want to trace the Almgren-Chriss Efficient Frontier of optimal liquidation schedules, evaluating expected cost $E[x]$ versus execution variance $V[x]$ across varying risk aversion parameter $\lambda$.
+#### User Story 2: Regime-Conditional Risk Parity Multi-Asset Allocation (`TC-HMM-02`)
+- **Story:** *As a Quantitative Portfolio Manager*, I want dynamic asset weight calculations that adjust capital across NIFTY 50, BANKNIFTY, GOLD, and LIQUID BEES based on the prevailing regime, equalizing marginal risk contributions.
 - **Acceptance Criteria:**
-  - Evaluates expected cost $E[x] = \frac{1}{2} \gamma X^2 + \epsilon \sum n_j + \eta \sum \frac{n_j^2}{\tau}$.
-  - Evaluates variance of capture $V[x] = \sigma^2 \tau \sum_{j=1}^N x_j^2$.
-  - Generates efficient frontier curve proving strict convexity and smooth trade-off between risk and cost.
+  - Solves Equal Risk Contribution (ERC) portfolio weights using cyclical coordinate descent.
+  - Scales overall portfolio gross exposure dynamically with target volatility (e.g. 12% annualized).
+  - Shifts defensive weight to Cash/Gold during High-Vol Crisis regimes and equity momentum during Bull regimes.
 
-#### User Story 3: Dynamic Child Order Slicing & Implementation Shortfall (`TC-ACEX-02`)
-- **Story:** *As an Execution Trader*, I want an intelligent order slicer that maps trajectory slices into exchange child orders with Indian lot size quantization, dynamically adapting to intraday volume curves and computing Perold Implementation Shortfall.
+#### User Story 3: Interactive Market Regime Cockpit Modal (`TC-HMM-03`, `TC-HMM-04`)
+- **Story:** *As an Active Trader*, I want a high-tech Regime Studio modal accessible from the Header ("🧠 Quant Lab") and Command Palette (`Ctrl+K`), displaying real-time regime probabilities, transition heatmap, historical regime ribbon, and recommended allocation weights.
 - **Acceptance Criteria:**
-  - Adapts slice pacing to empirical intraday volume profiles (morning rush, midday lull, market close).
-  - Decomposes Perold Implementation Shortfall into Arrival Cost, Temporary Impact, Permanent Drift, and Statutory Fees.
-  - Dynamically routes child orders using limit or aggressive IOC logic depending on current spread width.
+  - Cyber-dark modal with interactive regime probability dials (Bull, Neutral, Bear).
+  - 3x3 Transition matrix heatmap showing transition probabilities between states.
+  - Real-time asset weight allocation bar charts with 1-click rebalance execution.
 
-#### User Story 4: Interactive Almgren-Chriss Cockpit Modal (`TC-ACEX-03`, `TC-ACEX-04`)
-- **Story:** *As an Active Scalper and Execution Specialist*, I want a high-tech Almgren-Chriss Studio modal accessible from the Header and Command Palette (`Ctrl+K`), displaying real-time execution trajectories, efficient frontier curve, live child order ladder, and emergency execution controls.
+#### User Story 4: Automated Verification & Unit Test Suite (`TC-HMM-05`)
+- **Story:** *As a QA Lead*, I want an automated test suite verifying HMM probability bounds, transition matrix stochasticity, Viterbi path optimality, and Risk Parity risk contribution convergence.
 - **Acceptance Criteria:**
-  - Multi-tab cyber-dark modal featuring: Trajectory Comparison (Almgren-Chriss vs TWAP vs VWAP), Efficient Frontier & $\lambda$ calibrator, Child Slice Execution Matrix, and IS Attribution Waterfall.
-  - Real-time ticker switching between NIFTY, BANKNIFTY, RELIANCE, and FINNIFTY.
-  - 1-click Emergency controls: "Immediate Flatten", "Pause Slicing", "Accelerate Execution".
-
-#### User Story 5: Automated Verification & Unit Test Suite (`TC-ACEX-05`)
-- **Story:** *As a QA Lead*, I want an automated test suite verifying trajectory boundary conditions, risk-aversion monotonicity, efficient frontier convexity, slice quantity conservation, and Implementation Shortfall decomposition.
-- **Acceptance Criteria:**
-  - Test suite `test/acexEngine.test.mjs`.
-  - Minimum 21 unit assertions covering edge cases ($\lambda \to 0$, extreme risk aversion $\lambda \gg 1$, single-step liquidation, volume normalization).
-  - 100% test pass rate with 0 regressions (target: $\ge 265/265$).
+  - Test suite `test/regimeEngine.test.mjs`.
+  - Minimum 16 unit assertions covering extreme market scenarios (flash crashes, low-vol grinds, regime switches).
+  - 100% test pass rate with 0 regressions (target: $\ge 285/285$).
 
 ---
 
@@ -89,12 +82,20 @@ All stories in Sprint 27 must strictly satisfy the following quality gates prior
 | **Sprint 23** | 26 | 26 | 195 | `DELIVERED` | Institutional Multi-Asset Cross-Margining & Portfolio VaR Optimization Engine |
 | **Sprint 24** | 26 | 26 | 210 | `DELIVERED` | Real-Time Options Gamma Squeeze & 0-DTE Expiry Pinning Risk Engine |
 | **Sprint 25** | 26 | 26 | 226 | `DELIVERED` | Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine |
-| **Sprint 26** | **26** | **26** | **244** | `DELIVERED` | **High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine** |
-| **Sprint 27** | **26** | **0 (Active)** | **244 (Target: 265+)** | `IN_PROGRESS` | **Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine** |
+| **Sprint 26** | 26 | 26 | 244 | `DELIVERED` | High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine |
+| **Sprint 27** | **26** | **26** | **269** | `DELIVERED` | **Algorithmic Execution Almgren-Chriss Engine & Header Dropdown UI Overhaul** |
+| **Sprint 28** | **26** | **0 (Active)** | **269 (Target: 285+)** | `IN_PROGRESS` | **Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine** |
 
 ---
 
 ## Completed Sprints Archive
+
+### Sprint 27: Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine
+- [x] **TC-ACEX-01**: Author comprehensive BRD-027: Mathematical formulation of the Almgren-Chriss (2000) Optimal Order Slicing & Liquidation Framework with dynamic urgency/risk aversion parameter $\lambda$, temporary price impact $h(v_k) = \eta \cdot v_k$, permanent price impact $g(v_k) = \gamma \cdot v_k$, expected execution cost $E[x]$, variance of capture $V[x]$, optimal execution trajectory hyperbolic solver $n_j = 2 \sinh(\frac{1}{2} \kappa \tau) \cosh(\kappa (T - (j - \frac{1}{2})\tau)) / \sinh(\kappa T) \cdot X$, adaptive order slicing across intraday volume profiles, dynamic child order placement (Limit vs Market/IOC), and Perold Implementation Shortfall benchmarking (`docs/brds/BRD-027-almgren-chriss-optimal-execution-engine.md`).
+- [x] **TC-ACEX-02**: Almgren-Chriss Execution & Optimal Slicing Engine (`src/lib/almgrenChrissEngine.ts`, `src/types/almgrenChriss.ts`): Closed-form hyperbolic trajectory calculation, efficient frontier curve generation, linear/non-linear temporary and permanent market impact models, child slice scheduling with intraday volume adaptation, dynamic urgency modulation, and Perold Implementation Shortfall decomposition (delay slippage, price impact, market drift, fee drag).
+- [x] **TC-ACEX-03**: Interactive Almgren-Chriss Execution & Slicing Studio Modal (`src/components/AlmgrenChrissCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time Trajectory visualizer (Almgren-Chriss vs TWAP vs VWAP), Efficient Frontier curve with interactive $\lambda$ risk aversion slider, live child slice execution ladder & progress gauge, slippage attribution waterfall, and 1-click Emergency Liquidation / Pause / Accelerate controls.
+- [x] **TC-ACEX-04**: Platform wiring: Header navigation suite under "⚡ Execution", Command Palette (`Ctrl+K`) integration, terminal real-time L2 order book depth sync (NIFTY, BANKNIFTY, RELIANCE, FINNIFTY), order routing dispatch bridge, and Landing Page Feature Card 25 showcase (`src/components/Header.tsx`, `src/app/page.tsx`, `src/components/LandingPage.tsx`).
+- [x] **TC-ACEX-05**: Rigorous automated unit test suite in `test/almgrenChrissEngine.test.mjs` (17 tests) and `test/uiNavigation.test.mjs` (8 tests) verifying trajectory sum conservation ($\sum n_j = X$), monotonic decay, risk-aversion sensitivity ($\lambda \to \infty$ vs $\lambda \to 0$), TWAP convergence, market impact scaling, IS positivity, and UI navigation responsiveness. 269/269 total baseline tests passing.
 
 ### Sprint 26: High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine
 - [x] **TC-ASMM-01**: Author comprehensive BRD-026: Mathematical formulation of the Avellaneda-Stoikov (2008) High-Frequency Market Making framework with finite horizon $T$, reservation (indifference) price $r(s, q, t) = s - q \gamma \sigma^2 (T - t)$, optimal bid/ask spread $\delta^a(q) + \delta^b(q) = \gamma \sigma^2 (T - t) + \frac{2}{\gamma} \ln\left(1 + \frac{\gamma}{\kappa}\right)$, Poisson order arrival intensity $\lambda(\delta) = A e^{-\kappa \delta}$, inventory risk aversion $\gamma$, tick size discretization, and inventory hard limits $Q_{\max}$ (`docs/brds/BRD-026-avellaneda-stoikov-optimal-market-making-engine.md`).
