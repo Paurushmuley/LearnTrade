@@ -56,6 +56,40 @@ export const ChartTerminal: React.FC<ChartTerminalProps> = ({
         borderColor: '#1E293B',
         timeVisible: true,
         secondsVisible: false,
+        tickMarkFormatter: (time: any, tickMarkType: any) => {
+          if (typeof time === 'number') {
+            const date = new Date(time * 1000);
+            if (tickMarkType >= 3) {
+              return date.toLocaleTimeString('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+              });
+            }
+            return date.toLocaleDateString('en-IN', {
+              timeZone: 'Asia/Kolkata',
+              day: '2-digit',
+              month: 'short',
+            });
+          }
+          return null;
+        },
+      },
+      localization: {
+        timeFormatter: (time: any) => {
+          if (typeof time === 'number') {
+            const date = new Date(time * 1000);
+            return date.toLocaleTimeString('en-IN', {
+              timeZone: 'Asia/Kolkata',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false,
+            }) + ' IST';
+          }
+          return String(time);
+        },
+        dateFormat: 'dd MMM yyyy',
       },
     });
 

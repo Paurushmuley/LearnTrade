@@ -116,15 +116,39 @@ export const POPULAR_TICKERS: TickerInfo[] = [
 ];
 
 /**
- * Generates synthetic realistic historical candlestick data
+ * Returns Unix epoch seconds for the Indian Stock Market (NSE/BSE) opening bell (09:15 AM IST)
+ */
+export function getIndianMarketSessionStartEpoch(timeframe: string = '5m'): number {
+  if (timeframe === '1D') {
+    const d = new Date();
+    d.setUTCHours(0, 0, 0, 0);
+    return Math.floor(d.getTime() / 1000);
+  }
+
+  // Current date in IST (Asia/Kolkata)
+  const now = new Date();
+  const istDateString = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }); // 'YYYY-MM-DD'
+  const sessionOpenIST = new Date(`${istDateString}T09:15:00+05:30`);
+  let sessionOpenEpoch = Math.floor(sessionOpenIST.getTime() / 1000);
+
+  // If current epoch is before today's 09:15 AM IST, use yesterday's session open
+  const currentEpoch = Math.floor(now.getTime() / 1000);
+  if (currentEpoch < sessionOpenEpoch) {
+    sessionOpenEpoch -= 86400;
+  }
+
+  return sessionOpenEpoch;
+}
+
+/**
+ * Generates synthetic realistic historical candlestick data anchored to Indian market hours (09:15 AM IST)
  */
 export function generateHistoricalCandles(
   basePrice: number,
   timeframe: string = '5m',
-  numCandles: number = 100
+  numCandles: number = 75
 ): Candle[] {
   const candles: Candle[] = [];
-  const now = Math.floor(Date.now() / 1000);
   
   let intervalSeconds = 300; // 5m default
   if (timeframe === '1m') intervalSeconds = 60;
@@ -133,11 +157,20 @@ export function generateHistoricalCandles(
   if (timeframe === '1H') intervalSeconds = 3600;
   if (timeframe === '1D') intervalSeconds = 86400;
 
+  // For daily candles, step backwards from today; for intraday, anchor from 09:15 AM IST
+  let startEpoch: number;
+  if (timeframe === '1D') {
+    const now = Math.floor(Date.now() / 1000);
+    startEpoch = now - numCandles * intervalSeconds;
+  } else {
+    startEpoch = getIndianMarketSessionStartEpoch(timeframe);
+  }
+
   let currentPrice = basePrice * 0.95; // start slightly lower for trend
   const volatility = basePrice * 0.003;
 
-  for (let i = numCandles; i >= 0; i--) {
-    const time = now - i * intervalSeconds;
+  for (let i = 0; i < numCandles; i++) {
+    const time = startEpoch + i * intervalSeconds;
     const change = (Math.random() - 0.49) * volatility * (intervalSeconds / 300);
     const open = currentPrice;
     const close = Number((open + change).toFixed(2));
