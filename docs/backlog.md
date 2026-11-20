@@ -10,7 +10,7 @@
 - **Baseline Quality Gate:** ALL 269/269 Unit Tests Passing across 21 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
 - **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–27 Delivered & Archived; 689 Cumulative SP Delivered)
 - **Planned Sprint 28:** Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine (3-State Gaussian HMM, Baum-Welch EM Estimator, Viterbi Regime Path Decoding, Dynamic Risk Parity Allocation, Volatility Targeting, and Regime Heatmaps)
-- **Updated:** 2026-11-19 11:35 IST
+- **Updated:** 2026-11-20 11:35 IST
 
 ---
 
