@@ -6,11 +6,11 @@
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
 - **Active Cycle:** Sprint 28 (Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine)
-- **Sprint Status:** SPRINT 28 ACTIVATED & GROOMED (Target: 26 SP across 5 work packages; Sprints 1–27 Completed & Verified)
+- **Sprint Status:** SPRINT 28 ACTIVE (Target: 26 SP across 5 work packages; Sprints 1–27 Delivered & Verified — 689 Cumulative SP Delivered)
 - **Baseline Quality Gate:** ALL 269/269 Unit Tests Passing across 21 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
 - **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–27 Delivered & Archived; 689 Cumulative SP Delivered)
 - **Planned Sprint 28:** Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine (3-State Gaussian HMM, Baum-Welch EM Estimator, Viterbi Regime Path Decoding, Dynamic Risk Parity Allocation, Volatility Targeting, and Regime Heatmaps)
-- **Updated:** 2026-11-20 11:35 IST
+- **Updated:** 2026-11-20 15:09 IST
 
 ---
 
@@ -84,7 +84,7 @@ All stories in Sprint 28 must strictly satisfy the following quality gates prior
 | **Sprint 25** | 26 | 26 | 226 | `DELIVERED` | Real-Time Order Flow Toxicity & VPIN Informed Trading Microstructure Engine |
 | **Sprint 26** | 26 | 26 | 244 | `DELIVERED` | High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine |
 | **Sprint 27** | **26** | **26** | **269** | `DELIVERED` | **Algorithmic Execution Almgren-Chriss Engine & Header Dropdown UI Overhaul** |
-| **Sprint 28** | **26** | **0 (Active)** | **269 (Target: 285+)** | `IN_PROGRESS` | **Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine** |
+| **Sprint 28** | **26** | **0 (Active)** | **269 (Target: 285+)** | `ACTIVE` | **Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine** |
 
 ---
 

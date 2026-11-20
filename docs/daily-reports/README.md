@@ -19,7 +19,7 @@
 
 | Date | Sprints Covered | Test Suite Status | Report Link |
 | :---: | :--- | :---: | :--- |
-| **2026-11-20** | Sprint 28 In-Flight (Market Regime HMM Engine) & Chart Session Anchoring Hardening | **269/269 Passed** | [`2026-11-20.md`](./2026-11-20.md) |
+| **2026-11-20** | Sprint 28 Active Execution: Market Regime HMM Engine & Risk Parity Allocation (Target: ≥285 Tests) | **269/269 Passed** | [`2026-11-20.md`](./2026-11-20.md) |
 | **2026-11-19** | Sprint 27 Closeout (269/269 Passed, Almgren-Chriss Engine & Header UI Fix) & Sprint 28 Kickoff: Market Regime HMM Engine | **269/269 Passed** | [`2026-11-19.md`](./2026-11-19.md) |
 | **2026-11-18** | Sprint 25 Closeout (226/226 Passed) & Sprint 26 Kickoff: Avellaneda-Stoikov Market Making | **226/226 Passed** | [`2026-11-18.md`](./2026-11-18.md) |
 | **2026-11-17** | Sprint 24 Standup & Dev Kickoff: Real-Time Options Gamma Squeeze & 0-DTE Pinning Risk | **195/195 Passed** | [`2026-11-17.md`](./2026-11-17.md) |
