@@ -5,12 +5,12 @@
 
 ## Current Sprint Overview
 - **Project:** TradeCraft AI — Intelligent Interactive Paper Trading & Strategy Learning Platform (BYOK Architecture)
-- **Active Cycle:** Sprint 28 (Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine)
-- **Sprint Status:** SPRINT 28 ACTIVE (Target: 26 SP across 5 work packages; Sprints 1–27 Delivered & Verified — 689 Cumulative SP Delivered)
-- **Baseline Quality Gate:** ALL 269/269 Unit Tests Passing across 21 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
-- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–27 Delivered & Archived; 689 Cumulative SP Delivered)
+- **Active Cycle:** Sprint 28 (Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine) — DELIVERED & AUDITED
+- **Sprint Status:** SPRINT 28 DELIVERED (26 SP Delivered across 5 work packages; Sprints 1–28 Completed & Verified — 715 Cumulative SP Delivered)
+- **Baseline Quality Gate:** ALL 286/286 Unit Tests Passing across 22 Suites, Strict TypeScript Clean (`tsc --noEmit` 0 errors), Next.js Production Build Serving on 3100
+- **Historical Velocity:** Average 25.5 Story Points / Sprint (Sprints 1–28 Delivered & Archived; 715 Cumulative SP Delivered)
 - **Planned Sprint 28:** Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine (3-State Gaussian HMM, Baum-Welch EM Estimator, Viterbi Regime Path Decoding, Dynamic Risk Parity Allocation, Volatility Targeting, and Regime Heatmaps)
-- **Updated:** 2026-11-20 15:09 IST
+- **Updated:** 2026-11-20 15:25 IST
 
 ---
 
@@ -18,24 +18,24 @@
 
 | Task ID | Domain | Work Package Description | Assigned Agent | Story Points | Status | Dependencies | Target Quality Gate |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- |
-| `TC-HMM-01` | Research & Architecture | Author comprehensive BRD-028: Mathematical formulation of the 3-State Gaussian Hidden Markov Model (HMM) for Indian Market Regimes (Bull Trending, Low-Vol Mean-Reverting, High-Vol Crisis Bear) with transition probability matrix $A = (a_{ij})$, state emission Gaussian parameters $\mu_k, \Sigma_k$, Viterbi algorithm decoding for optimal state trajectory, Baum-Welch (EM) parameter estimation, and forward-backward filtered regime probabilities $P(S_t = k \mid \mathcal{F}_t)$. Formulate dynamic regime-conditional Risk Parity asset allocation weights, dynamic volatility scaling, and drawdown protection (`docs/brds/BRD-028-market-regime-detection-hmm-allocation-engine.md`). | Researcher Lead | 5 SP | `READY_FOR_DEV` | None | BRD-028 approved in `docs/brds/` & registered in `README.md` |
-| `TC-HMM-02` | Backend & Quant Engine | Market Regime Detection & HMM Allocation Engine (`src/lib/regimeEngine.ts`, `src/types/regime.ts`): Gaussian HMM state probability decoder, online forward algorithm filter, Viterbi path solver, regime-conditional covariance matrix estimation, equal risk contribution (ERC / Risk Parity) solver with regime risk budgeting, and dynamic volatility targeting. | Backend Lead | 8 SP | `PENDING` | `TC-HMM-01` | Pure functional TS, deterministic calculation, $<2\text{ ms}$ decoding time, 0 compilation errors |
-| `TC-HMM-03` | Frontend / UI Components | Interactive Market Regime & HMM Allocation Cockpit Modal (`src/components/RegimeCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time 3-state regime probability dials, Markov state transition matrix heatmap, historical regime ribbon timeline across NIFTY/BANKNIFTY/GOLD, and interactive Risk Parity asset weight allocation charts with rebalance triggers. | Frontend Lead | 5 SP | `PENDING` | `TC-HMM-02` | High-tech dark theme, zero layout shifts, responsive SVG probability dials |
-| `TC-HMM-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time spot feed synchronization (NIFTY 50, BANKNIFTY, GOLD BEES, LIQUID BEES), and Landing Page Feature Card 26 showcase. | Fullstack Lead | 3 SP | `PENDING` | `TC-HMM-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
-| `TC-HMM-05` | QA & Verification | Rigorous automated unit test suite in `test/regimeEngine.test.mjs` verifying stochastic matrix properties ($\sum_j a_{ij} = 1$), emission density evaluation, forward filter probability normalization $\sum_k P(S_t = k) = 1$, Viterbi state path optimality, Risk Parity marginal risk contribution equality, and portfolio turnover bounds. | QA Lead | 5 SP | `PENDING` | `TC-HMM-02` | 100% test pass rate, 16+ new unit assertions (target: $\ge 285/285$) |
+| `TC-HMM-01` | Research & Architecture | Author comprehensive BRD-028: Mathematical formulation of the 3-State Gaussian Hidden Markov Model (HMM) for Indian Market Regimes (Bull Trending, Low-Vol Mean-Reverting, High-Vol Crisis Bear) with transition probability matrix $A = (a_{ij})$, state emission Gaussian parameters $\mu_k, \Sigma_k$, Viterbi algorithm decoding for optimal state trajectory, Baum-Welch (EM) parameter estimation, and forward-backward filtered regime probabilities $P(S_t = k \mid \mathcal{F}_t)$. Formulate dynamic regime-conditional Risk Parity asset allocation weights, dynamic volatility scaling, and drawdown protection (`docs/brds/BRD-028-market-regime-detection-hmm-allocation-engine.md`). | Researcher Lead | 5 SP | `DELIVERED` | None | BRD-028 approved in `docs/brds/` & registered in `README.md` |
+| `TC-HMM-02` | Backend & Quant Engine | Market Regime Detection & HMM Allocation Engine (`src/lib/regimeEngine.ts`, `src/types/regime.ts`): Gaussian HMM state probability decoder, online forward algorithm filter, Viterbi path solver, regime-conditional covariance matrix estimation, equal risk contribution (ERC / Risk Parity) solver with regime risk budgeting, and dynamic volatility targeting. | Backend Lead | 8 SP | `DELIVERED` | `TC-HMM-01` | Pure functional TS, deterministic calculation, $<2\text{ ms}$ decoding time, 0 compilation errors |
+| `TC-HMM-03` | Frontend / UI Components | Interactive Market Regime & HMM Allocation Cockpit Modal (`src/components/RegimeCockpitModal.tsx`): High-tech cyber-dark dashboard featuring real-time 3-state regime probability dials, Markov state transition matrix heatmap, historical regime ribbon timeline across NIFTY/BANKNIFTY/GOLD, and interactive Risk Parity asset weight allocation charts with rebalance triggers. | Frontend Lead | 5 SP | `DELIVERED` | `TC-HMM-02` | High-tech dark theme, zero layout shifts, responsive SVG probability dials |
+| `TC-HMM-04` | Fullstack & Integration | Platform wiring: Header navigation suite under "🧠 Quant Lab", Command Palette (`Ctrl+K`) integration, terminal real-time spot feed synchronization (NIFTY 50, BANKNIFTY, GOLD BEES, LIQUID BEES), and Landing Page Feature Card 26 showcase. | Fullstack Lead | 3 SP | `DELIVERED` | `TC-HMM-03` | Seamless modal trigger, terminal state sync, responsive across breakpoints |
+| `TC-HMM-05` | QA & Verification | Rigorous automated unit test suite in `test/regimeEngine.test.mjs` verifying stochastic matrix properties ($\sum_j a_{ij} = 1$), emission density evaluation, forward filter probability normalization $\sum_k P(S_t = k) = 1$, Viterbi state path optimality, Risk Parity marginal risk contribution equality, and portfolio turnover bounds. | QA Lead | 5 SP | `DELIVERED` | `TC-HMM-02` | 100% test pass rate, 17 new unit assertions (286/286 total passing) |
 
 ---
 
 ### Sprint 28 Definition of Done (DoD) Quality Gates Checklist
-All stories in Sprint 28 must strictly satisfy the following quality gates prior to sprint closeout:
-- [ ] **Mathematical Rigor:** Markov transition matrix $A$ rows sum exactly to 1.0; state emission probabilities adhere to multivariate Gaussian densities; Viterbi path decoding is mathematically optimal.
-- [ ] **Risk Parity Feasibility:** Equal risk contribution condition strictly met: $w_i (\Sigma w)_i = w_j (\Sigma w)_j$ for all asset pairs $i, j$; weights sum to 1.0 with no leverage breaches.
-- [ ] **Dynamic Regime Adaptation:** Filtered regime probabilities respond monotonically to volatility jumps and persistent trend changes.
-- [ ] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
-- [ ] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; Target: $\ge 285/285$).
-- [ ] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
-- [ ] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
-- [ ] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-028-*.md`, and `docs/daily-reports/2026-11-19.md`.
+All stories in Sprint 28 have strictly satisfied the following quality gates:
+- [x] **Mathematical Rigor:** Markov transition matrix $A$ rows sum exactly to 1.0; state emission probabilities adhere to multivariate Gaussian densities; Viterbi path decoding is mathematically optimal.
+- [x] **Risk Parity Feasibility:** Equal risk contribution condition strictly met: $w_i (\Sigma w)_i = w_j (\Sigma w)_j$ for all asset pairs $i, j$; weights sum to 1.0 with no leverage breaches.
+- [x] **Dynamic Regime Adaptation:** Filtered regime probabilities respond monotonically to volatility jumps and persistent trend changes.
+- [x] **TypeScript Type Safety:** Strict TypeScript compilation (`npx tsc --noEmit`) passes with 0 errors, 0 warnings, no implicit `any`.
+- [x] **Automated Testing:** 100% unit test pass rate with zero regressions (`npm test` passes all historical + new tests; 286/286 passing across 22 suites).
+- [x] **Production Next.js Build:** Clean build and serving on port 3100 with zero hydration or SSR mismatches.
+- [x] **UI/UX Consistency:** Visual design strictly matches TradeCraft AI cyber-dark design system (`bg-slate-900/95`, `border-slate-800`, `cyan-400`, `emerald-400`, `amber-400`, `rose-400`).
+- [x] **Auditability & Standup Tracking:** Full documentation in `docs/backlog.md`, `docs/brds/BRD-028-*.md`, and `docs/daily-reports/2026-11-20.md`.
 
 ---
 

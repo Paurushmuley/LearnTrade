@@ -48,6 +48,7 @@ Each BRD authored by the Researcher Agent adheres to:
 | [`BRD-025`](./BRD-025-vpin-informed-trading-microstructure-toxicity-engine.md) | Real-Time Order Flow Toxicity & Volume-Synchronized Probability of Toxicity (VPIN) & Informed Trading Microstructure Engine (Easley-López de Prado-O'Hara VPIN, Kyle's Lambda, Glosten-Milgrom Spread Decomposition & Flash Crash Early-Warning Radar) | Sprint 25 | `COMPLETED` |
 | [`BRD-026`](./BRD-026-avellaneda-stoikov-optimal-market-making-engine.md) | High-Frequency Market Making & Optimal Avellaneda-Stoikov Inventory Control Engine (Dynamic Reservation Price, Bid-Ask Spread Skewing, Inventory Penalties & HFT Execution Simulator) | Sprint 26 | `COMPLETED` |
 | [`BRD-027`](./BRD-027-almgren-chriss-optimal-execution-engine.md) | Algorithmic Execution Almgren-Chriss & Optimal Order Slicing Engine (TWAP / VWAP Benchmark Slippage, Permanent vs Temporary Market Impact Decomposition, Dynamic Trajectory Scheduler & Implementation Shortfall Cockpit) | Sprint 27 | `COMPLETED` |
+| [`BRD-028`](./BRD-028-market-regime-detection-hmm-allocation-engine.md) | Real-Time Market Regime Detection & Hidden Markov Model Multi-Asset Risk Parity Allocation Engine (3-State Gaussian HMM, Online Forward Filtering, Viterbi Decoding, Equal Risk Contribution & Volatility Targeting) | Sprint 28 | `APPROVED FOR ENGINEERING` |
 
 
 

@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   ChevronRight,
   Clock,
+  Compass,
   Cpu,
   Crosshair,
   FileSpreadsheet,
@@ -582,6 +583,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <h3 className="text-base font-bold text-slate-100">Almgren-Chriss Optimal Execution Engine</h3>
             <p className="text-xs text-slate-400 mt-2 leading-relaxed">
               Optimal liquidation trajectory minimization x(t) = X·sinh(κ(T-t))/sinh(κT) trading off market impact against timing risk, multi-model horizon comparisons (Almgren-Chriss vs TWAP vs VWAP), parabolic cost-variance efficient frontier E[x] vs V[x], and live sliced order execution monitor.
+            </p>
+          </div>
+
+          {/* Card 26: Market Regime Detection & HMM Risk Parity Engine */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-emerald-500/50 transition group">
+            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition">
+              <Compass className="h-5 w-5" />
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Market Regime Detection & HMM Risk Parity Engine</h3>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+              Real-time 3-state Gaussian Hidden Markov Model (Bull, Chop, Crisis) with online Bayesian forward filtering, 3x3 transition probability matrix, multi-asset historical ribbon, and Equal Risk Contribution (ERC) dynamic risk parity allocation across NIFTY 50, BANKNIFTY, GOLD BEES, and LIQUID BEES.
             </p>
           </div>
         </div>

@@ -11,6 +11,7 @@ import {
   ChevronDown,
   Clock,
   Command,
+  Compass,
   Cpu,
   Crosshair,
   FileSpreadsheet,
@@ -63,6 +64,7 @@ interface HeaderProps {
   onOpenVPIN?: () => void;
   onOpenASMM?: () => void;
   onOpenAlmgrenChriss?: () => void;
+  onOpenRegime?: () => void;
   onOpenBYOK: () => void;
   onOpenStrategy: () => void;
   onOpenCrisis: () => void;
@@ -114,6 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenVPIN,
   onOpenASMM,
   onOpenAlmgrenChriss,
+  onOpenRegime,
   onOpenBYOK,
   onOpenStrategy,
   onOpenCrisis,
@@ -252,6 +255,16 @@ export const Header: React.FC<HeaderProps> = ({
     },
 
     // 3. Quant Lab Suite
+    {
+      id: 'regime-cockpit',
+      name: 'Market Regime & HMM Risk Parity',
+      badge: 'Sprint 28',
+      description: 'Hidden Markov Model 3-state regime filter, transition matrix & risk parity allocation',
+      icon: <Compass className="h-4 w-4 text-emerald-400" />,
+      action: onOpenRegime,
+      category: 'Quant Lab',
+      accent: 'emerald',
+    },
     {
       id: 'avellaneda-stoikov-cockpit',
       name: 'Avellaneda-Stoikov HFT Market Making',
